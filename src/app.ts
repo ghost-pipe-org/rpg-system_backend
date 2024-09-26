@@ -1,4 +1,7 @@
-const a = 1;
-const b = 2;
+import express from "express";
+import routes from "./routes";
+const app = express();
 
-console.log(a + b);
+routes(app);
+
+export default app;
