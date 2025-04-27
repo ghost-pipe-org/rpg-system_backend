@@ -3,6 +3,7 @@ package com.ghostPipe.backend.model.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,6 +12,9 @@ import java.time.LocalDateTime;
 
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "player")
 public class Player {
 
@@ -29,7 +33,7 @@ public class Player {
     @Column(name = "player_phone", length = 20)
     private String phone;
 
-    // TODO olhar uma forma de por regex diretamente na senha
+    // TODO olhar uma forma de por regex diretamente na senha   
     @NotBlank(message = "The password is obligatory")
     @Column(name = "player_password", nullable = false, length = 255)
     private String encryptedpassword;
