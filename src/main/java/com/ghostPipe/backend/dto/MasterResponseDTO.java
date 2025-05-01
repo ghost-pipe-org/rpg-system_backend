@@ -5,11 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlayerResponseDTO {
+public class MasterResponseDTO {
 
     private Long id;
     private String name;
     private String enrollment;
     private String phoneNumber;
     private String email;
+    private Integer sessionsOpened;
 }

@@ -1,9 +1,19 @@
 package com.ghostPipe.backend.dto;
+ feat/iago/issue#25-27
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+main
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PlayerRequestDTO {
     @NotBlank(message = "Este campo é obrigatório")
     @Size(max = 100, message = "Você excedeu o número máximo de caracteres permitidos")
@@ -59,8 +69,4 @@ public class PlayerRequestDTO {
     public String getEmail() {
         return email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }    
 }
