@@ -17,7 +17,7 @@ services:
     command: npm run start:dev
     container_name: sistemas-pedidos-comprovantes-api
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules

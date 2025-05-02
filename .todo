@@ -1,14 +1,14 @@
 ## ✅ **1. Preparação do Ambiente**
 
-* [ ] Criar repositório Git com README inicial
+* [x] Criar repositório Git com README inicial
 * [ ] Configurar Docker para:
 
-  * [ ] API Node.js
-  * [ ] Banco de dados PostgreSQL
+  * [x] API Node.js
+  * [x] Banco de dados PostgreSQL
   * [ ] Redis
   * [ ] NGINX como proxy reverso
 * [ ] Configurar ESLint, Prettier e editorconfig
-* [ ] Configurar TypeScript no projeto
+* [x] Configurar TypeScript no projeto
 
 ---
 
@@ -23,7 +23,7 @@
 
 ## 📦 **3. Gestão de Pedidos**
 
-* [ ] Modelo Order com Prisma
+* [x] Modelo Order com Prisma
 * [ ] Endpoint para criar pedidos com imagem (com upload) — `POST /orders`
 * [ ] Endpoint para listar pedidos do usuário — `GET /orders`
 * [ ] Endpoint para visualizar um pedido específico — `GET /orders/:id`
