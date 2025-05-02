@@ -1,0 +1,45 @@
+services:
+  postgres:
+    container_name: postgres-sistemas-pedidos-comprovantes
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=sistemas-pedidos-comprovantes
+    volumes:
+      - ./data:/data/postgres
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    command: npm run start:dev
+    container_name: sistemas-pedidos-comprovantes-api
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  prisma-studio:
+    image: node:lts-alpine3.17
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    command: sh -c "npx prisma migrate dev && npx prisma studio --port 5555 --browser none"
+    ports:
+      - "5555:5555"
+    depends_on:
+      - postgres
+
+
+volumes:
+  data:
+    driver: local
