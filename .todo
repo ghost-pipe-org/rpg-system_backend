@@ -1,0 +1,90 @@
+## ✅ **1. Preparação do Ambiente**
+
+* [ ] Criar repositório Git com README inicial
+* [ ] Configurar Docker para:
+
+  * [ ] API Node.js
+  * [ ] Banco de dados PostgreSQL
+  * [ ] Redis
+  * [ ] NGINX como proxy reverso
+* [ ] Configurar ESLint, Prettier e editorconfig
+* [ ] Configurar TypeScript no projeto
+
+---
+
+## 👤 **2. Autenticação e Autorização**
+
+* [ ] Criar cadastro de usuários (`/register`)
+* [ ] Criar login com JWT (`/login`)
+* [ ] Implementar middleware de autenticação (JWT)
+* [ ] Middleware de autorização por `role` (user/admin)
+
+---
+
+## 📦 **3. Gestão de Pedidos**
+
+* [ ] Modelo Order com Prisma
+* [ ] Endpoint para criar pedidos com imagem (com upload) — `POST /orders`
+* [ ] Endpoint para listar pedidos do usuário — `GET /orders`
+* [ ] Endpoint para visualizar um pedido específico — `GET /orders/:id`
+
+---
+
+## 🛠 **4. Upload de Imagens**
+
+* [ ] Integrar com Cloudinary ou Amazon S3
+* [ ] Validar tipo de imagem no backend (`.png`, `.jpg`, `.jpeg`)
+* [ ] Armazenar a URL da imagem no banco de dados
+
+---
+
+## 📬 **5. Envio de E-mails (Nodemailer)**
+
+* [ ] Configurar serviço de e-mail
+* [ ] Criar templates para:
+
+  * [ ] Pedido recebido
+  * [ ] Pedido aprovado/rejeitado
+* [ ] Criar serviço de envio de e-mail reutilizável
+
+---
+
+## 🧵 **6. Fila com BullMQ**
+
+* [ ] Configurar BullMQ e Redis
+* [ ] Criar job `processOrder`
+* [ ] Redimensionar imagem (opcional)
+* [ ] Alterar status do pedido para `processing`
+* [ ] Enviar email de confirmação
+* [ ] Marcar como `approved` ou `rejected` automaticamente (simulação)
+
+---
+
+## 🧑‍💼 **7. Painel Admin**
+
+* [ ] Endpoint `GET /admin/orders` — listar todos os pedidos
+* [ ] Endpoint `PATCH /admin/orders/:id` — aprovar/rejeitar manualmente
+
+---
+
+## 🌐 **8. NGINX + Produção**
+
+* [ ] Configurar NGINX como proxy reverso
+* [ ] Testar acesso via porta 80/443
+* [ ] Documentar variáveis de ambiente
+
+---
+
+## 📑 **9. Documentação**
+
+* [ ] Documentar rotas da API (ex: Swagger ou Markdown)
+* [ ] Especificar `.env.example` com todas as variáveis
+* [ ] Incluir instruções de uso e setup no `README.md`
+
+---
+
+## 🧪 **10. Testes (opcional)**
+
+* [ ] Testes unitários para serviços
+* [ ] Testes de integração com rotas principais
+
