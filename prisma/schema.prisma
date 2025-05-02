@@ -1,0 +1,49 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(100)
+  email     String   @unique @db.VarChar(150)
+  password  String   @db.Text
+  role      Role    @default(user)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  orders    Order[]
+
+  @@map("users")
+}
+
+model Order {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  title        String   @db.VarChar(100)
+  description  String   @db.Text
+  imageUrl     String   @map("image_url") @db.Text
+  status       OrderStatus @default(pending) @map("status")
+  createdAt    DateTime @default(now()) @map("created_at")
+  processedAt  DateTime? @map("processed_at")
+
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum OrderStatus {
+  pending
+  processing
+  approved
+  rejected
+}
