@@ -12,7 +12,7 @@ model User {
   id        String   @id @default(uuid()) @db.Uuid
   name      String   @db.VarChar(100)
   email     String   @unique @db.VarChar(150)
-  password  String   @db.Text
+  password_hash  String   @db.Text
   role      Role    @default(user)
   createdAt DateTime @default(now()) @map("created_at")
 
