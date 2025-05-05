@@ -7,14 +7,14 @@
   * [x] Banco de dados PostgreSQL
   * [ ] Redis
   * [ ] NGINX como proxy reverso
-* [ ] Configurar ESLint, Prettier e editorconfig
+* [x] Configurar EiomeJs
 * [x] Configurar TypeScript no projeto
 
 ---
 
 ## 👤 **2. Autenticação e Autorização**
 
-* [ ] Criar cadastro de usuários (`/register`)
+* [x] Criar cadastro de usuários (`/register`)
 * [ ] Criar login com JWT (`/login`)
 * [ ] Implementar middleware de autenticação (JWT)
 * [ ] Middleware de autorização por `role` (user/admin)
