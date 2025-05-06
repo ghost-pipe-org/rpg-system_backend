@@ -23,22 +23,11 @@ services:
       - /usr/src/app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - DATABASE_URL=postgres://postgres:1234@postgres:5432/sistemas-pedidos-comprovantes
     links:
       - postgres
     depends_on:
       - postgres
-
-  prisma-studio:
-    image: node:lts-alpine3.17
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
-    command: sh -c "npx prisma migrate dev && npx prisma studio --port 5555 --browser none"
-    ports:
-      - "5555:5555"
-    depends_on:
-      - postgres
-
 
 volumes:
   data:
