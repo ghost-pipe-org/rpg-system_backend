@@ -1,5 +1,5 @@
 import type { UsersRepository } from "@/repositories/usersRepository";
-import { InvalidCredencialsError } from "./errors/invalidCredencialsError";
+import { InvalidCredentialsError } from "./errors/invalidCredentialsError";
 import { hash, compare } from "bcryptjs";
 import type { User } from "@prisma/client";
 
@@ -21,12 +21,12 @@ export class AuthenticateService {
 	}: AuthenticateRequest): Promise<AuthenticateResponse> {
 		const user = await this.userRepository.findByEmail(email);
 		if (!user) {
-			throw new InvalidCredencialsError();
+			throw new InvalidCredentialsError();
 		}
 
 		const doesPasswordMatch = await compare(password, user.password_hash);
 		if (!doesPasswordMatch) {
-			throw new InvalidCredencialsError();
+			throw new InvalidCredentialsError();
 		}
 
 		return {
