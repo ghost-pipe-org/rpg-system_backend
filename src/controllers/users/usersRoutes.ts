@@ -1,6 +1,12 @@
-import type { Express } from 'express';
-import { registerController } from './registerController';
+import { Router, type Express } from "express";
+import { registerController } from "./registerController";
+import { authenticateController } from "./authenticateController";
+import { validateRegister } from "../middlewares/validateRegister";
+import { validateAuthenticate } from "../middlewares/validateAuthenticate";
 
-export async function usersRoutes(app :Express){
-    app.post("/users", registerController);
-}
+const userRouter = Router();
+
+userRouter.post("/users", validateRegister, registerController);
+userRouter.post("/users/authenticate", validateAuthenticate, authenticateController);
+
+export default userRouter;
