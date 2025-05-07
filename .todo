@@ -7,17 +7,16 @@
   * [x] Banco de dados PostgreSQL
   * [ ] Redis
   * [ ] NGINX como proxy reverso
-* [ ] Configurar ESLint, Prettier e editorconfig
 * [x] Configurar TypeScript no projeto
 
 ---
 
 ## 👤 **2. Autenticação e Autorização**
 
-* [ ] Criar cadastro de usuários (`/register`)
-* [ ] Criar login com JWT (`/login`)
-* [ ] Implementar middleware de autenticação (JWT)
-* [ ] Middleware de autorização por `role` (user/admin)
+* [x] Criar cadastro de usuários (`/register`)
+* [x] Criar login com JWT (`/login`)
+* [x] Implementar middleware de autenticação (JWT)
+* [x] Middleware de autorização por `role` (user/admin)
 
 ---
 
@@ -42,7 +41,6 @@
 
 * [ ] Configurar serviço de e-mail
 * [ ] Criar templates para:
-
   * [ ] Pedido recebido
   * [ ] Pedido aprovado/rejeitado
 * [ ] Criar serviço de envio de e-mail reutilizável
@@ -78,8 +76,8 @@
 ## 📑 **9. Documentação**
 
 * [ ] Documentar rotas da API (ex: Swagger ou Markdown)
-* [ ] Especificar `.env.example` com todas as variáveis
-* [ ] Incluir instruções de uso e setup no `README.md`
+* [x] Especificar `.env.example` com todas as variáveis
+* [x] Incluir instruções de uso e setup no `README.md`
 
 ---
 
