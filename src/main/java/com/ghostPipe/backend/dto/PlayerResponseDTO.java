@@ -1,15 +1,17 @@
 package com.ghostPipe.backend.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class PlayerResponseDTO {
-
     private Long id;
     private String name;
     private String enrollment;
     private String phoneNumber;
     private String email;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
