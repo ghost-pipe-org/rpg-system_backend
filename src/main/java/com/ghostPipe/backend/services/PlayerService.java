@@ -29,9 +29,9 @@ public class PlayerService {
                 player.getEmail(),
                 player.getCreatedAt(),
                 player.getUpdatedAt()
-            ))
-            .collect(Collectors.toList());
+            )).collect(Collectors.toList());
     }
+
     public PlayerResponseDTO createPlayer(PlayerRequestDTO request){
         Player player = new Player();
         player.setName(request.getName());
