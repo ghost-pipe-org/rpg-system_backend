@@ -1,37 +1,33 @@
 package com.ghostPipe.backend.dto;
-
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Builder;
-
 
 @Getter
 @Setter
-@Builder
 public class PlayerRequestDTO {
-
-    @NotBlank(message = "Este campo é obrigatório")
-    @Size(max = 100, message = "Você excedeu o número máximo de caracteres permitidos")
+    @NotBlank(message = "This field is required")
+    @Size(max = 100, message = "You have exceeded the maximum allowed number of characters")
     private String name;
 
-    @Size(max = 9, message = "Matrícula inválida")
+    @Size(max = 9, message = "Invalid enrollment number")
     private String enrollment;
 
-    @Size(max = 20, message = "Número de telefone inválido")
+    @Size(max = 20, message = "Invalid phone number")
     private String phone;
 
-    @NotBlank(message = "Este campo é obrigatório")
-    @Size(min = 6, max = 255, message = "A senha deve ter pelo menos seis caracteres")
+    @NotBlank(message = "This field is required")
+    @Size(min = 6, max = 255, message = "Password must be at least six characters long")
     private String encryptedpassword;
 
-    @NotBlank(message = "Este campo é obrigatório")
-    @Email(message = "O email deve ser válido")
-    @Size(max = 255, message = "Número de caracteres excedido")
+    @NotBlank(message = "This field is required")
+    @Email(message = "Email must be valid")
+    @Size(max = 255, message = "Maximum number of characters exceeded")
     private String email;
 
     public String getName() {
@@ -70,3 +66,4 @@ public class PlayerRequestDTO {
         return email;
     }
 }
+//dont call my name dont call my name
