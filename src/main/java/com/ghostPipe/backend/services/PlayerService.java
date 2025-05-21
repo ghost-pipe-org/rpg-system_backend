@@ -9,48 +9,49 @@ import com.ghostPipe.backend.dto.PlayerRequestDTO;
 import com.ghostPipe.backend.dto.PlayerResponseDTO;
 import com.ghostPipe.backend.model.entities.Player;
 import com.ghostPipe.backend.repositories.PlayerRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, PasswordEncoder passwordEncoder) {
         this.playerRepository = playerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<PlayerResponseDTO> getAll() {
         return playerRepository.findAll().stream()
-            .map(player -> new PlayerResponseDTO(
-                player.getId(),
-                player.getName(),
-                player.getEnrollment(),
-                player.getPhoneNumber(),
-                player.getEmail(),
-                player.getCreatedAt(),
-                player.getUpdatedAt()
-            )).collect(Collectors.toList());
+                .map(player -> new PlayerResponseDTO(
+                        player.getId(),
+                        player.getName(),
+                        player.getEnrollment(),
+                        player.getPhoneNumber(),
+                        player.getEmail(),
+                        player.getCreatedAt(),
+                        player.getUpdatedAt()))
+                .collect(Collectors.toList());
     }
 
-    public PlayerResponseDTO createPlayer(PlayerRequestDTO request){
+    public PlayerResponseDTO createPlayer(PlayerRequestDTO request) {
         Player player = new Player();
         player.setName(request.getName());
         player.setEnrollment(request.getEnrollment());
         player.setPhoneNumber(request.getPhone());
         player.setEmail(request.getEmail());
-        player.setPassword(request.getEncryptedpassword());
+        player.setPassword(passwordEncoder.encode(request.getPassword()));
 
         Player savedPlayer = playerRepository.save(player);
-    
+
         return new PlayerResponseDTO(
-            savedPlayer.getId(),
-            savedPlayer.getName(),
-            savedPlayer.getEnrollment(),
-            savedPlayer.getPhoneNumber(),
-            savedPlayer.getEmail(),
-            savedPlayer.getCreatedAt(),
-            savedPlayer.getUpdatedAt()
-        );
+                savedPlayer.getId(),
+                savedPlayer.getName(),
+                savedPlayer.getEnrollment(),
+                savedPlayer.getPhoneNumber(),
+                savedPlayer.getEmail(),
+                savedPlayer.getCreatedAt(),
+                savedPlayer.getUpdatedAt());
     }
-    //i want you love and i want you revenge
 }

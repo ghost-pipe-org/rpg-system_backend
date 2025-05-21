@@ -5,9 +5,11 @@ import lombok.*;
 
 @Data
 public class LoginRequestDTO {
-    @NotBlank @Email
+    @NotBlank
+    @Email
     private String email;
-    
-    @NotBlank @Size(min = 6)
+
+    @NotBlank
+    @Size(min = 6)
     private String password;
 }

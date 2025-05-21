@@ -1,6 +1,5 @@
 package com.ghostPipe.backend.model.entities;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
-
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -55,16 +53,17 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email; 
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; 
+        return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
-        return true; 
+        return true;
     }
 
     @Override

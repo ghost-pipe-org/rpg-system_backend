@@ -26,10 +26,6 @@ public class DataSourceConfig {
         dataSource.setUsername(dotenv.get("DB_USERNAME"));
         dataSource.setPassword(dotenv.get("DB_PASSWORD"));
 
-        // System.out.println("🌱 DB_URL: " + dotenv.get("DB_URL"));
-        // System.out.println("🌱 DB_USERNAME: " + dotenv.get("DB_USERNAME"));
-        // System.out.println("🌱 DB_PASSWORD: " + dotenv.get("DB_PASSWORD"));
-
         return dataSource;
     }
 }

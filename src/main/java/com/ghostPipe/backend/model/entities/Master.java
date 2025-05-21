@@ -10,14 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "master")
-@AttributeOverrides({
-        @AttributeOverride(name = "email", column = @Column(name = "master_email")),
-        @AttributeOverride(name = "password", column = @Column(name = "master_password")),
-        @AttributeOverride(name = "name", column = @Column(name = "master_name")),
-        @AttributeOverride(name = "phoneNumber", column = @Column(name = "master_phone")),
-        @AttributeOverride(name = "createdAt", column = @Column(name = "master_createdat", updatable = false)),
-        @AttributeOverride(name = "updatedAt", column = @Column(name = "master_updatedat"))
-})
+
 public class Master extends Player {
 
     @Column(name = "sessions_opened", nullable = false)
