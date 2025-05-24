@@ -31,10 +31,10 @@ public class PlayerController {
         List<PlayerResponseDTO> players = playerService.getAll(); 
         return ResponseEntity.ok(players);
     }
-@PostMapping
-public ResponseEntity<PlayerResponseDTO> createPlayer(@RequestBody PlayerRequestDTO request){
-    PlayerResponseDTO createdPlayer = playerService.createPlayer(request);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdPlayer);
-}
+    @PostMapping
+    public ResponseEntity<PlayerResponseDTO> createPlayer(@RequestBody PlayerRequestDTO request){
+        PlayerResponseDTO createdPlayer = playerService.createPlayer(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPlayer);
+    }
 
 }

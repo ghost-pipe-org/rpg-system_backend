@@ -52,5 +52,4 @@ public class PlayerService {
             savedPlayer.getUpdatedAt()
         );
     }
-    //i want you love and i want you revenge
 }
