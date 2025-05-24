@@ -1,6 +1,5 @@
 package com.ghostPipe.backend.dto;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
-
 
 @Getter
 @Setter
@@ -27,7 +25,7 @@ public class PlayerRequestDTO {
 
     @NotBlank(message = "Este campo é obrigatório")
     @Size(min = 6, max = 255, message = "A senha deve ter pelo menos seis caracteres")
-    private String encryptedpassword;
+    private String password;
 
     @NotBlank(message = "Este campo é obrigatório")
     @Email(message = "O email deve ser válido")
@@ -41,7 +39,7 @@ public class PlayerRequestDTO {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getEnrollment() {
         return enrollment;
     }
@@ -58,12 +56,12 @@ public class PlayerRequestDTO {
         this.phone = phone;
     }
 
-    public String getEncryptedpassword() {
-        return encryptedpassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEncryptedpassword(String encryptedpassword) {
-        this.encryptedpassword = encryptedpassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

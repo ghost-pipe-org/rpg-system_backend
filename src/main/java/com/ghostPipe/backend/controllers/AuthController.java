@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    
+
     private final AuthService authService;
 
     @PostMapping("/login")
@@ -29,7 +29,7 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode())
-                .body(new ErrorResponseDTO());
+                    .body(new ErrorResponseDTO());
         }
     }
 }

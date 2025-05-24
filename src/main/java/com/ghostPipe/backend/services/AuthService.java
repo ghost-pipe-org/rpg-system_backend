@@ -14,23 +14,23 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
 
     public LoginResponseDTO login(LoginRequestDTO request) {
         User user = userRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new ResponseStatusException(UNAUTHORIZED, "Credenciais inválidas"));
-        
+                .orElseThrow(() -> new ResponseStatusException(UNAUTHORIZED, "Credenciais inválidas"));
+
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(UNAUTHORIZED, "Credenciais inválidas");
         }
-        
+
         return LoginResponseDTO.builder()
-            .token(jwtTokenUtil.generateToken(user))
-            .userId(user.getId())
-            .userRole(user.getRole())
-            .build();
+                .token(jwtTokenUtil.generateToken(user))
+                .userId(user.getId())
+                .userRole(user.getRole())
+                .build();
     }
 }
