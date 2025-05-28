@@ -34,6 +34,7 @@ public class PlayerController {
     @PostMapping
     public ResponseEntity<PlayerResponseDTO> createPlayer(@RequestBody PlayerRequestDTO request) {
         PlayerResponseDTO createdPlayer = playerService.createPlayer(request);
+        System.out.println("Player created: " + createdPlayer);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlayer);
     }
 
