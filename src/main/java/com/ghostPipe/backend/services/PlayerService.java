@@ -39,10 +39,9 @@ public class PlayerService {
         Player player = new Player();
         player.setName(request.getName());
         player.setEnrollment(request.getEnrollment());
-        player.setPhoneNumber(request.getPhoneNumber());
+        player.setPhoneNumber(request.getPhone());
         player.setEmail(request.getEmail());
-        player.setPassword(passwordEncoder.encode(request.getPassword()));
-
+        
         Player savedPlayer = playerRepository.save(player);
 
         return new PlayerResponseDTO(
