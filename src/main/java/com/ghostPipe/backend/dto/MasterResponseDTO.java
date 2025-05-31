@@ -1,5 +1,7 @@
 package com.ghostPipe.backend.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +15,6 @@ public class MasterResponseDTO {
     private String phoneNumber;
     private String email;
     private Integer sessionsOpened;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
