@@ -1,15 +1,18 @@
 package com.ghostPipe.backend.model.entities;
 
-import javax.persistence.Converts;
-
 import com.ghostPipe.backend.model.converters.LocalDateListConverter;
-import jakarta.annotation.Generated;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Column;
+import java.util.List;
 import jakarta.persistence.Converter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,9 +35,11 @@ public class Session {
     private int max_players;
 
     @NotNull
+    @Size(max=100, message = "The session title must be at most 100 characters long")
     private String session_title;
 
     @NotNull
+    @Size(max=500, message = "The session description must be at most 500 characters long")
     private String session_description;
 
     private String session_requirements;
@@ -48,10 +53,12 @@ public class Session {
     private String location;
 
     @NotNull
-    @Column(name = "possible_dates", lenght = 100, nullable = false)
-    Converts(converter = LocalDateListConverter.class)
+    @Column(name = "possible_dates", length = 100, nullable = false)
+    @Convert(converter = LocalDateListConverter.class)
+    @FutureOrPresent(message = "The session date must be in the future or today")
     private List<LocalDate> possible_dates;
 
+    @FutureOrPresent(message = "The session date must be in the future or today")
     private String approved_date;
 
     private String cancel_event;
