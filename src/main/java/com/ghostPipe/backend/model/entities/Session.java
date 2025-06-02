@@ -1,5 +1,8 @@
 package com.ghostPipe.backend.model.entities;
 
+import javax.persistence.Converts;
+
+import com.ghostPipe.backend.model.converters.LocalDateListConverter;
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Converter;
@@ -46,7 +49,7 @@ public class Session {
 
     @NotNull
     @Column(name = "possible_dates", lenght = 100, nullable = false)
-    @Convert(converter = PossibleDatesConverter.class)
+    Converts(converter = LocalDateListConverter.class)
     private List<LocalDate> possible_dates;
 
     private String approved_date;
