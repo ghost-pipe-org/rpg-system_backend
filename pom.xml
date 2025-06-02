@@ -112,7 +112,13 @@
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+	
+   <dependency>
+     <groupId>org.eclipse.apoapsis.ortserver.api.v1</groupId>
+     <artifactId>api-v1-client-jvm</artifactId>
+     <version>0.1.0-RC6</version>
+   </dependency>
+ 			<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
