@@ -5,9 +5,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import java.util.List;
-import jakarta.persistence.Converter;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -22,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table (name = "session")
+@Table (name = "sessions")
 public class Session {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
@@ -44,6 +48,7 @@ public class Session {
 
     private String session_requirements;
 
+    @Enumerated(EnumType.STRING)
     private SolicitationStatus solicitation_status;
 
     @NotNull
@@ -63,7 +68,13 @@ public class Session {
 
     private String cancel_event;
 
+    @Enumerated(EnumType.STRING)
     private SessionPeriod session_period;
 
     private LocalDateTime created_at;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "master_id")
+    @NotNull
+    private User master;
 }
