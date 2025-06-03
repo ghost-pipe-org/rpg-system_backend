@@ -1,4 +1,4 @@
-package com.ghostPipe.backend.model.entities.converters;
+package com.ghostPipe.backend.model.converters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
