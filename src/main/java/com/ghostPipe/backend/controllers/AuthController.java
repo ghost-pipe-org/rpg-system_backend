@@ -1,4 +1,13 @@
-import org.eclipse.apoapsis.ortserver.client.auth.AuthService;
+package com.ghostPipe.backend.controllers;
+
+import com.ghostPipe.backend.dto.*;
+import com.ghostPipe.backend.services.AuthService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/auth")
@@ -7,33 +16,31 @@ public class AuthController {
 
     private final AuthService authService;
 
-    // Endpoint de Login (existente)
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO request) {
         try {
-            LoginResponseDTO response = AuthService.login(request);
+            LoginResponseDTO response = authService.login(request);
             return ResponseEntity.ok(response);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode())
                     .body(new ErrorResponseDTO(e.getReason()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ErrorResponseDTO("Erro interno no servidor"));
         }
     }
 
-    // Novo Endpoint de Signup
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDTO request) {
         try {
-            // Lógica diferenciada para Mestre/Player
-            if (request.queroSerMestre()) {
-                MasterResponseDTO response = authService.registerMaster(request);
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            } else {
-                PlayerResponseDTO response = authService.registerPlayer(request);
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            }
+            LoginResponseDTO response = authService.signup(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode())
                     .body(new ErrorResponseDTO(e.getReason()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ErrorResponseDTO("Falha ao processar cadastro"));
         }
     }
 }
