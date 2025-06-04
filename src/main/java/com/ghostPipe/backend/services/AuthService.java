@@ -51,7 +51,7 @@ public class AuthService {
         User newUser;
         
         if (request.isQueroSerMestre()) {
-            if (!request.getEnrollment().matches("UEPB\\d{8}")) {
+            if (!request.getEnrollment().matches("d{9}")) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
                     "Matrícula inválida. Formato: 9 dígitos");
             }
@@ -64,7 +64,6 @@ public class AuthService {
             newUser = masterRepository.save(master);
 
         } else {
-            // Lógica para jogadores (matrícula opcional)
             Player player = new Player();
             player.setEmail(request.getEmail());
             player.setPassword(passwordEncoder.encode(request.getPassword()));
