@@ -5,6 +5,7 @@ import lombok.*;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class LoginResponseDTO {
     private String token;
     private Long userId;

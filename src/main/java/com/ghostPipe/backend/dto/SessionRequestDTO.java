@@ -1,9 +1,10 @@
 package com.ghostPipe.backend.dto;
+
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.*;
 import lombok.Setter;
-import com.ghostPipe.backend.model.entities.SessionPeriod; 
+import com.ghostPipe.backend.model.entities.SessionPeriod;
 
 import java.time.LocalDate;
 import java.util.List;
