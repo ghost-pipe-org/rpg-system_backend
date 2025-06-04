@@ -1,14 +1,17 @@
 package com.ghostPipe.backend.dto;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import lombok.Setter;
+import com.ghostPipe.backend.model.entities.SessionPeriod; 
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class SessionRequestDTO {
 
@@ -36,5 +39,14 @@ public class SessionRequestDTO {
 
     @NotNull(message = "Possible dates are required")
     @Size(min = 1, message = "At least one possible date must be provided")
-    private List<@FutureOrPresent LocalDate> possible_dates;
+    @FutureOrPresent(message = "Possible dates must be in the future or present")
+    private List<LocalDate> possible_dates;
+
+    private SessionPeriod session_period;
+
+    private String approved_date;
+
+    private String solicitation_status;
+
+    private String session_requirements;
 }
