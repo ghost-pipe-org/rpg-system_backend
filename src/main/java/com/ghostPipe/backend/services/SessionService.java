@@ -19,14 +19,14 @@ public class SessionService {
 
     public SessionResponseDTO createSession(SessionRequestDTO request) {
         User master = (User) SecurityContextHolder.getContext()
-                        .getAuthentication().getPrincipal();
+                .getAuthentication().getPrincipal();
 
         Session session = Session.builder()
                 .session_title(request.getSession_title())
                 .session_description(request.getSession_description())
                 .session_period(request.getSession_period())
                 .session_system(request.getSession_system())
-                .solicitation_status(SolicitationStatus.PENDING) 
+                .solicitation_status(SolicitationStatus.PENDING)
                 .approved_date(request.getApproved_date())
                 .possible_dates(request.getPossible_dates())
                 .master(master)
@@ -48,7 +48,6 @@ public class SessionService {
                 session.getCreated_at(),
                 session.getApproved_date(),
                 session.getPossible_dates(),
-                session.getMaster().getId()
-        );
+                session.getMaster().getId());
     }
 }

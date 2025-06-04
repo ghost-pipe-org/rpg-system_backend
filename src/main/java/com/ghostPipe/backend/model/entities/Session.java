@@ -18,6 +18,8 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,12 +28,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table (name = "sessions")
+@AllArgsConstructor
+@Builder
+@Table(name = "sessions")
 public class Session {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotNull
     private int min_players;
 
@@ -39,11 +43,11 @@ public class Session {
     private int max_players;
 
     @NotNull
-    @Size(max=100, message = "The session title must be at most 100 characters long")
+    @Size(max = 100, message = "The session title must be at most 100 characters long")
     private String session_title;
 
     @NotNull
-    @Size(max=500, message = "The session description must be at most 500 characters long")
+    @Size(max = 500, message = "The session description must be at most 500 characters long")
     private String session_description;
 
     private String session_requirements;

@@ -37,45 +37,43 @@ public class AuthService {
         }
 
         return new LoginResponseDTO(
-            jwtTokenUtil.generateToken(user),
-            user.getId(),
-            user.getRole()
-        );
+                jwtTokenUtil.generateToken(user),
+                user.getId(),
+                user.getRole());
     }
 
     public LoginResponseDTO signup(SignupRequestDTO request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (userRepository.existsByEmail(request.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
 
         User newUser;
-        
-        if (request.isQueroSerMestre()) {
-            if (!request.getEnrollment().matches("d{9}")) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
-                    "Matrícula inválida. Formato: 9 dígitos");
+
+        if (request.queroSerMestre()) {
+            if (!request.enrollment().matches("\\d{9}")) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matrícula inválida. Formato: 9 dígitos");
             }
 
             Master master = new Master();
-            master.setEmail(request.getEmail());
-            master.setPassword(passwordEncoder.encode(request.getPassword()));
-            master.setEnrollment(request.getEnrollment());
+            master.setEmail(request.email());
+            master.setPassword(passwordEncoder.encode(request.password()));
+            master.setEnrollment(request.enrollment());
             master.setRole(UserRole.MASTER);
             newUser = masterRepository.save(master);
 
         } else {
             Player player = new Player();
-            player.setEmail(request.getEmail());
-            player.setPassword(passwordEncoder.encode(request.getPassword()));
-            player.setEnrollment(request.getEnrollment()); 
+            player.setEmail(request.email());
+            player.setPassword(passwordEncoder.encode(request.password()));
+            player.setEnrollment(request.enrollment());
             player.setRole(UserRole.PLAYER);
             newUser = playerRepository.save(player);
         }
 
-        return new LoginResponseDTO(
-            jwtTokenUtil.generateToken(newUser),
-            newUser.getId(),
-            newUser.getRole()
-        );
+        return LoginResponseDTO.builder()
+                .token(jwtTokenUtil.generateToken(newUser))
+                .userId(newUser.getId())
+                .userRole(newUser.getRole())
+                .build();
     }
 }

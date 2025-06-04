@@ -41,7 +41,7 @@ public class PlayerService {
         player.setEnrollment(request.getEnrollment());
         player.setPhoneNumber(request.getPhone());
         player.setEmail(request.getEmail());
-        
+
         Player savedPlayer = playerRepository.save(player);
 
         return new PlayerResponseDTO(

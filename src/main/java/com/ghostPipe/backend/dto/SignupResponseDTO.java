@@ -1,8 +1,8 @@
 package com.ghostPipe.backend.dto;
 
 public record SignupResponseDTO(
-    Long id,
-    String email,
-    String tipoUsuario,
-    String message
-) {}
+        Long id,
+        String email,
+        String tipoUsuario,
+        String message) {
+}

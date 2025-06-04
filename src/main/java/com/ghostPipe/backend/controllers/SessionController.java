@@ -20,10 +20,10 @@ public class SessionController {
     private final SessionService sessionService;
 
     @PostMapping
-    @PreAuthorize("hasRole('MASTER')") 
+    @PreAuthorize("hasRole('MASTER')")
     public ResponseEntity<SessionResponseDTO> createSession(
             @Valid @RequestBody SessionRequestDTO request) {
-        
+
         SessionResponseDTO response = sessionService.createSession(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
