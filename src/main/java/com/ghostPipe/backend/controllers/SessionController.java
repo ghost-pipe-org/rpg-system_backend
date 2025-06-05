@@ -2,8 +2,6 @@ package com.ghostPipe.backend.controllers;
 
 import com.ghostPipe.backend.dto.SessionRequestDTO;
 import com.ghostPipe.backend.dto.SessionResponseDTO;
-import com.ghostPipe.backend.model.entities.Session;
-import com.ghostPipe.backend.model.entities.SolicitationStatus;
 import com.ghostPipe.backend.services.SessionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

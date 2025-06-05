@@ -14,5 +14,5 @@ public record SignupRequestDTO(
 
         boolean masterConfirm,
 
-        @Size(min = 9, max = 9, message = "Enrollment must be exactly 9 digits") @Pattern(regexp = "^[0-9]+$", message = "Enrollment must contain only numbers") String enrollment) {
+        String enrollment) {
 }
