@@ -1,88 +1,104 @@
-## ✅ **1. Preparação do Ambiente**
-
-* [x] Criar repositório Git com README inicial
-* [ ] Configurar Docker para:
-
-  * [x] API Node.js
-  * [x] Banco de dados PostgreSQL
-  * [ ] Redis
-  * [ ] NGINX como proxy reverso
-* [x] Configurar TypeScript no projeto
 
 ---
 
-## 👤 **2. Autenticação e Autorização**
+### ✅ **1. Entidade unificada: `user`**
 
-* [x] Criar cadastro de usuários (`/register`)
-* [x] Criar login com JWT (`/login`)
-* [x] Implementar middleware de autenticação (JWT)
-* [x] Middleware de autorização por `role` (user/admin)
-
----
-
-## 📦 **3. Gestão de Pedidos**
-
-* [x] Modelo Order com Prisma
-* [ ] Endpoint para criar pedidos com imagem (com upload) — `POST /orders`
-* [ ] Endpoint para listar pedidos do usuário — `GET /orders`
-* [ ] Endpoint para visualizar um pedido específico — `GET /orders/:id`
-
----
-
-## 🛠 **4. Upload de Imagens**
-
-* [ ] Integrar com Cloudinary ou Amazon S3
-* [ ] Validar tipo de imagem no backend (`.png`, `.jpg`, `.jpeg`)
-* [ ] Armazenar a URL da imagem no banco de dados
+```ts
+User
+- id: UUID (PK)
+- name: VARCHAR(100)
+- enrollment: VARCHAR(9) (opcional, obrigatório para mestres)
+- phone_number: VARCHAR(20) (opcional)
+- email: VARCHAR(255) UNIQUE NOT NULL
+- password: VARCHAR(255) NOT NULL
+- role: ENUM("player", "master", "admin") DEFAULT "player"
+- created_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+- updated_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+```
 
 ---
 
-## 📬 **5. Envio de E-mails (Nodemailer)**
+### ✅ **2. Lista de Tarefas (Backlog do Projeto)**
 
-* [ ] Configurar serviço de e-mail
-* [ ] Criar templates para:
-  * [ ] Pedido recebido
-  * [ ] Pedido aprovado/rejeitado
-* [ ] Criar serviço de envio de e-mail reutilizável
+Organizadas por prioridade e agrupadas por domínio de funcionalidade:
 
 ---
 
-## 🧵 **6. Fila com BullMQ**
+#### 🔐 **Autenticação e Cadastro**
 
-* [ ] Configurar BullMQ e Redis
-* [ ] Criar job `processOrder`
-* [ ] Redimensionar imagem (opcional)
-* [ ] Alterar status do pedido para `processing`
-* [ ] Enviar email de confirmação
-* [ ] Marcar como `approved` ou `rejected` automaticamente (simulação)
-
----
-
-## 🧑‍💼 **7. Painel Admin**
-
-* [ ] Endpoint `GET /admin/orders` — listar todos os pedidos
-* [ ] Endpoint `PATCH /admin/orders/:id` — aprovar/rejeitar manualmente
+* [x] Criar endpoint de cadastro de usuários (`/register`)
+* [x] Validar matrícula obrigatória ao cadastrar como mestre
+* [x] Criar endpoint de login (`/login`)
+* [x] Implementar autenticação JWT segura
+* [x] Middleware para verificar autenticação e papel do usuário (player, master, admin)
 
 ---
 
-## 🌐 **8. NGINX + Produção**
+#### 🧾 **Gerenciamento de Sessões (Player)**
 
-* [ ] Configurar NGINX como proxy reverso
-* [ ] Testar acesso via porta 80/443
-* [ ] Documentar variáveis de ambiente
+* [ ] Criar endpoint para listar sessões disponíveis com filtros (título, sistema, vagas restantes)
+* [ ] Implementar lógica de verificação de conflitos de data/período ao se inscrever
+* [ ] Criar endpoint para inscrição em sessão
+* [ ] Impedir inscrição duplicada na mesma sessão
+* [ ] Criar endpoint para cancelamento de inscrição (restrito a 72h antes)
+* [ ] Criar sistema de notificações (ex: por email ou painel interno) sobre:
+
+  * Inscrição confirmada
+  * Cancelamento confirmado
+  * Sessão cancelada pelo mestre
 
 ---
 
-## 📑 **9. Documentação**
+#### 📅 **Solicitação de Sessões (Master)**
 
-* [ ] Documentar rotas da API (ex: Swagger ou Markdown)
-* [x] Especificar `.env.example` com todas as variáveis
-* [x] Incluir instruções de uso e setup no `README.md`
+* [ ] Criar endpoint para solicitação de sessão (emissão de ticket)
+* [ ] Validar se já existe uma solicitação ativa
+* [ ] Validar campos obrigatórios: título, descrição, sistema, data(s), período e vagas
+* [ ] Criar endpoint para cancelamento de ticket (antes da aprovação)
+* [ ] Implementar sistema de notificações para:
+
+  * Ticket aprovado
+  * Ticket rejeitado (com motivo)
+  * Sessão lotada
+  * Fim do período de inscrições
+* [ ] Criar endpoint para cancelamento de sessão aprovada (com justificativa e 72h de antecedência)
 
 ---
 
-## 🧪 **10. Testes (opcional)**
+#### 🛠️ **Painel de Aprovação (Admin)**
 
-* [ ] Testes unitários para serviços
-* [ ] Testes de integração com rotas principais
+* [ ] Criar painel/admin endpoint para listar todas as solicitações pendentes
+* [ ] Implementar lógica de verificação de disponibilidade de salas (mock ou estrutura de datas)
+* [ ] Criar endpoint para aprovar ou rejeitar uma sessão
+* [ ] Enviar notificação com motivo de rejeição ou aprovação para o mestre
+* [ ] Garantir login exclusivo e restrito para administradores
 
+---
+
+#### 🧠 **Validações de Negócio**
+
+* [ ] Impedir inscrições simultâneas com conflito de horário/período
+* [ ] Permitir apenas uma sessão ativa por mestre até decisão do admin
+* [ ] Garantir que apenas usuários com matrícula possam ser mestres
+* [ ] Limitar cancelamentos (tanto por jogadores quanto mestres) com base em tempo restante
+
+---
+
+#### 🧪 **Infraestrutura e Qualidade**
+
+* [ ] Criar modelo de dados no banco com integridade entre users, sessions e inscrições
+* [ ] Implementar testes unitários e E2E para funcionalidades principais
+* [ ] Garantir responsividade e usabilidade no frontend
+* [ ] Garantir autenticação e senhas seguras (hash, bcrypt, etc.)
+* [ ] Criar documentação básica da API com Swagger ou equivalente
+
+---
+
+#### 🛡️ **Requisitos Não Funcionais**
+
+* [ ] Implementar responsividade para mobile no frontend
+* [ ] Garantir desempenho mínimo para X usuários simultâneos (testes de carga)
+* [ ] Aplicar práticas de LGPD e proteção de dados da universidade
+* [ ] Implementar controle de erros e feedbacks claros no frontend
+
+---

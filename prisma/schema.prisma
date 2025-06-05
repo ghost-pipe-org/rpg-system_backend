@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,41 +8,49 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String   @db.VarChar(100)
-  email     String   @unique @db.VarChar(150)
-  password_hash  String   @db.Text
-  role      Role    @default(user)
-  createdAt DateTime @default(now()) @map("created_at")
+  id           String                @id @default(uuid()) @db.Uuid
+  name         String                @db.VarChar(100)
+  enrollment   String?               @db.VarChar(9)
+  phoneNumber  String?               @db.VarChar(20)
+  email        String                @unique @db.VarChar(255)
+  password_hash     String                @db.VarChar(255)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
 
-  orders    Order[]
-
-  @@map("users")
+  enrollments  SessionEnrollment[]
 }
 
-model Order {
-  id           String   @id @default(uuid()) @db.Uuid
-  userId       String   @map("user_id") @db.Uuid
-  title        String   @db.VarChar(100)
-  description  String   @db.Text
-  imageUrl     String   @map("image_url") @db.Text
-  status       OrderStatus @default(pending) @map("status")
-  createdAt    DateTime @default(now()) @map("created_at")
-  processedAt  DateTime? @map("processed_at")
+model Session {
+  id               String               @id @default(uuid()) @db.Uuid
+  title            String               @db.VarChar(100)
+  description      String               @db.Text
+  requirements     String?              @db.Text
+  status           String               @db.VarChar(50)
+  system           String               @db.VarChar(50)
+  location         String               @db.VarChar(100)
+  possibleDates    String               @db.Text
+  approvedDate     String?              @db.VarChar(50)
+  cancelEvent      String?              @db.Text
+  period           String               @db.VarChar(50)
+  minPlayers       Int
+  maxPlayers       Int
+  currentPlayers   Int
 
-  user         User     @relation(fields: [userId], references: [id])
+  enrollments      SessionEnrollment[]
 
-  @@map("orders")
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
 }
 
-enum Role {
-  user
-  admin
-}
+model SessionEnrollment {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @db.Uuid
+  sessionId  String   @db.Uuid
 
-enum OrderStatus {
-  pending
-  processing
-  approved
-  rejected
+  user       User     @relation(fields: [userId], references: [id])
+  session    Session  @relation(fields: [sessionId], references: [id])
+
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, sessionId])
 }

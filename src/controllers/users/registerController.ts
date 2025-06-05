@@ -5,7 +5,7 @@ import type { Request, Response } from "express";
 
 export async function registerController(req: Request, res: Response) {
 
-	const {name, email, password, role} = req.body
+	const {name, email, password, enrollment, phoneNumber} = req.body
 
 	try {
 		const registerService = makeRegisterService();
@@ -14,7 +14,8 @@ export async function registerController(req: Request, res: Response) {
 			name,
 			email,
 			password,
-			role,
+			enrollment,
+			phoneNumber,
 		});
 
 	} catch (error) {

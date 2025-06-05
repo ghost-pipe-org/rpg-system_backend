@@ -1,13 +1,14 @@
-import type { Role, User } from "@prisma/client";
-import type { UsersRepository } from "../repositories/usersRepository";
-import { UserAlreadyExistsError } from "./errors/userAlreadyExistsError";
+import type { User } from "@prisma/client";
+import type { UsersRepository } from "../../repositories/usersRepository";
+import { UserAlreadyExistsError } from "../errors/userAlreadyExistsError";
 import { hash } from "bcryptjs";
 
 interface RegisterServiceRequest {
     name: string;
     email: string;
     password: string;
-    role: Role;
+    enrollment?: string;
+    phoneNumber?: string;
 
 }
 
@@ -22,7 +23,9 @@ export class RegisterService {
         name,
         email,
         password,
-        role
+        enrollment,
+        phoneNumber,
+
     }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
         const passwordHash = await hash(password, 6);
         const userWithSameEmail = await this.usersRepository.findByEmail(email);
@@ -34,7 +37,8 @@ export class RegisterService {
             name,
             email,
             password_hash: passwordHash,
-            role
+            enrollment,
+            phoneNumber,
         });
         return {
             user

@@ -15,7 +15,13 @@ const registerSchema = z
 				message: "Password must contain at least one lowercase letter",
 			})
 			.regex(/[0-9]/, { message: "Password must contain at least one number" }),
-		role: z.enum(["admin", "user"]).default("user"),
+		enrollment: z.string().regex(/^\d{9}$/).optional(),
+		phoneNumber: z
+			.string()
+			.regex(/^\+?[1-9]\d{1,14}$/, {
+				message: "Phone number must be in E.164 format",
+			})
+			.optional(),
 	})
 	.strict();
 

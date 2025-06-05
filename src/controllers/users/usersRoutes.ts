@@ -12,6 +12,6 @@ const userRouter = Router();
 userRouter.post("/users", validateRegister, registerController);
 userRouter.post("/users/authenticate", validateAuthenticate, authenticateController);
 
-userRouter.get("/users",validateJWT("admin"), usersController);
+userRouter.get("/users",validateJWT(), usersController);
 
 export default userRouter;
