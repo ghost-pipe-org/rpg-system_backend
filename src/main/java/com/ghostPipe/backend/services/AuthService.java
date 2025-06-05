@@ -49,12 +49,14 @@ public class AuthService {
 
         User newUser;
 
-        if (request.queroSerMestre()) {
+        if (request.masterConfirm()) {
             if (!request.enrollment().matches("\\d{9}")) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matrícula inválida. Formato: 9 dígitos");
             }
 
             Master master = new Master();
+            master.setName(request.name());
+            master.setPhoneNumber(request.phoneNumber());
             master.setEmail(request.email());
             master.setPassword(passwordEncoder.encode(request.password()));
             master.setEnrollment(request.enrollment());
@@ -63,6 +65,8 @@ public class AuthService {
 
         } else {
             Player player = new Player();
+            player.setName(request.name());
+            player.setPhoneNumber(request.phoneNumber());
             player.setEmail(request.email());
             player.setPassword(passwordEncoder.encode(request.password()));
             player.setEnrollment(request.enrollment());

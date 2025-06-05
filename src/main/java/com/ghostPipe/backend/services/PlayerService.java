@@ -39,7 +39,7 @@ public class PlayerService {
         Player player = new Player();
         player.setName(request.getName());
         player.setEnrollment(request.getEnrollment());
-        player.setPhoneNumber(request.getPhone());
+        player.setPhoneNumber(request.getPhoneNumber());
         player.setEmail(request.getEmail());
 
         Player savedPlayer = playerRepository.save(player);

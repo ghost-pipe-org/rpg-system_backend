@@ -17,7 +17,7 @@ public class PlayerRequestDTO {
     private String enrollment;
 
     @Size(max = 20, message = "Invalid phone number")
-    private String phone;
+    private String phoneNumber;
 
     @NotBlank(message = "This field is required")
     @Size(min = 6, max = 255, message = "Password must be at least six characters long")
@@ -44,12 +44,12 @@ public class PlayerRequestDTO {
         this.enrollment = enrollment;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEncryptedpassword() {

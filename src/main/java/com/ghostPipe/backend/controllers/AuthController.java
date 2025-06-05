@@ -34,6 +34,7 @@ public class AuthController {
     public ResponseEntity<?> signup(@Valid @RequestBody SignupRequestDTO request) {
         try {
             LoginResponseDTO response = authService.signup(request);
+            System.out.println("Usuário cadastrado: " + response + request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode())
