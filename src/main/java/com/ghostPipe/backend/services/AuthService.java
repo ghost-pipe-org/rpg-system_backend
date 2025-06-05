@@ -50,7 +50,9 @@ public class AuthService {
         User newUser;
 
         if (request.masterConfirm()) {
-            if (!request.enrollment().matches("\\d{9}")) {
+
+            // Agora o valor pode ser nulo ou conter a matrcula, permitindo que o usuario possa se tornar um mestre também
+            if (request.enrollment() == null || !request.enrollment().matches("\\d{9}")) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matrícula inválida. Formato: 9 dígitos");
             }
 
