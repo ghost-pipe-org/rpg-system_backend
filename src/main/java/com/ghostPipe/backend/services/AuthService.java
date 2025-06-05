@@ -43,35 +43,35 @@ public class AuthService {
     }
 
     public LoginResponseDTO signup(SignupRequestDTO request) {
-        if (userRepository.existsByEmail(request.email())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
 
         User newUser;
 
-        if (request.masterConfirm()) {
+        if (request.isQueroSerMestre()) {
 
             // Agora o valor pode ser nulo ou conter a matrcula, permitindo que o usuario possa se tornar um mestre também
-            if (request.enrollment() == null || !request.enrollment().matches("\\d{9}")) {
+            if (request.getEnrollment() == null || !request.getEnrollment().matches("\\d{9}")) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Matrícula inválida. Formato: 9 dígitos");
             }
 
             Master master = new Master();
-            master.setName(request.name());
-            master.setPhoneNumber(request.phoneNumber());
-            master.setEmail(request.email());
-            master.setPassword(passwordEncoder.encode(request.password()));
-            master.setEnrollment(request.enrollment());
+            master.setName(request.getName());
+            master.setPhoneNumber(request.getPhone());
+            master.setEmail(request.getEmail());
+            master.setPassword(passwordEncoder.encode(request.getPassword()));
+            master.setEnrollment(request.getEnrollment());
             master.setRole(UserRole.MASTER);
             newUser = masterRepository.save(master);
 
         } else {
             Player player = new Player();
-            player.setName(request.name());
-            player.setPhoneNumber(request.phoneNumber());
-            player.setEmail(request.email());
-            player.setPassword(passwordEncoder.encode(request.password()));
-            player.setEnrollment(request.enrollment());
+            player.setName(request.getName());
+            player.setPhoneNumber(request.getPhone());
+            player.setEmail(request.getEmail());
+            player.setPassword(passwordEncoder.encode(request.getPassword()));
+            player.setEnrollment(request.getEnrollment());
             player.setRole(UserRole.PLAYER);
             newUser = playerRepository.save(player);
         }
