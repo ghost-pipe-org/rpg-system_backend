@@ -3,16 +3,33 @@ package com.ghostPipe.backend.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-public record SignupRequestDTO(
+@Data
+@Builder
+@AllArgsConstructor
+public class SignupRequestDTO {
 
-        @NotBlank(message = "Name is required") @Size(max = 100, message = "Name must not exceed 100 characters") String name,
-        @Size(max = 20, message = "Phone number must not exceed 20 characters") String phoneNumber,
-        @NotBlank(message = "Email is required") @jakarta.validation.constraints.Email(message = "Email must be valid") String email,
+    @NotBlank(message = "Name is required")
+    private String name;
 
-        @NotBlank(message = "Password is required") @Size(min = 8, message = "Password must be at least 8 characters") String password,
+    @NotBlank(message = "Email is required")
+    @jakarta.validation.constraints.Email(message = "Email must be valid")
+    private String email;
 
-        boolean masterConfirm,
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    private String password;
 
-        String enrollment) {
+    @NotBlank(message = "phone is required")
+    private String phone;
+    
+    private boolean queroSerMestre;
+
+    @NotBlank(message = "Enrollment is required for masters")
+    @Size(min = 9, max = 9, message = "Enrollment must be exactly 9 digits")
+    @Pattern(regexp = "^[0-9]+$", message = "Enrollment must contain only numbers")
+    private String enrollment;
 }
