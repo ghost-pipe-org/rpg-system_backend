@@ -5,4 +5,3 @@ public enum UserRole {
     MASTER,
     ADMIN
 }
-// Lady Gaga - Bad Romance

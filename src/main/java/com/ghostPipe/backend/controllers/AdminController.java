@@ -16,11 +16,11 @@ public class AdminController {
 
     @PostMapping("/create")
     public ResponseEntity<?> criarAdmin(@RequestBody AdminCreateDTO dto) {
-        if (adminService.existePorEmail(dto.email())) {
+        if (adminService.existByEmail(dto.email())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email já cadastrado.");
         }
 
-        Admin admin = adminService.criarAdmin(dto.name(), dto.email(), dto.password());
+        Admin admin = adminService.createAdmin(dto.name(), dto.email(), dto.password());
         return ResponseEntity.status(HttpStatus.CREATED).body(admin);
     }
 }

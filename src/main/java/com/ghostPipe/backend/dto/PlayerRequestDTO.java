@@ -21,7 +21,7 @@ public class PlayerRequestDTO {
 
     @NotBlank(message = "This field is required")
     @Size(min = 6, max = 255, message = "Password must be at least six characters long")
-    private String encryptedpassword;
+    private String password;
 
     @NotBlank(message = "This field is required")
     @Email(message = "Email must be valid")
@@ -52,12 +52,12 @@ public class PlayerRequestDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEncryptedpassword() {
-        return encryptedpassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEncryptedpassword(String encryptedpassword) {
-        this.encryptedpassword = encryptedpassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

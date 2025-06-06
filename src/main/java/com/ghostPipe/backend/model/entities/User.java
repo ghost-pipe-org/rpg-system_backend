@@ -76,12 +76,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public enum UserRole {
-        PLAYER,
-        MASTER,
-        ADMIN
-    }
-
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
