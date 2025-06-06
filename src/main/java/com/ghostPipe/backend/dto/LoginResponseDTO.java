@@ -1,6 +1,6 @@
 package com.ghostPipe.backend.dto;
 
-import com.ghostPipe.backend.model.entities.User.UserRole;
+import com.ghostPipe.backend.model.entities.UserRole;
 import lombok.*;
 
 @Data

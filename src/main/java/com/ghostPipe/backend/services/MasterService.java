@@ -1,19 +1,16 @@
 package com.ghostPipe.backend.services;
 
-import java.util.stream.Collectors;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ghostPipe.backend.dto.MasterResponseDTO;
 import com.ghostPipe.backend.repositories.MasterRepository;
+import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
 public class MasterService {
+    
     private final MasterRepository masterRepository;
-
-    @Autowired
-    public MasterService(MasterRepository masterRepository) {
-        this.masterRepository = masterRepository;
-    }
 
     public List<MasterResponseDTO> getAll() {
         return masterRepository.findAll().stream()

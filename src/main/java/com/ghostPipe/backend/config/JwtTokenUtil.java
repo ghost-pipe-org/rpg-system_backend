@@ -18,7 +18,7 @@ public class JwtTokenUtil {
     private String secret;
 
     @Value("${jwt.expiration}")
-    private Long expiration;
+    private Long expirationInSeconds;
 
     public String generateToken(User user) {
 
@@ -27,7 +27,7 @@ public class JwtTokenUtil {
                 .setSubject(user.getEmail())
                 .claim("id", user.getId())
                 .claim("role", user.getRole().name())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationInSeconds * 1000))
                 .signWith(key)
                 .compact();
     }
@@ -49,12 +49,12 @@ public class JwtTokenUtil {
 
     private boolean isTokenExpired(String token) {
         SecretKey key = Keys.hmacShaKeyFor(secret.getBytes());
-        Date expiration = Jwts.parserBuilder()
+        Date tokenExpiration = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
-        return expiration.before(new Date());
+        return tokenExpiration.before(new Date());
     }
 }

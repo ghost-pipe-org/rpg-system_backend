@@ -13,6 +13,6 @@ import lombok.Setter;
 
 public class Player extends User {
 
-    @Column(name = "player_enrollment", length = 9)
+    @Column(name = "player_enrollment", length = 9, nullable = true)
     private String enrollment;
 }
