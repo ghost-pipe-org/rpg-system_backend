@@ -6,6 +6,7 @@ import { emitSessionController } from "./emitSessionController";
 import { approveSessionController } from "./approveSessionController";
 import { rejectSessionController } from "./rejectSessionController";
 import { validateEmitSession } from "../middlewares/validateEmitSession";
+import { getAllSessionsController } from "./getAllSessionsController";
 
 const sessionRouter = Router();
 
@@ -17,6 +18,12 @@ sessionRouter.get(
 );
 
 //Privadas
+
+sessionRouter.get(
+    "/sessions",
+    validateJWT(),
+    getAllSessionsController,
+);
 
 sessionRouter.post(
     "/sessions/:sessionId/subscribe",

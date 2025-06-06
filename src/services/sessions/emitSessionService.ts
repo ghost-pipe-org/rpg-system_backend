@@ -10,7 +10,7 @@ interface emitSessionServiceRequest {
     requirements?: string;
     system: string;
     location: string;
-    possibleDates: string;
+    possibleDates: string[];
     period: string;
     minPlayers: number;
     maxPlayers: number;

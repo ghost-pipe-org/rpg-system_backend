@@ -66,8 +66,7 @@ Organizadas por prioridade e agrupadas por domínio de funcionalidade:
 #### 🛠️ **Painel de Aprovação (Admin)**
 
 * [ ] Criar painel/admin endpoint para listar todas as solicitações pendentes
-* [ ] Implementar lógica de verificação de disponibilidade de salas (mock ou estrutura de datas)
-* [ ] Criar endpoint para aprovar ou rejeitar uma sessão
+* [x] Criar endpoint para aprovar ou rejeitar uma sessão
 * [ ] Enviar notificação com motivo de rejeição ou aprovação para o mestre
 * [ ] Garantir login exclusivo e restrito para administradores
 
@@ -76,7 +75,7 @@ Organizadas por prioridade e agrupadas por domínio de funcionalidade:
 #### 🧠 **Validações de Negócio**
 
 * [ ] Impedir inscrições simultâneas com conflito de horário/período
-* [ ] Permitir apenas uma sessão ativa por mestre até decisão do admin
+* [x] Permitir apenas uma sessão ativa por mestre até decisão do admin
 * [ ] Garantir que apenas usuários com matrícula possam ser mestres
 * [ ] Limitar cancelamentos (tanto por jogadores quanto mestres) com base em tempo restante
 

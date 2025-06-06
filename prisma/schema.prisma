@@ -29,7 +29,7 @@ model Session {
   status         String  @db.VarChar(50)
   system         String  @db.VarChar(50)
   location       String  @db.VarChar(100)
-  possibleDates  String  @db.Text
+  possibleDates  String[]  @db.Text
   approvedDate   String? @db.VarChar(50)
   cancelEvent    String? @db.Text
   period         String  @db.VarChar(50)
