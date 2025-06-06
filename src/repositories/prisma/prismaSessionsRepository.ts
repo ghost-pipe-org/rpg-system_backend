@@ -7,50 +7,50 @@ export class PrismaSessionsRepository implements SessionsRepository {
 
     async findById(id: string) {
         return prisma.session.findUnique({
-        where: { id },
+            where: { id },
         });
     }
-    
+
     async create(data: Prisma.SessionCreateInput) {
         return prisma.session.create({
-        data,
+            data,
         });
     }
-    
+
     async update(id: string, data: Prisma.SessionUpdateInput) {
         return prisma.session.update({
-        where: { id },
-        data,
+            where: { id },
+            data,
         });
     }
-    
+
     async delete(id: string) {
         await prisma.session.delete({
-        where: { id },
+            where: { id },
         });
     }
-    
+
     async getAll() {
         return prisma.session.findMany();
     }
-    
-async getByUserId(userId: string) {
-    return prisma.session.findMany({
-        where: {
-            enrollments: {
-                some: {
-                    userId: userId,
+
+    async getByUserId(userId: string) {
+        return prisma.session.findMany({
+            where: {
+                enrollments: {
+                    some: {
+                        userId: userId,
+                    },
                 },
             },
-        },
-    });
-}
+        });
+    }
 
-async getAllByStatus(status: string) {
-    return prisma.session.findMany({
-        where: { status },
-    });
-}
+    async getAllByStatus(status: string) {
+        return prisma.session.findMany({
+            where: { status },
+        });
+    }
 
     async subscribeUserToSession(sessionId: string, userId: string) {
         return prisma.sessionEnrollment.create({
@@ -69,6 +69,15 @@ async getAllByStatus(status: string) {
             },
         });
         return !!enrollment;
+    }
+
+    async findFirstByCreatorAndStatus(creatorId: string, status: string) {
+        return prisma.session.findFirst({
+            where: {
+                creatorId,
+                status,
+            },
+        });
     }
 
 }

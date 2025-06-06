@@ -8,49 +8,53 @@ datasource db {
 }
 
 model User {
-  id           String                @id @default(uuid()) @db.Uuid
-  name         String                @db.VarChar(100)
-  enrollment   String?               @db.VarChar(9)
-  phoneNumber  String?               @db.VarChar(20)
-  email        String                @unique @db.VarChar(255)
-  password_hash     String                @db.VarChar(255)
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
+  id            String   @id @default(uuid()) @db.Uuid
+  name          String   @db.VarChar(100)
+  enrollment    String?  @db.VarChar(9)
+  phoneNumber   String?  @db.VarChar(20)
+  email         String   @unique @db.VarChar(255)
+  password_hash String   @db.VarChar(255)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  enrollments  SessionEnrollment[]
+  enrollments     SessionEnrollment[]
+  createdSessions Session[] @relation("SessionToUser")
 }
 
 model Session {
-  id               String               @id @default(uuid()) @db.Uuid
-  title            String               @db.VarChar(100)
-  description      String               @db.Text
-  requirements     String?              @db.Text
-  status           String               @db.VarChar(50)
-  system           String               @db.VarChar(50)
-  location         String               @db.VarChar(100)
-  possibleDates    String               @db.Text
-  approvedDate     String?              @db.VarChar(50)
-  cancelEvent      String?              @db.Text
-  period           String               @db.VarChar(50)
-  minPlayers       Int
-  maxPlayers       Int
-  currentPlayers   Int
+  id             String  @id @default(uuid()) @db.Uuid
+  title          String  @db.VarChar(100)
+  description    String  @db.Text
+  requirements   String? @db.Text
+  status         String  @db.VarChar(50)
+  system         String  @db.VarChar(50)
+  location       String  @db.VarChar(100)
+  possibleDates  String  @db.Text
+  approvedDate   String? @db.VarChar(50)
+  cancelEvent    String? @db.Text
+  period         String  @db.VarChar(50)
+  minPlayers     Int
+  maxPlayers     Int
+  currentPlayers Int
 
-  enrollments      SessionEnrollment[]
+  enrollments SessionEnrollment[]
 
-  createdAt        DateTime             @default(now())
-  updatedAt        DateTime             @updatedAt
+  creatorId String @db.Uuid
+  creator   User   @relation(fields: [creatorId], references: [id], name: "SessionToUser")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SessionEnrollment {
-  id         String   @id @default(uuid()) @db.Uuid
-  userId     String   @db.Uuid
-  sessionId  String   @db.Uuid
+  id        String @id @default(uuid()) @db.Uuid
+  userId    String @db.Uuid
+  sessionId String @db.Uuid
 
-  user       User     @relation(fields: [userId], references: [id])
-  session    Session  @relation(fields: [sessionId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  session Session @relation(fields: [sessionId], references: [id])
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@unique([userId, sessionId])
 }

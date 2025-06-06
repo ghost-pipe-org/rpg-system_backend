@@ -10,4 +10,8 @@ export interface SessionsRepository {
     getAllByStatus(status: string): Promise<Session[]>;
     subscribeUserToSession(sessionId: string, userId: string): Promise<SessionEnrollment>;
     isUserEnrolled(sessionId: string, userId: string): Promise<boolean>;
+    findFirstByCreatorAndStatus( 
+        creatorId: string,
+        status: string
+    ): Promise<Session | null>;
 }

@@ -37,9 +37,7 @@ Organizadas por prioridade e agrupadas por domínio de funcionalidade:
 #### 🧾 **Gerenciamento de Sessões (Player)**
 
 * [x] Criar endpoint para listar sessões disponíveis com filtros (título, sistema, vagas restantes)
-* [ ] Implementar lógica de verificação de conflitos de data/período ao se inscrever
-* [ ] Criar endpoint para inscrição em sessão
-* [ ] Impedir inscrição duplicada na mesma sessão
+* [x] Criar endpoint para inscrição em sessão
 * [ ] Criar endpoint para cancelamento de inscrição (restrito a 72h antes)
 * [ ] Criar sistema de notificações (ex: por email ou painel interno) sobre:
 
