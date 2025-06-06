@@ -1,4 +1,4 @@
-import type { Prisma, Session } from "@prisma/client";
+import type { Prisma, Session, SessionEnrollment } from "@prisma/client";
 
 export interface SessionsRepository {
     findById(id: string): Promise<Session | null>;
@@ -8,4 +8,6 @@ export interface SessionsRepository {
     getAll(): Promise<Session[]>;
     getByUserId(userId: string): Promise<Session[]>;
     getAllByStatus(status: string): Promise<Session[]>;
+    subscribeUserToSession(sessionId: string, userId: string): Promise<SessionEnrollment>;
+    isUserEnrolled(sessionId: string, userId: string): Promise<boolean>;
 }

@@ -52,4 +52,23 @@ async getAllByStatus(status: string) {
     });
 }
 
+    async subscribeUserToSession(sessionId: string, userId: string) {
+        return prisma.sessionEnrollment.create({
+            data: {
+                sessionId,
+                userId,
+            },
+        });
+    }
+
+    async isUserEnrolled(sessionId: string, userId: string) {
+        const enrollment = await prisma.sessionEnrollment.findFirst({
+            where: {
+                sessionId,
+                userId,
+            },
+        });
+        return !!enrollment;
+    }
+
 }
