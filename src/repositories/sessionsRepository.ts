@@ -14,4 +14,6 @@ export interface SessionsRepository {
         creatorId: string,
         status: string
     ): Promise<Session | null>;
+    findEmittedByCreator(creatorId: string): Promise<Session[]>;
+    findEnrolledByUser(userId: string): Promise<SessionEnrollment[]>;
 }

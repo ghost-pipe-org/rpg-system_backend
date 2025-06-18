@@ -80,4 +80,22 @@ export class PrismaSessionsRepository implements SessionsRepository {
         });
     }
 
+    async findEmittedByCreator(creatorId: string) {
+        return prisma.session.findMany({
+            where: {
+                creatorId,
+            },
+        });
+    }
+
+    async findEnrolledByUser(userId: string) {
+        return prisma.sessionEnrollment.findMany({
+            where: {
+                userId,
+            },
+            include: {
+                session: true, // Include session details if needed
+            },
+        });
+    }
 }
