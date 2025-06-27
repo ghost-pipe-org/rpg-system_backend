@@ -6,7 +6,7 @@ const app = express();
 
 // Adicione os middlewares globais aqui
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://rpg-system-frontend.vercel.app",
   credentials: true
 }));
 app.use(express.json());
