@@ -4,7 +4,7 @@
   "description": "Uma API em Node usando typescript.",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "tsx server.ts",
     "start:dev": "tsx watch server.ts",
     "db:dev": "prisma migrate dev",
     "build": "tsup src",
