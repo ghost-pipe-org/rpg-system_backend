@@ -9,7 +9,7 @@ interface RegisterServiceRequest {
     password: string;
     enrollment?: string;
     phoneNumber?: string;
-
+    masterConfirm?: boolean; // Assuming this is not needed in the backend service
 }
 
 interface RegisterServiceResponse {
@@ -25,6 +25,7 @@ export class RegisterService {
         password,
         enrollment,
         phoneNumber,
+        masterConfirm, // This field is not used in the backend service
 
     }: RegisterServiceRequest): Promise<RegisterServiceResponse> {
         const passwordHash = await hash(password, 6);

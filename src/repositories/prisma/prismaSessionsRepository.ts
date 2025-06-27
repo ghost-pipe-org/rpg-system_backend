@@ -8,6 +8,13 @@ export class PrismaSessionsRepository implements SessionsRepository {
     async findById(id: string) {
         return prisma.session.findUnique({
             where: { id },
+            include: {
+                creator: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         });
     }
 
@@ -31,7 +38,15 @@ export class PrismaSessionsRepository implements SessionsRepository {
     }
 
     async getAll() {
-        return prisma.session.findMany();
+        return prisma.session.findMany({
+            include: {
+                creator: {
+                    select: {
+                        name: true,
+                    },
+                }
+            },
+        });
     }
 
     async getByUserId(userId: string) {
@@ -43,12 +58,26 @@ export class PrismaSessionsRepository implements SessionsRepository {
                     },
                 },
             },
+            include: {
+                creator: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         });
     }
 
     async getAllByStatus(status: string) {
         return prisma.session.findMany({
             where: { status },
+            include: {
+                creator: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
         });
     }
 

@@ -9,7 +9,6 @@ interface emitSessionServiceRequest {
     description: string;
     requirements?: string;
     system: string;
-    location: string;
     possibleDates: string[];
     period: string;
     minPlayers: number;
@@ -31,7 +30,6 @@ export class EmitSessionService {
         description,
         requirements,
         system,
-        location,
         possibleDates,
         period,
         minPlayers,
@@ -49,7 +47,7 @@ export class EmitSessionService {
             description,
             requirements,
             system,
-            location,
+            location: "",
             possibleDates,
             period,
             minPlayers,

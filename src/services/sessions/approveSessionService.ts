@@ -7,12 +7,15 @@ import { SessionAlreadyApprovedError } from "@/services/errors/sessionAlreadyApp
 interface approveSessionServiceRequest {
     sessionId: string;
     userId: string;
-
+    approvedDate: string;
+    location: string;
 }
 
 interface approveSessionServiceResponse {
     sessionId: string;
     userId: string;
+    approvedDate: string;
+    location: string;
 }
 
 export class ApproveSessionService {
@@ -23,7 +26,9 @@ export class ApproveSessionService {
 
     async execute({
         sessionId,
-        userId
+        userId,
+        approvedDate,
+        location
     }: approveSessionServiceRequest): Promise<approveSessionServiceResponse> {
 
         const session = await this.sessionsRepository.findById(sessionId);
@@ -42,15 +47,25 @@ export class ApproveSessionService {
             throw new NotFoundError("Usuário não encontrado");
         }
 
+        if (!session.possibleDates.includes(approvedDate)) {
+            throw new NotFoundError("Data aprovada não está entre as possíveis datas da sessão");
+        }
+
         session.status = "aprovada";
+        session.approvedDate = approvedDate;
+        session.location = location;
 
         await this.sessionsRepository.update(session.id, {
             status: session.status,
+            approvedDate: session.approvedDate,
+            location: session.location,
         });
 
         return {
             sessionId: session.id,
-            userId: user.id
+            userId: user.id,
+            approvedDate: session.approvedDate!,
+            location: session.location
         };
     }
 }

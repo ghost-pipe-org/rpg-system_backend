@@ -6,6 +6,7 @@ import { SessionAlreadyApprovedError } from "@/services/errors/sessionAlreadyApp
 
 export async function approveSessionController(req: Request, res: Response) {
     const { sessionId } = req.params;
+    const { approvedDate, location } = req.body;
     const userId = req.user!.id;
 
     try {
@@ -14,11 +15,14 @@ export async function approveSessionController(req: Request, res: Response) {
         await approveSessionService.execute({
             sessionId,
             userId,
+            approvedDate,
+            location,
         });
 
         return res.status(200).json({ message: "Session Approved successfully" });
     } catch (error) {
         if (error instanceof NotFoundError) {
+            console.error("Session not found:", error);
             return res.status(404).json({ message: error.message });
         }
         if (error instanceof SessionAlreadyApprovedError) {

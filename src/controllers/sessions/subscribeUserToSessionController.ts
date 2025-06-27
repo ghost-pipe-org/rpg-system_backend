@@ -1,6 +1,7 @@
 import { AlreadyEnrolledError } from '@/services/errors/alreadyEnrolledError';
 import { InvalidSessionError } from '@/services/errors/invalidSessionError';
 import { InvalidUserError } from '@/services/errors/invalidUserError';
+import { SessionFullError } from '@/services/errors/sessionFullError';
 import { makeSubscribeUserToSessionService } from '@/services/factories/makesubscribeUserToSessionService';
 import { Request, Response } from 'express';
 
@@ -27,6 +28,9 @@ export async function subscribeUserToSessionController(req: Request, res: Respon
         }
         if (error instanceof AlreadyEnrolledError) {
             return res.status(409).json({ error: 'User already subscribed to this session' });
+        }
+        if (error instanceof SessionFullError) {
+            return res.status(409).json({ error: 'Session has reached maximum capacity' });
         }
 
         console.error('Error subscribing user to session:', error);

@@ -16,9 +16,15 @@ export async function authenticateController(req: Request, res: Response) {
 		});
 
 		const { JWT_SECRET } = env;
+		const userInfo = {
+			id: user.id,
+			name: user.name,
+			enrollment: user.enrollment,
+			email: user.email,
+		}
 
 		const token = jwt.sign({ sub: user.id }, JWT_SECRET, { expiresIn: "1h" });
-        return res.status(200).json({ message: "User authenticated successfully", token });
+        return res.status(200).json({ message: "User authenticated successfully", token, user: userInfo });
 
 	} catch (error) {
 		if (error instanceof InvalidCredentialsError) {

@@ -3,6 +3,7 @@ import { UsersRepository } from "@/repositories/usersRepository";
 import { InvalidSessionError } from "../errors/invalidSessionError";
 import { InvalidUserError } from "../errors/invalidUserError";
 import { AlreadyEnrolledError } from "../errors/alreadyEnrolledError";
+import { SessionFullError } from "../errors/sessionFullError";
 
 interface subscribeUserToSessionServiceRequest {
     sessionId: string;
@@ -39,6 +40,11 @@ export class SubscribeUserToSessionService {
         const alreadyEnrolled = await this.sessionsRepository.isUserEnrolled(sessionId, userId);
         if (alreadyEnrolled) {
             throw new AlreadyEnrolledError();
+        }
+
+        // Verifica se a sessão já atingiu o máximo de jogadores
+        if (session.currentPlayers >= session.maxPlayers) {
+            throw new SessionFullError();
         }
 
         await this.sessionsRepository.subscribeUserToSession(sessionId, userId);

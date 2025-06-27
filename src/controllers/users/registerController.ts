@@ -5,7 +5,7 @@ import type { Request, Response } from "express";
 
 export async function registerController(req: Request, res: Response) {
 
-	const {name, email, password, enrollment, phoneNumber} = req.body
+	const {name, email, password, enrollment, phoneNumber, masterConfirm} = req.body
 
 	try {
 		const registerService = makeRegisterService();
@@ -16,6 +16,7 @@ export async function registerController(req: Request, res: Response) {
 			password,
 			enrollment,
 			phoneNumber,
+			masterConfirm, // This field is not used in the backend service
 		});
 
 	} catch (error) {

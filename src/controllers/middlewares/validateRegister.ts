@@ -15,13 +15,14 @@ const registerSchema = z
 				message: "Password must contain at least one lowercase letter",
 			})
 			.regex(/[0-9]/, { message: "Password must contain at least one number" }),
-		enrollment: z.string().regex(/^\d{9}$/).optional(),
+		enrollment: z.string().regex(/^\d{9}$/).or(z.literal("")).optional(),
 		phoneNumber: z
 			.string()
 			.regex(/^\+?[1-9]\d{1,14}$/, {
 				message: "Phone number must be in E.164 format",
 			})
 			.optional(),
+		masterConfirm: z.boolean().optional(), // Assuming this is not needed in the backend service
 	})
 	.strict();
 
@@ -32,6 +33,7 @@ export const validateRegister = (
 ) => {
 	const result = registerSchema.safeParse(req.body);
 	if (!result.success) {
+		console.error("Validation errors:", result.error.errors);
 		return res.status(400).json({ errors: result.error.errors });
 	}
 	next();
