@@ -1,128 +1,327 @@
+# 🎲 RPG System Backend API
 
-# 📦 Sistema de Processamento de Pedidos com Upload de Comprovantes
+> Uma API REST completa para sistema de inscrições de mesas de RPG, desenvolvida em Node.js com TypeScript.
 
-## 🎯 Objetivo
-Criar uma API robusta onde:
-- Usuários possam cadastrar pedidos com upload de imagens (ex: comprovantes, imagens de referência, etc.)
-- Admins possam aprovar, rejeitar e acompanhar esses pedidos
-- Tarefas pesadas (processamento de imagem, envio de email, atualizações de status) sejam feitas em background com **BullMQ**
+![Node.js](https://img.shields.io/badge/Node.js-18+-green)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)
+![Express](https://img.shields.io/badge/Express-4.x-lightgrey)
+![Prisma](https://img.shields.io/badge/Prisma-5.x-2D3748)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue)
+![Tests](https://img.shields.io/badge/Tests-53%20passing-brightgreen)
 
----
+## 📋 Índice
 
-## 🧱 Arquitetura Geral
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Tecnologias](#tecnologias)
+- [Funcionalidades](#funcionalidades)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Uso](#uso)
+- [API Endpoints](#api-endpoints)
+- [Testes](#testes)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-### 📦 Backend
-- **Node.js + TypeScript**
-- **Express** para rotas e middlewares
-- **BullMQ** para filas assíncronas
-- **Redis** como broker da fila
-- **JWT + Bcrypt** para autenticação com controle de acesso por **roles** (`user` e `admin`)
-- **Cloudinary** (ou S3) para armazenar imagens
-- **Nodemailer** para envio de e-mails
-- **Docker** para containerização
-- **NGINX** como proxy reverso
-- **Banco de dados:** PostgreSQL com **Prisma ORM**
+## 🎯 Sobre o Projeto
 
----
+O **RPG System Backend** é uma API REST que gerencia um sistema completo de inscrições para mesas de RPG. Permite que mestres criem sessões, jogadores se inscrevam, e administradores gerenciem todo o sistema.
 
+### ✨ Principais Características
 
-## 🧑‍💻 Funcionalidades
+- 🔐 **Autenticação JWT** com roles de usuário
+- 🎮 **Gestão de Sessões** de RPG completa
+- 📝 **Sistema de Inscrições** automatizado
+- 👥 **Múltiplos Tipos de Usuário** (Player, Master, Admin)
+- 🛡️ **Validação Robusta** de dados
+- 🧪 **Cobertura de Testes** de 53 casos
+- 📊 **Banco de Dados** PostgreSQL com Prisma ORM
 
-### Usuário Comum
-- POST /register — criar conta
-- POST /login — login com JWT
-- POST /orders — criar novo pedido com imagem (upload)
-- GET /orders — listar seus pedidos
-- GET /orders/:id — ver detalhes do pedido
+## 🚀 Tecnologias
 
-### Admin
-- GET /admin/orders — listar todos os pedidos
-- PATCH /admin/orders/:id — aprovar ou rejeitar pedido
+### Core
+- **[Node.js 18+](https://nodejs.org/)** - Runtime JavaScript
+- **[TypeScript 5.0+](https://www.typescriptlang.org/)** - Tipagem estática
+- **[Express.js](https://expressjs.com/)** - Framework web
+- **[Prisma](https://www.prisma.io/)** - ORM e Database toolkit
 
----
+### Database
+- **[PostgreSQL](https://www.postgresql.org/)** - Banco de dados principal
+- **[Prisma Migrate](https://www.prisma.io/migrate)** - Migrations e schema
 
-## 📊 Entidades (modelo de dados)
+### Autenticação & Segurança
+- **[JSON Web Tokens (JWT)](https://jwt.io/)** - Autenticação
+- **[bcryptjs](https://github.com/dcodeIO/bcrypt.js)** - Hash de senhas
+- **[CORS](https://github.com/expressjs/cors)** - Cross-Origin Resource Sharing
 
-### User
-- id
-- name
-- email
-- password
-- role (`user` | `admin`)
-- createdAt
+### Validação & Testing
+- **[Zod](https://zod.dev/)** - Validação de schemas
+- **[Vitest](https://vitest.dev/)** - Framework de testes
+- **[Supertest](https://github.com/visionmedia/supertest)** - Testes HTTP
 
-### Order
-- id
-- userId
-- title
-- description
-- imageUrl
-- status (`pending` | `processing` | `approved` | `rejected`)
-- createdAt
-- processedAt
+### Desenvolvimento
+- **[TSX](https://github.com/esbuild-kit/tsx)** - TypeScript execution
+- **[Biome](https://biomejs.dev/)** - Linting e formatação
+- **[TSUP](https://tsup.egoist.dev/)** - Build tool
 
----
+## 🎮 Funcionalidades
 
-## 🔁 BullMQ - Tarefas Assíncronas
+### 👤 Gestão de Usuários
+- ✅ Registro de novos usuários
+- ✅ Autenticação com email/senha
+- ✅ Sistema de roles (PLAYER, MASTER, ADMIN)
+- ✅ Perfis de usuário personalizados
 
-- **Job:** `processOrder`
-  - Tarefa:
-    - Redimensionar imagem (opcional)
-    - Enviar e-mail de "Pedido recebido"
-    - Alterar status para `processing`
-    - Simular aprovação automática (opcional)
-    - Enviar e-mail de resultado
+### 🎲 Gestão de Sessões
+- ✅ Criação de sessões por Mestres
+- ✅ Sistema de datas possíveis
+- ✅ Configuração de número de jogadores
+- ✅ Status de sessões (PENDENTE, APROVADA, REJEITADA, CANCELADA)
 
----
+### 📝 Sistema de Inscrições
+- ✅ Inscrição de jogadores em sessões
+- ✅ Controle de vagas disponíveis
+- ✅ Prevenção de múltiplas inscrições
 
-## 📬 Email (Nodemailer)
+### 🛡️ Administração
+- ✅ Aprovação/rejeição de sessões
+- ✅ Visualização de todas as sessões
+- ✅ Gestão completa do sistema
 
-- Confirmação de envio de pedido
-- Resultado de aprovação ou rejeição
+## 📦 Instalação
 
----
+### Pré-requisitos
+- Node.js 18 ou superior
+- PostgreSQL 15 ou superior
+- npm ou yarn
 
-## 🐳 Docker e NGINX
+### 1. Clone o repositório
+```bash
+git clone https://github.com/ghost-pipe-org/api-test.git
+cd api-test
+```
 
-- Containers:
-  - API (Node)
-  - Redis
-  - PostgreSQL
-- NGINX como proxy reverso
+### 2. Instale as dependências
+```bash
+npm install
+```
 
----
+### 3. Configure as variáveis de ambiente
+```bash
+cp .env.example .env
+```
 
-## ✅ Requisitos Funcionais
+### 4. Configure o banco de dados
+```bash
+# Execute as migrations
+npm run db:dev
 
-1. Cadastro e login de usuários com roles.
-2. Criação de pedidos com upload de imagem.
-3. Listagem e detalhamento de pedidos para o usuário.
-4. Acesso a todos os pedidos e moderação para admin.
-5. Armazenamento de imagens externo.
-6. Processamento assíncrono com BullMQ.
-7. Envio de emails automáticos.
-8. Acompanhamento de status de pedidos.
+# (Opcional) Execute o seed
+npm run db:seed
+```
 
----
+### 5. Inicie o servidor
+```bash
+# Desenvolvimento
+npm run start:dev
 
-## 🚫 Regras de Negócio
+# Produção
+npm run build
+npm start
+```
 
-1. Apenas usuários autenticados podem criar pedidos.
-2. Um usuário só vê seus próprios pedidos.
-3. Apenas admin vê todos os pedidos e aprova/rejeita.
-4. Status do pedido segue ciclo: pending → processing → approved/rejected.
-5. Um pedido não pode ser aprovado/rejeitado mais de uma vez.
-6. Tipos de imagens aceitas: `.png`, `.jpg`, `.jpeg`.
+## ⚙️ Configuração
 
----
+### Variáveis de Ambiente
 
-## ⚙️ Requisitos Não Funcionais
+Crie um arquivo `.env` na raiz do projeto:
 
-1. API containerizada com Docker.
-2. Uso de NGINX como reverse proxy.
-3. Autenticação via JWT.
-4. Uploads armazenados externamente.
-5. Banco de dados relacional com Prisma/PostgreSQL.
-6. Fila BullMQ com Redis.
-7. Código modular e tipado com TypeScript.
-8. Logs básicos e estrutura RESTful.
+```env
+# Database
+DATABASE_URL="postgresql://usuario:senha@localhost:5432/rpg_system"
+
+# JWT
+JWT_SECRET="seu-jwt-secret-super-seguro"
+
+# Server
+PORT=3000
+NODE_ENV=development
+```
+
+### Estrutura do Banco de Dados
+
+```sql
+-- Principais tabelas
+Users (id, name, email, password, enrollment, role)
+Sessions (id, title, description, system, status, dates, location)
+Enrollments (userId, sessionId, enrollmentStatus)
+```
+
+## 🔌 API Endpoints
+
+### 🔐 Autenticação
+
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|------|
+| `POST` | `/users` | Registrar novo usuário | ❌ |
+| `POST` | `/users/authenticate` | Login de usuário | ❌ |
+
+#### Exemplo de Registro
+```bash
+POST /users
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@email.com",
+  "password": "senha123",
+  "enrollment": "202301001"
+}
+```
+
+#### Exemplo de Login
+```bash
+POST /users/authenticate
+Content-Type: application/json
+
+{
+  "email": "joao@email.com",
+  "password": "senha123"
+}
+```
+
+### 🎲 Sessões
+
+| Método | Endpoint | Descrição | Roles |
+|--------|----------|-----------|-------|
+| `GET` | `/sessions/approved` | Listar sessões aprovadas | ❌ |
+| `GET` | `/sessions` | Listar todas as sessões | `ADMIN` |
+| `POST` | `/sessions` | Criar nova sessão | `MASTER` |
+| `POST` | `/sessions/:id/subscribe` | Inscrever-se em sessão | `PLAYER`, `MASTER` |
+| `PATCH` | `/sessions/:id/approve` | Aprovar sessão | `ADMIN` |
+| `PATCH` | `/sessions/:id/reject` | Rejeitar sessão | `ADMIN` |
+
+#### Exemplo de Criação de Sessão
+```bash
+POST /sessions
+Authorization: Bearer seu-jwt-token
+Content-Type: application/json
+
+{
+  "title": "A Maldição de Strahd",
+  "description": "Uma aventura épica em Ravenloft",
+  "system": "D&D 5e",
+  "requirements": "Personagens nível 1-3",
+  "possibleDates": ["2025-08-20T19:00:00Z", "2025-08-21T19:00:00Z"],
+  "period": "NOITE",
+  "minPlayers": 3,
+  "maxPlayers": 5,
+  "location": "Sala 101"
+}
+```
+
+### 👤 Perfil do Usuário
+
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|------|
+| `GET` | `/my-emmitted-sessions` | Sessões criadas pelo usuário | ✅ |
+| `GET` | `/my-enrolled-sessions` | Sessões inscritas pelo usuário | ✅ |
+
+## 🧪 Testes
+
+O projeto possui **53 testes automatizados** cobrindo todos os endpoints e cenários.
+
+### Executar testes
+```bash
+# Executar todos os testes
+npm test
+
+# Executar em modo watch
+npm run test:watch
+
+# Executar com UI
+npm run test:ui
+
+# Executar apenas uma vez
+npm run test:run
+
+# Gerar relatório de cobertura
+npm run test:coverage
+```
+
+### Estrutura de Testes
+```
+src/test/
+├── controllers/
+│   ├── health.test.ts           # 1 teste
+│   ├── sessions-admin.test.ts   # 15 testes
+│   ├── sessions-protected.test.ts # 14 testes
+│   ├── sessions-public.test.ts  # 6 testes
+│   ├── users-protected.test.ts  # 8 testes
+│   └── users.test.ts           # 9 testes
+└── setup/
+    └── global-setup.ts
+```
+
+## 📂 Estrutura do Projeto
+
+```
+.
+├── prisma/                 # Database schema e migrations
+│   ├── schema.prisma
+│   ├── seed.ts
+│   └── migrations/
+├── src/
+│   ├── @types/            # Definições de tipos TypeScript
+│   ├── controllers/       # Controllers da API
+│   │   ├── middlewares/   # Middlewares de validação
+│   │   ├── sessions/      # Endpoints de sessões
+│   │   └── users/         # Endpoints de usuários
+│   ├── env/               # Configuração de environment
+│   ├── lib/               # Bibliotecas e utilitários
+│   ├── repositories/      # Camada de dados
+│   ├── services/          # Lógica de negócio
+│   └── test/              # Testes automatizados
+├── .github/workflows/     # CI/CD Pipeline
+├── docker-compose.yml     # Docker setup
+├── package.json
+└── README.md
+```
+
+## 🔄 CI/CD
+
+O projeto utiliza **GitHub Actions** para CI/CD automatizado:
+
+- ✅ **Linting** com Biome
+- ✅ **Type checking** com TypeScript
+- ✅ **Testes automatizados** com Vitest
+- ✅ **Database migrations** com Prisma
+- ✅ **Build validation**
+
+## 🐳 Docker
+
+### Desenvolvimento com Docker
+```bash
+# Subir apenas o banco de dados
+docker compose up postgres
+
+# Subir ambiente completo
+docker compose up --build
+```
+
+### Testes com Docker
+```bash
+docker-compose -f docker-compose.test.yml up
+```
+
+### Convenções de Commit
+- `feat:` Nova funcionalidade
+- `fix:` Correção de bug
+- `docs:` Documentação
+- `style:` Formatação
+- `refactor:` Refatoração
+- `test:` Testes
+- `chore:` Manutenção
+
+## 📄 Licença
+
+Este projeto está sob a licença ISC. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
