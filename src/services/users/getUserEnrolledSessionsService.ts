@@ -1,17 +1,18 @@
-import { SessionsRepository } from "../../repositories/sessionsRepository";
+import type { SessionsRepository } from "../../repositories/sessionsRepository";
 
 interface GetUserEnrolledSessionsServiceRequest {
-  userId: string;
+	userId: string;
 }
 
 export class GetUserEnrolledSessionsService {
-  constructor(private sessionRepository: SessionsRepository) {}
+	constructor(private sessionRepository: SessionsRepository) {}
 
-  async execute({ userId }: GetUserEnrolledSessionsServiceRequest) {
-    const enrolledSessions = await this.sessionRepository.findEnrolledByUser(userId);
+	async execute({ userId }: GetUserEnrolledSessionsServiceRequest) {
+		const enrolledSessions =
+			await this.sessionRepository.findEnrolledByUser(userId);
 
-    return {
-      enrolledSessions,
-    };
-  }
+		return {
+			enrolledSessions,
+		};
+	}
 }

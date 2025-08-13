@@ -1,5 +1,5 @@
+import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
-import type { Request, Response, NextFunction } from "express";
 
 const registerSchema = z
 	.object({
@@ -15,16 +15,38 @@ const registerSchema = z
 				message: "Password must contain at least one lowercase letter",
 			})
 			.regex(/[0-9]/, { message: "Password must contain at least one number" }),
-		enrollment: z.string().regex(/^\d{9}$/).or(z.literal("")).optional(),
+		enrollment: z
+			.string()
+			.regex(/^\d{9}$/)
+			.or(z.literal(""))
+			.optional(),
 		phoneNumber: z
 			.string()
 			.regex(/^\+?[1-9]\d{1,14}$/, {
 				message: "Phone number must be in E.164 format",
 			})
 			.optional(),
-		masterConfirm: z.boolean().optional(), // Assuming this is not needed in the backend service
+		masterConfirm: z.boolean().optional(),
 	})
-	.strict();
+	.strict()
+	.refine(
+		(data) => {
+			// Se masterConfirm for true, enrollment deve ser obrigatório e válido
+			if (data.masterConfirm === true) {
+				return (
+					data.enrollment &&
+					data.enrollment.length === 9 &&
+					/^\d{9}$/.test(data.enrollment)
+				);
+			}
+			return true;
+		},
+		{
+			message:
+				"Para se registrar como mestre, é necessário fornecer uma matrícula válida de 9 dígitos",
+			path: ["enrollment"],
+		},
+	);
 
 export const validateRegister = (
 	req: Request,
