@@ -1,15 +1,14 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { makeGetUserEnrolledSessionsService } from "@/services/factories/makeGetUserEnrolledSessionsService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
 export async function getEnrolledSessionsController(
-	req: AuthenticatedRequest,
+	req: Request,
 	res: Response,
 ) {
 	const getUserEnrolledSessionsService = makeGetUserEnrolledSessionsService();
 
 	try {
-		const userId = req.user.id;
+		const userId = (req.user as { id: string }).id;
 		const { enrolledSessions } = await getUserEnrolledSessionsService.execute({
 			userId,
 		});

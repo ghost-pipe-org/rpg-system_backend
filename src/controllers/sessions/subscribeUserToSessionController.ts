@@ -1,17 +1,16 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { AlreadyEnrolledError } from "@/services/errors/alreadyEnrolledError";
 import { InvalidSessionError } from "@/services/errors/invalidSessionError";
 import { InvalidUserError } from "@/services/errors/invalidUserError";
 import { SessionFullError } from "@/services/errors/sessionFullError";
 import { makeSubscribeUserToSessionService } from "@/services/factories/makesubscribeUserToSessionService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
 export async function subscribeUserToSessionController(
-	req: AuthenticatedRequest,
+	req: Request,
 	res: Response,
 ) {
 	const { sessionId } = req.params;
-	const userId = req.user.id;
+	const userId = (req.user as { id: string }).id;
 
 	try {
 		const subscribeUserToSessionService = makeSubscribeUserToSessionService();

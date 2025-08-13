@@ -1,16 +1,11 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { NotFoundError } from "@/services/errors/notFoundError";
 import { SessionAlreadyRejectedError } from "@/services/errors/sessionAlreadyRejectedError";
 import { makeRejectSessionService } from "@/services/factories/makeRejectSessionService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
-export async function rejectSessionController(
-	req: AuthenticatedRequest,
-	res: Response,
-) {
+export async function rejectSessionController(req: Request, res: Response) {
 	const { sessionId } = req.params;
-	const userId = req.user.id;
-
+	const userId = (req.user as { id: string }).id;
 	try {
 		const rejectSessionService = makeRejectSessionService();
 

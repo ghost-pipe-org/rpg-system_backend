@@ -1,15 +1,14 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { makeGetMasterEmittedSessionsService } from "@/services/factories/makeGetMasterEmittedSessionsService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
 export async function getEmittedSessionsController(
-	req: AuthenticatedRequest,
+	req: Request,
 	res: Response,
 ) {
 	const masterEmittedSessionsService = makeGetMasterEmittedSessionsService();
 
 	try {
-		const masterId = req.user.id; // Agora TypeScript sabe que sempre existe
+		const masterId = (req.user as { id: string }).id; // Garantido pelo middleware
 		const { emittedSessions } = await masterEmittedSessionsService.execute({
 			masterId,
 		});

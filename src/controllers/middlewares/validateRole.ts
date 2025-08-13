@@ -1,19 +1,14 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { PrismaUsersRepository } from "@/repositories/prisma/prismaUsersRepository";
 import type { UserRole } from "@prisma/client";
-import type { NextFunction, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 type RequiredRole = UserRole | UserRole[];
 
 export const validateRole = (requiredRoles: RequiredRole) => {
-	return async (
-		req: AuthenticatedRequest,
-		res: Response,
-		next: NextFunction,
-	) => {
+	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			// req.user é garantido pelo validateJWT que roda antes
-			const userId = req.user.id;
+			const userId = (req.user as { id: string }).id;
 
 			const usersRepository = new PrismaUsersRepository();
 			const user = await usersRepository.findById(userId);

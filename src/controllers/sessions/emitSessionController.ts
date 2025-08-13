@@ -1,13 +1,10 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { PendingSessionExistsError } from "@/services/errors/PendingSessionExistsError";
+import { AlreadyEnrolledError } from "@/services/errors/alreadyEnrolledError";
 import { makeEmitSessionService } from "@/services/factories/makeEmitSessionService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
-export async function emitSessionController(
-	req: AuthenticatedRequest,
-	res: Response,
-) {
-	const masterId = req.user.id;
+export async function emitSessionController(req: Request, res: Response) {
+	const masterId = (req.user as { id: string }).id;
 
 	const {
 		title,

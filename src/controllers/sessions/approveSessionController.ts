@@ -1,16 +1,12 @@
-import type { AuthenticatedRequest } from "@/@types/express";
 import { NotFoundError } from "@/services/errors/notFoundError";
 import { SessionAlreadyApprovedError } from "@/services/errors/sessionAlreadyApprovedError";
 import { makeApproveSessionService } from "@/services/factories/makeApproveSessionService";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 
-export async function approveSessionController(
-	req: AuthenticatedRequest,
-	res: Response,
-) {
+export async function approveSessionController(req: Request, res: Response) {
 	const { sessionId } = req.params;
 	const { approvedDate, location } = req.body;
-	const userId = req.user.id;
+	const userId = (req.user as { id: string }).id;
 
 	try {
 		const approveSessionService = makeApproveSessionService();
