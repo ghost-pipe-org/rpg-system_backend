@@ -7,13 +7,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  PLAYER
+  MASTER
+  ADMIN
+}
+
+enum SessionStatus {
+  CANCELADA
+  REJEITADA
+  APROVADA
+  PENDENTE
+}
+
+enum SessionPeriod {
+  MANHA
+  TARDE
+  NOITE
+}
+
+enum EnrollmentStatus {
+  PENDENTE
+  APROVADO
+  REJEITADO
+}
+
 model User {
   id            String   @id @default(uuid()) @db.Uuid
   name          String   @db.VarChar(100)
   enrollment    String?  @db.VarChar(9)
   phoneNumber   String?  @db.VarChar(20)
   email         String   @unique @db.VarChar(255)
-  password_hash String   @db.VarChar(255)
+  passwordHash  String   @db.VarChar(255)
+  role          UserRole @default(PLAYER)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -22,37 +48,45 @@ model User {
 }
 
 model Session {
-  id             String  @id @default(uuid()) @db.Uuid
-  title          String  @db.VarChar(100)
-  description    String  @db.Text
-  requirements   String? @db.Text
-  status         String  @db.VarChar(50)
-  system         String  @db.VarChar(50)
-  location       String  @db.VarChar(100)
-  possibleDates  String[]  @db.Text
-  approvedDate   String? @db.VarChar(50)
-  cancelEvent    String? @db.Text
-  period         String  @db.VarChar(50)
-  minPlayers     Int
-  maxPlayers     Int
-  currentPlayers Int
+  id            String         @id @default(uuid()) @db.Uuid
+  title         String         @db.VarChar(255)
+  description   String         @db.Text
+  requirements  String?        @db.Text
+  status        SessionStatus  @default(PENDENTE)
+  system        String         @db.VarChar(100)
+  location      String         @db.VarChar(255)
+  approvedDate  DateTime?
+  cancelEvent   String?        @db.Text
+  period        SessionPeriod?
+  minPlayers    Int
+  maxPlayers    Int
 
-  enrollments SessionEnrollment[]
+  enrollments   SessionEnrollment[]
+  possibleDates SessionPossibleDate[]
 
-  creatorId String @db.Uuid
-  creator   User   @relation(fields: [creatorId], references: [id], name: "SessionToUser")
+  masterId String @db.Uuid
+  master   User   @relation(fields: [masterId], references: [id], name: "SessionToUser")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model SessionEnrollment {
-  id        String @id @default(uuid()) @db.Uuid
-  userId    String @db.Uuid
-  sessionId String @db.Uuid
+model SessionPossibleDate {
+  id        String   @id @default(uuid()) @db.Uuid
+  sessionId String   @db.Uuid
+  date      DateTime
 
-  user    User    @relation(fields: [userId], references: [id])
-  session Session @relation(fields: [sessionId], references: [id])
+  session   Session  @relation(fields: [sessionId], references: [id])
+}
+
+model SessionEnrollment {
+  id        String           @id @default(uuid()) @db.Uuid
+  userId    String           @db.Uuid
+  sessionId String           @db.Uuid
+  status    EnrollmentStatus @default(PENDENTE)
+
+  user      User     @relation(fields: [userId], references: [id])
+  session   Session  @relation(fields: [sessionId], references: [id])
 
   createdAt DateTime @default(now())
 

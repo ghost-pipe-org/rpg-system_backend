@@ -2,7 +2,9 @@ import { PrismaSessionsRepository } from "@/repositories/prisma/prismaSessionsRe
 import { GetAvaliableSessionsService } from "../sessions/getAvaliableSessionsService";
 
 export function makeAvaliableSessionsService() {
-    const sessionsRepository = new PrismaSessionsRepository();
-    const avaliableSessionsService = new GetAvaliableSessionsService(sessionsRepository);
-    return avaliableSessionsService;
+	const sessionsRepository = new PrismaSessionsRepository();
+	const avaliableSessionsService = new GetAvaliableSessionsService(
+		sessionsRepository,
+	);
+	return avaliableSessionsService;
 }

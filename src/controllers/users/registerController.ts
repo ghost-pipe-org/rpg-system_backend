@@ -1,11 +1,12 @@
+import { MasterRequiresEnrollmentError } from "@/services/errors/masterRequiresEnrollmentError";
 import { UserAlreadyExistsError } from "@/services/errors/userAlreadyExistsError";
 import { makeRegisterService } from "@/services/factories/makeRegisterService";
-import z from "zod";
 import type { Request, Response } from "express";
+import z from "zod";
 
 export async function registerController(req: Request, res: Response) {
-
-	const {name, email, password, enrollment, phoneNumber, masterConfirm} = req.body
+	const { name, email, password, enrollment, phoneNumber, masterConfirm } =
+		req.body;
 
 	try {
 		const registerService = makeRegisterService();
@@ -16,14 +17,16 @@ export async function registerController(req: Request, res: Response) {
 			password,
 			enrollment,
 			phoneNumber,
-			masterConfirm, // This field is not used in the backend service
+			masterConfirm,
 		});
-
 	} catch (error) {
-        if (error instanceof UserAlreadyExistsError) {
-            return res.status(409).json({ message: error.message });
-        }
-        return res.status(500).json({ message: "Internal server error" });
-    }
-    return res.status(201).json({ message: "User registered successfully" });
+		if (error instanceof UserAlreadyExistsError) {
+			return res.status(409).json({ message: error.message });
+		}
+		if (error instanceof MasterRequiresEnrollmentError) {
+			return res.status(400).json({ message: error.message });
+		}
+		return res.status(500).json({ message: "Internal server error" });
+	}
+	return res.status(201).json({ message: "User registered successfully" });
 }
