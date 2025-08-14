@@ -103,6 +103,7 @@ const swaggerDefinition = {
 						type: "string",
 						maxLength: 255,
 						example: "Sala 101 - Prédio Principal",
+						nullable: true,
 					},
 					status: {
 						type: "string",
@@ -276,7 +277,6 @@ const swaggerDefinition = {
 					"period",
 					"minPlayers",
 					"maxPlayers",
-					"location",
 				],
 				properties: {
 					title: {

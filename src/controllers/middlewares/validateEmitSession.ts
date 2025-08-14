@@ -21,7 +21,6 @@ const emitSessionSquema = z
 			.number()
 			.int()
 			.min(1, { message: "Maximum players must be at least 1" }),
-		location: z.string().min(1, { message: "Location is required" }),
 	})
 	.strict();
 

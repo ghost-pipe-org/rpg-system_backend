@@ -54,7 +54,7 @@ model Session {
   requirements  String?        @db.Text
   status        SessionStatus  @default(PENDENTE)
   system        String         @db.VarChar(100)
-  location      String         @db.VarChar(255)
+  location      String?        @db.VarChar(255)
   approvedDate  DateTime?
   cancelEvent   String?        @db.Text
   period        SessionPeriod?

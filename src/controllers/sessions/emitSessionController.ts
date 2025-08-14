@@ -15,7 +15,6 @@ export async function emitSessionController(req: Request, res: Response) {
 		period,
 		minPlayers,
 		maxPlayers,
-		location,
 	} = req.body;
 
 	try {
@@ -30,7 +29,6 @@ export async function emitSessionController(req: Request, res: Response) {
 			minPlayers,
 			maxPlayers,
 			masterId,
-			location,
 		});
 
 		return res
