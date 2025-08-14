@@ -9,6 +9,7 @@ const startServer = async () => {
 		await prisma.$connect();
 		app.listen(PORT, () => {
 			console.log(`Server is running on http://localhost:${PORT}`);
+			console.log(`API documentation is available at http://localhost:${PORT}/api-docs`);
 		});
 	} catch (error) {
 		console.error("Failed to connect to the database:", error);

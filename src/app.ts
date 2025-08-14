@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import routes from "./controllers/index";
+import { setupSwagger } from "./swagger";
 
 const app = express();
 
@@ -14,6 +15,9 @@ app.use(
 	}),
 );
 app.use(express.json());
+
+// Setup Swagger documentation
+setupSwagger(app);
 
 routes(app);
 
