@@ -6,6 +6,7 @@ import { authenticateController } from "./authenticateController";
 import { getEmittedSessionsController } from "./getEmittedSessionsController";
 import { getEnrolledSessionsController } from "./getEnrolledSessionsController";
 import { registerController } from "./registerController";
+import { getUserProfileController } from "./getUserProfileController";
 
 const userRouter = Router();
 
@@ -26,6 +27,12 @@ userRouter.get(
 	"/my-enrolled-sessions",
 	validateJWT(),
 	getEnrolledSessionsController,
+);
+
+userRouter.get(
+	"/users/profile",
+	validateJWT(),
+	getUserProfileController,
 );
 
 export default userRouter;
