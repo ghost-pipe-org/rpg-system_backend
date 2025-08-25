@@ -78,7 +78,10 @@ describe("GET /users/profile - User Profile Controller", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("message", "Profile retrieved successfully");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Profile retrieved successfully",
+			);
 			expect(response.body).toHaveProperty("data");
 
 			const { data } = response.body;
@@ -109,7 +112,9 @@ describe("GET /users/profile - User Profile Controller", () => {
 			expect(data.enrolledSessions).toHaveLength(1);
 			expect(data.totalEnrolled).toBe(1);
 			expect(data.enrolledSessions[0]).toHaveProperty("session");
-			expect(data.enrolledSessions[0].session.title).toBe("Test Session for Player");
+			expect(data.enrolledSessions[0].session.title).toBe(
+				"Test Session for Player",
+			);
 		});
 
 		it("should return complete profile for MASTER user", async () => {
@@ -129,7 +134,10 @@ describe("GET /users/profile - User Profile Controller", () => {
 				.set("Authorization", `Bearer ${masterToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("message", "Profile retrieved successfully");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Profile retrieved successfully",
+			);
 			expect(response.body).toHaveProperty("data");
 
 			const { data } = response.body;
@@ -178,9 +186,7 @@ describe("GET /users/profile - User Profile Controller", () => {
 
 	describe("Authentication & Authorization", () => {
 		it("should require authentication", async () => {
-			await request(app)
-				.get("/users/profile")
-				.expect(401);
+			await request(app).get("/users/profile").expect(401);
 		});
 
 		it("should reject invalid token", async () => {
@@ -206,7 +212,7 @@ describe("GET /users/profile - User Profile Controller", () => {
 				.expect(200);
 
 			const { data } = response.body;
-			
+
 			expect(data.user).not.toHaveProperty("passwordHash");
 			expect(data.user).not.toHaveProperty("password");
 		});

@@ -1,5 +1,5 @@
-import { makeGetUserProfileService } from "@/services/factories/makeGetUserProfileService";
 import { InvalidUserError } from "@/services/errors/invalidUserError";
+import { makeGetUserProfileService } from "@/services/factories/makeGetUserProfileService";
 import type { Request, Response } from "express";
 
 export async function getUserProfileController(req: Request, res: Response) {
@@ -15,14 +15,14 @@ export async function getUserProfileController(req: Request, res: Response) {
 		});
 	} catch (error) {
 		if (error instanceof InvalidUserError) {
-			return res.status(404).json({ 
-				message: error.message 
+			return res.status(404).json({
+				message: error.message,
 			});
 		}
-		
+
 		console.error("Error fetching user profile:", error);
-		return res.status(500).json({ 
-			message: "Internal server error" 
+		return res.status(500).json({
+			message: "Internal server error",
 		});
 	}
 }

@@ -3,7 +3,9 @@ import { GetUserBasicProfileService } from "../users/getUserBasicProfileService"
 
 export function makeGetUserBasicProfileService() {
 	const usersRepository = new PrismaUsersRepository();
-	const getUserBasicProfileService = new GetUserBasicProfileService(usersRepository);
+	const getUserBasicProfileService = new GetUserBasicProfileService(
+		usersRepository,
+	);
 
 	return getUserBasicProfileService;
 }

@@ -1,5 +1,5 @@
-import type { GetUserBasicProfileService } from "./getUserBasicProfileService";
 import type { GetUserActivityHistoryService } from "./getUserActivityHistoryService";
+import type { GetUserBasicProfileService } from "./getUserBasicProfileService";
 
 interface GetUserProfileServiceRequest {
 	userId: string;

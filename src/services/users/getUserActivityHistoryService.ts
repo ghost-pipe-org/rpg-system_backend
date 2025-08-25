@@ -1,4 +1,7 @@
-import type { SessionsRepository, SessionEnrollmentWithSession } from "@/repositories/sessionsRepository";
+import type {
+	SessionEnrollmentWithSession,
+	SessionsRepository,
+} from "@/repositories/sessionsRepository";
 import type { Session } from "@prisma/client";
 
 interface GetUserActivityHistoryServiceRequest {

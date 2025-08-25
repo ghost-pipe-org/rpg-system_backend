@@ -3,7 +3,9 @@ import { GetUserActivityHistoryService } from "../users/getUserActivityHistorySe
 
 export function makeGetUserActivityHistoryService() {
 	const sessionsRepository = new PrismaSessionsRepository();
-	const getUserActivityHistoryService = new GetUserActivityHistoryService(sessionsRepository);
+	const getUserActivityHistoryService = new GetUserActivityHistoryService(
+		sessionsRepository,
+	);
 
 	return getUserActivityHistoryService;
 }
