@@ -5,6 +5,7 @@ import { validateRegister } from "../middlewares/validateRegister";
 import { authenticateController } from "./authenticateController";
 import { getEmittedSessionsController } from "./getEmittedSessionsController";
 import { getEnrolledSessionsController } from "./getEnrolledSessionsController";
+import { getUserProfileController } from "./getUserProfileController";
 import { registerController } from "./registerController";
 
 const userRouter = Router();
@@ -27,5 +28,7 @@ userRouter.get(
 	validateJWT(),
 	getEnrolledSessionsController,
 );
+
+userRouter.get("/users/profile", validateJWT(), getUserProfileController);
 
 export default userRouter;
