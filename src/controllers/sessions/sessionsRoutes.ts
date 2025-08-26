@@ -1,14 +1,17 @@
+// src/controllers/sessions/sessionsRoutes.ts
 import { Router } from "express";
 import { validateApproveSession } from "../middlewares/validateApproveSession";
 import { validateEmitSession } from "../middlewares/validateEmitSession";
 import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
+import { validateCancelApprovedSession } from "../middlewares/validateCancelApprovedSession";
 import { approveSessionController } from "./approveSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
 import { rejectSessionController } from "./rejectSessionController";
 import { subscribeUserToSessionController } from "./subscribeUserToSessionController";
+import { CancelApprovedSessionController, CancelApprovedSessionControllerancelApprovedSessionController } from "./cancelApprovedSessionController";
 
 const sessionRouter = Router();
 
@@ -53,6 +56,15 @@ sessionRouter.patch(
 	validateJWT(),
 	validateRole("ADMIN"),
 	rejectSessionController,
+);
+
+// Nova rota para cancelamento de sessões aprovadas
+sessionRouter.patch(
+	"/sessions/:sessionId/cancel",
+	validateJWT(),
+	validateRole("MASTER"),
+	validateCancelApprovedSession,
+	CancelApprovedSessionController,
 );
 
 export default sessionRouter;
