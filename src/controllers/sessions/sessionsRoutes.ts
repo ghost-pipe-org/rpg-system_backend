@@ -58,7 +58,7 @@ sessionRouter.patch(
 
 sessionRouter.delete(
 	"/sessions/:sessionId",
-	validateJWT,
+	validateJWT(),
 	validateRole("MASTER"),
 	cancelPendingSessionController
 )
