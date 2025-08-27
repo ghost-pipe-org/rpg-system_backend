@@ -4,7 +4,7 @@ import { NotFoundError } from "../errors/notFoundError";
 import { SessionNotPending } from "../errors/SessionNotPending";
 import { error } from "node:console";
 import { userIsNotMaster } from "../errors/userIsNotMaster"
-import { cancelPendingSessionController } from "@/controllers/sessions/cancelPendingSessionController";
+import { cancelPendingSessionController } from "@/controllers/sessions/cancelSessionController";
 
 
 // DTO
@@ -23,7 +23,7 @@ export class CancelPendingSessionService{
         private usersRepository: UsersRepository,
     ) {}
     
-    async execute({userId, sessionId}: cancelSessionServiceRequest): Promise<cancelSessionServiceRequest>{
+    async execute({userId, sessionId}: cancelSessionServiceRequest): Promise<cancelSessionServiceResponse>{
         const user = await this.usersRepository.findById(userId);
         const session = await this.sessionsRepository.findById(sessionId);
 
@@ -50,7 +50,6 @@ export class CancelPendingSessionService{
         return {
             message: `Infelizmente, sua solicitação não pôde ser atendida, pois as datas escolhidas não são adequadas para a mestragem da mesa. Por favor contate o admin do sistema.`
         }
-        
         
     }
 }

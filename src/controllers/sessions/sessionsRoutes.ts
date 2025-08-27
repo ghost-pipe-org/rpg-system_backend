@@ -9,6 +9,7 @@ import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
 import { rejectSessionController } from "./rejectSessionController";
 import { subscribeUserToSessionController } from "./subscribeUserToSessionController";
+import { cancelPendingSessionController } from "./cancelSessionController";
 
 const sessionRouter = Router();
 
@@ -54,5 +55,12 @@ sessionRouter.patch(
 	validateRole("ADMIN"),
 	rejectSessionController,
 );
+
+sessionRouter.delete(
+	"/sessions/:sessionId",
+	validateJWT,
+	validateRole("MASTER"),
+	cancelPendingSessionController
+)
 
 export default sessionRouter;
