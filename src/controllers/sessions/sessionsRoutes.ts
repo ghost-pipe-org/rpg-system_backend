@@ -6,6 +6,7 @@ import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
 import { validateCancelApprovedSession } from "../middlewares/validateCancelApprovedSession";
 import { approveSessionController } from "./approveSessionController";
+import { cancelPendingSessionController } from "./cancelSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
@@ -58,13 +59,20 @@ sessionRouter.patch(
 	rejectSessionController,
 );
 
-// Nova rota para cancelamento de sessões aprovadas
+
 sessionRouter.patch(
 	"/sessions/:sessionId/cancel",
 	validateJWT(),
 	validateRole("MASTER"),
 	validateCancelApprovedSession,
 	CancelApprovedSessionController,
+);
+
+sessionRouter.delete(
+	"/sessions/:sessionId",
+	validateJWT(),
+	validateRole("MASTER"),
+	cancelPendingSessionController,
 );
 
 export default sessionRouter;
