@@ -4,6 +4,7 @@ import { validateEmitSession } from "../middlewares/validateEmitSession";
 import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
 import { approveSessionController } from "./approveSessionController";
+import { cancelPendingSessionController } from "./cancelSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
@@ -53,6 +54,13 @@ sessionRouter.patch(
 	validateJWT(),
 	validateRole("ADMIN"),
 	rejectSessionController,
+);
+
+sessionRouter.delete(
+	"/sessions/:sessionId",
+	validateJWT(),
+	validateRole("MASTER"),
+	cancelPendingSessionController,
 );
 
 export default sessionRouter;
