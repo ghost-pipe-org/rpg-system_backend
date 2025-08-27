@@ -29,9 +29,7 @@ describe("Cancel Session Routes - Simple Test", () => {
 		it("should require authentication", async () => {
 			const fakeId = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11";
 
-			await request(app)
-				.delete(`/sessions/${fakeId}`)
-				.expect(401);
+			await request(app).delete(`/sessions/${fakeId}`).expect(401);
 		});
 
 		it("should not cancel non-existent session", async () => {
