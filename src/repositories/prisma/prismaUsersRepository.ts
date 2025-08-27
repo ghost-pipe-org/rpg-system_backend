@@ -21,4 +21,14 @@ export class PrismaUsersRepository implements UsersRepository {
 		});
 		return user;
 	}
+	async update(id: string, data: Prisma.UserUpdateInput) {
+		const user = await prisma.user.update({
+			where: { id },
+			data: {
+				...data,
+				updatedAt: new Date(), // Força atualização do timestamp
+			},
+		});
+		return user;
+	}
 }
