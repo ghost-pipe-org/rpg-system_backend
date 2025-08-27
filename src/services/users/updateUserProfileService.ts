@@ -36,15 +36,15 @@ export class UpdateUserProfileService {
 		if (phoneNumber !== undefined) {
 			updateData.phoneNumber = phoneNumber?.trim() || null;
 		}
-        if (email !== undefined) {
-            updateData.email = email.trim();
-        }
+		if (email !== undefined) {
+			updateData.email = email.trim();
+		}
 
-        const updatedUser = await this.usersRepository.update(userId, updateData);
-        const { passwordHash, ...safeUserData } = updatedUser;
+		const updatedUser = await this.usersRepository.update(userId, updateData);
+		const { passwordHash, ...safeUserData } = updatedUser;
 
-        return {
-            user: safeUserData,
-        };
+		return {
+			user: safeUserData,
+		};
 	}
 }

@@ -1,5 +1,5 @@
-import { z } from "zod";
 import type { NextFunction, Request, Response } from "express";
+import { z } from "zod";
 
 const updateProfileSchema = z
 	.object({

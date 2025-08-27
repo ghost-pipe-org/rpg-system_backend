@@ -2,13 +2,13 @@ import { type Express, Router } from "express";
 import { validateAuthenticate } from "../middlewares/validateAuthenticate";
 import { validateJWT } from "../middlewares/validateJWT";
 import { validateRegister } from "../middlewares/validateRegister";
+import { validateUpdateProfile } from "../middlewares/validateUpdateProfile";
 import { authenticateController } from "./authenticateController";
 import { getEmittedSessionsController } from "./getEmittedSessionsController";
 import { getEnrolledSessionsController } from "./getEnrolledSessionsController";
 import { getUserProfileController } from "./getUserProfileController";
 import { registerController } from "./registerController";
 import { updateUserProfileController } from "./updateUserProfileController";
-import { validateUpdateProfile } from "../middlewares/validateUpdateProfile";
 
 const userRouter = Router();
 
@@ -32,6 +32,11 @@ userRouter.get(
 );
 
 userRouter.get("/users/profile", validateJWT(), getUserProfileController);
-userRouter.patch("/users/profile", validateJWT(), validateUpdateProfile, updateUserProfileController);
+userRouter.patch(
+	"/users/profile",
+	validateJWT(),
+	validateUpdateProfile,
+	updateUserProfileController,
+);
 
 export default userRouter;
