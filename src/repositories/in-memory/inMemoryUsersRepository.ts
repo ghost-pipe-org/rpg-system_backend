@@ -39,15 +39,28 @@ export class InMemoryUsersRepository implements UsersRepository {
 		const currentUser = this.items[userIndex];
 		const updatedUser: User = {
 			...currentUser,
-			name: typeof data.name === 'string' ? data.name : currentUser.name,
-			email: typeof data.email === 'string' ? data.email : currentUser.email,
-			passwordHash: typeof data.passwordHash === 'string' ? data.passwordHash : currentUser.passwordHash,
-			role: typeof data.role === 'string' ? data.role : currentUser.role,
-			enrollment: typeof data.enrollment === 'string' ? data.enrollment : data.enrollment === null ? null : currentUser.enrollment,
-			phoneNumber: typeof data.phoneNumber === 'string' ? data.phoneNumber : data.phoneNumber === null ? null : currentUser.phoneNumber,
+			name: typeof data.name === "string" ? data.name : currentUser.name,
+			email: typeof data.email === "string" ? data.email : currentUser.email,
+			passwordHash:
+				typeof data.passwordHash === "string"
+					? data.passwordHash
+					: currentUser.passwordHash,
+			role: typeof data.role === "string" ? data.role : currentUser.role,
+			enrollment:
+				typeof data.enrollment === "string"
+					? data.enrollment
+					: data.enrollment === null
+						? null
+						: currentUser.enrollment,
+			phoneNumber:
+				typeof data.phoneNumber === "string"
+					? data.phoneNumber
+					: data.phoneNumber === null
+						? null
+						: currentUser.phoneNumber,
 			updatedAt: new Date(),
 		};
-		
+
 		this.items[userIndex] = updatedUser;
 		return updatedUser;
 	}
