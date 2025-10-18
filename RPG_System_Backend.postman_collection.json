@@ -1,0 +1,1010 @@
+{
+	"info": {
+		"_postman_id": "rpg-system-backend-api",
+		"name": "RPG System Backend API",
+		"description": "Collection completa da API de sistema de inscrições de mesas de RPG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "rpg-system-backend"
+	},
+	"item": [
+		{
+			"name": "🔓 Public Endpoints",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Verificação de saúde da API"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "API Node.js"
+						}
+					]
+				},
+				{
+					"name": "Register User - Player",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@exemplo.com\",\n  \"password\": \"Senha123\",\n  \"phoneNumber\": \"(11) 99999-9999\",\n  \"masterConfirm\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Registra um novo usuário como PLAYER"
+					},
+					"response": [
+						{
+							"name": "Success - Player Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@exemplo.com\",\n  \"password\": \"Senha123\",\n  \"phoneNumber\": \"(11) 99999-9999\",\n  \"masterConfirm\": false\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"name\": \"João Silva\",\n  \"email\": \"joao@exemplo.com\",\n  \"enrollment\": null,\n  \"phoneNumber\": \"(11) 99999-9999\",\n  \"role\": \"PLAYER\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register User - Master",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"maria@exemplo.com\",\n  \"password\": \"Senha123\",\n  \"enrollment\": \"123456789\",\n  \"phoneNumber\": \"(11) 88888-8888\",\n  \"masterConfirm\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Registra um novo usuário como MASTER (requer matrícula)"
+					},
+					"response": [
+						{
+							"name": "Success - Master Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"maria@exemplo.com\",\n  \"password\": \"Senha123\",\n  \"enrollment\": \"123456789\",\n  \"phoneNumber\": \"(11) 88888-8888\",\n  \"masterConfirm\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426614174001\",\n  \"name\": \"Maria Santos\",\n  \"email\": \"maria@exemplo.com\",\n  \"enrollment\": \"123456789\",\n  \"phoneNumber\": \"(11) 88888-8888\",\n  \"role\": \"MASTER\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Authenticate User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('auth_token', response.token);",
+									"    pm.environment.set('user_id', response.user.id);",
+									"    pm.environment.set('user_role', response.user.role);",
+									"    console.log('Token salvo:', response.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"joao@exemplo.com\",\n  \"password\": \"Senha123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/authenticate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"authenticate"
+							]
+						},
+						"description": "Autentica um usuário e retorna token JWT"
+					},
+					"response": [
+						{
+							"name": "Success - Authentication",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"joao@exemplo.com\",\n  \"password\": \"Senha123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/authenticate",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"authenticate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQwMDAiLCJpYXQiOjE1MTYyMzkwMjJ9.example\",\n  \"user\": {\n    \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n    \"name\": \"João Silva\",\n    \"email\": \"joao@exemplo.com\",\n    \"enrollment\": null,\n    \"phoneNumber\": \"(11) 99999-9999\",\n    \"role\": \"PLAYER\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Approved Sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/approved",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"approved"
+							]
+						},
+						"description": "Retorna todas as sessões aprovadas e disponíveis para inscrição"
+					},
+					"response": [
+						{
+							"name": "Success - Approved Sessions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/sessions/approved",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions",
+										"approved"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"session-uuid-1\",\n    \"title\": \"Campanha de D&D: A Maldição de Strahd\",\n    \"description\": \"Uma aventura gótica de horror em Barovia\",\n    \"requirements\": \"Conhecimento básico de D&D 5e\",\n    \"system\": \"D&D 5e\",\n    \"location\": \"Sala 101 - Prédio Principal\",\n    \"status\": \"APROVADA\",\n    \"period\": \"NOITE\",\n    \"minPlayers\": 3,\n    \"maxPlayers\": 6,\n    \"approvedDate\": \"2024-12-31T20:00:00.000Z\",\n    \"masterId\": \"master-uuid\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\",\n    \"possibleDates\": [\n      {\n        \"id\": \"date-uuid-1\",\n        \"date\": \"2024-12-31T20:00:00.000Z\"\n      }\n    ],\n    \"enrollments\": []\n  }\n]"
+						}
+					]
+				}
+			],
+			"description": "Endpoints públicos que não requerem autenticação"
+		},
+		{
+			"name": "🔒 Protected Endpoints",
+			"item": [
+				{
+					"name": "Get My Emitted Sessions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/my-emmitted-sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"my-emmitted-sessions"
+							]
+						},
+						"description": "Retorna todas as sessões criadas pelo usuário logado"
+					},
+					"response": [
+						{
+							"name": "Success - My Sessions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/my-emmitted-sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"my-emmitted-sessions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"session-uuid-1\",\n    \"title\": \"Minha Campanha\",\n    \"description\": \"Sessão criada por mim\",\n    \"status\": \"PENDENTE\",\n    \"system\": \"D&D 5e\",\n    \"period\": \"NOITE\",\n    \"minPlayers\": 3,\n    \"maxPlayers\": 6,\n    \"masterId\": \"{{user_id}}\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get My Enrolled Sessions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/my-enrolled-sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"my-enrolled-sessions"
+							]
+						},
+						"description": "Retorna todas as sessões nas quais o usuário está inscrito"
+					},
+					"response": [
+						{
+							"name": "Success - My Enrollments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/my-enrolled-sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"my-enrolled-sessions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"session-uuid-1\",\n    \"title\": \"Campanha de D&D\",\n    \"description\": \"Sessão na qual estou inscrito\",\n    \"status\": \"APROVADA\",\n    \"system\": \"D&D 5e\",\n    \"period\": \"NOITE\",\n    \"minPlayers\": 3,\n    \"maxPlayers\": 6,\n    \"masterId\": \"master-uuid\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create Session (Master Only)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Campanha de D&D: A Maldição de Strahd\",\n  \"description\": \"Uma aventura gótica de horror em Barovia, onde os heróis devem enfrentar o vampiro Conde Strahd von Zarovich.\",\n  \"requirements\": \"Conhecimento básico de D&D 5e, disponibilidade para sessões semanais\",\n  \"system\": \"D&D 5e\",\n  \"possibleDates\": [\n    \"2024-12-31T20:00:00.000Z\",\n    \"2025-01-07T20:00:00.000Z\",\n    \"2025-01-14T20:00:00.000Z\"\n  ],\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6,\n  \"location\": \"Sala 101 - Prédio Principal\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions"
+							]
+						},
+						"description": "Cria uma nova sessão RPG (apenas para MASTER)"
+					},
+					"response": [
+						{
+							"name": "Success - Session Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Campanha de D&D: A Maldição de Strahd\",\n  \"description\": \"Uma aventura gótica de horror em Barovia\",\n  \"requirements\": \"Conhecimento básico de D&D 5e\",\n  \"system\": \"D&D 5e\",\n  \"possibleDates\": [\n    \"2024-12-31T20:00:00.000Z\",\n    \"2025-01-07T20:00:00.000Z\"\n  ],\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"session-uuid-1\",\n  \"title\": \"Campanha de D&D: A Maldição de Strahd\",\n  \"description\": \"Uma aventura gótica de horror em Barovia\",\n  \"requirements\": \"Conhecimento básico de D&D 5e\",\n  \"system\": \"D&D 5e\",\n  \"location\": null,\n  \"status\": \"PENDENTE\",\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6,\n  \"approvedDate\": null,\n  \"cancelEvent\": null,\n  \"masterId\": \"{{user_id}}\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"updatedAt\": \"2024-01-15T10:30:00.000Z\",\n  \"possibleDates\": [\n    {\n      \"id\": \"date-uuid-1\",\n      \"date\": \"2024-12-31T20:00:00.000Z\"\n    },\n    {\n      \"id\": \"date-uuid-2\",\n      \"date\": \"2025-01-07T20:00:00.000Z\"\n    }\n  ],\n  \"enrollments\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Subscribe to Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sessions/{{session_id}}/subscribe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"{{session_id}}",
+								"subscribe"
+							]
+						},
+						"description": "Inscreve o usuário logado em uma sessão específica"
+					},
+					"response": [
+						{
+							"name": "Success - Subscribed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sessions/session-uuid-1/subscribe",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions",
+										"session-uuid-1",
+										"subscribe"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"message\": \"Inscrição realizada com sucesso\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints protegidos que requerem autenticação JWT"
+		},
+		{
+			"name": "👑 Admin Endpoints",
+			"item": [
+				{
+					"name": "Get All Sessions (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions"
+							]
+						},
+						"description": "Retorna todas as sessões do sistema (apenas para ADMIN)"
+					},
+					"response": [
+						{
+							"name": "Success - All Sessions",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"session-uuid-1\",\n    \"title\": \"Campanha de D&D\",\n    \"description\": \"Sessão pendente\",\n    \"status\": \"PENDENTE\",\n    \"system\": \"D&D 5e\",\n    \"period\": \"NOITE\",\n    \"minPlayers\": 3,\n    \"maxPlayers\": 6,\n    \"masterId\": \"master-uuid\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  },\n  {\n    \"id\": \"session-uuid-2\",\n    \"title\": \"Sessão Aprovada\",\n    \"description\": \"Sessão já aprovada\",\n    \"status\": \"APROVADA\",\n    \"system\": \"D&D 5e\",\n    \"period\": \"NOITE\",\n    \"minPlayers\": 3,\n    \"maxPlayers\": 6,\n    \"masterId\": \"master-uuid\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "Approve Session",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"approvedDate\": \"2024-12-31T20:00:00.000Z\",\n  \"location\": \"Sala 101 - Prédio Principal\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sessions/{{session_id}}/approve",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"{{session_id}}",
+								"approve"
+							]
+						},
+						"description": "Aprova uma sessão pendente (apenas para ADMIN)"
+					},
+					"response": [
+						{
+							"name": "Success - Session Approved",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"approvedDate\": \"2024-12-31T20:00:00.000Z\",\n  \"location\": \"Sala 101 - Prédio Principal\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sessions/session-uuid-1/approve",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions",
+										"session-uuid-1",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"session-uuid-1\",\n  \"title\": \"Campanha de D&D\",\n  \"description\": \"Sessão aprovada\",\n  \"status\": \"APROVADA\",\n  \"system\": \"D&D 5e\",\n  \"location\": \"Sala 101 - Prédio Principal\",\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6,\n  \"approvedDate\": \"2024-12-31T20:00:00.000Z\",\n  \"masterId\": \"master-uuid\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Reject Session",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sessions/{{session_id}}/reject",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"{{session_id}}",
+								"reject"
+							]
+						},
+						"description": "Rejeita uma sessão pendente (apenas para ADMIN)"
+					},
+					"response": [
+						{
+							"name": "Success - Session Rejected",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/sessions/session-uuid-1/reject",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions",
+										"session-uuid-1",
+										"reject"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"session-uuid-1\",\n  \"title\": \"Campanha de D&D\",\n  \"description\": \"Sessão rejeitada\",\n  \"status\": \"REJEITADA\",\n  \"system\": \"D&D 5e\",\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6,\n  \"masterId\": \"master-uuid\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints administrativos que requerem role ADMIN"
+		},
+		{
+			"name": "🧪 Test Scenarios",
+			"item": [
+				{
+					"name": "Error Cases - Invalid Registration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"João\",\n  \"email\": \"email-invalido\",\n  \"password\": \"123\",\n  \"masterConfirm\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Testa validação de dados inválidos no registro"
+					},
+					"response": [
+						{
+							"name": "Error - Validation Failed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"João\",\n  \"email\": \"email-invalido\",\n  \"password\": \"123\",\n  \"masterConfirm\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"invalid_string\",\n      \"expected\": \"email\",\n      \"received\": \"string\",\n      \"path\": [\"email\"],\n      \"message\": \"Invalid email address\"\n    },\n    {\n      \"code\": \"too_small\",\n      \"minimum\": 6,\n      \"type\": \"string\",\n      \"inclusive\": true,\n      \"exact\": false,\n      \"message\": \"Password must be at least 6 characters long\",\n      \"path\": [\"password\"]\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Error Cases - Unauthorized Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/my-emmitted-sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"my-emmitted-sessions"
+							]
+						},
+						"description": "Testa acesso sem token de autenticação"
+					},
+					"response": [
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/my-emmitted-sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"my-emmitted-sessions"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"message\": \"Token not provided\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Error Cases - Forbidden Access",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Test Session\",\n  \"description\": \"Test\",\n  \"system\": \"D&D 5e\",\n  \"possibleDates\": [\"2024-12-31T20:00:00.000Z\"],\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions"
+							]
+						},
+						"description": "Testa criação de sessão com usuário PLAYER (deve falhar)"
+					},
+					"response": [
+						{
+							"name": "Error - Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{auth_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Test Session\",\n  \"description\": \"Test\",\n  \"system\": \"D&D 5e\",\n  \"possibleDates\": [\"2024-12-31T20:00:00.000Z\"],\n  \"period\": \"NOITE\",\n  \"minPlayers\": 3,\n  \"maxPlayers\": 6\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/sessions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sessions"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"message\": \"Access denied. Insufficient permissions.\",\n  \"required\": [\"MASTER\"],\n  \"current\": \"PLAYER\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Cenários de teste para validação de erros e edge cases"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_role",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "session_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
