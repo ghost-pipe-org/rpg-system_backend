@@ -1,12 +1,12 @@
 services:
   postgres:
-    container_name: postgres-sistemas-pedidos-comprovantes
+    container_name: postgres-rpg-system-backend
     image: postgres
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=sistemas-pedidos-comprovantes
+      - POSTGRES_DB=rpg-system-backend
     volumes:
       - ./data:/data/postgres
     ports:
@@ -14,8 +14,8 @@ services:
 
   app:
     build: .
-    command: npm run start:dev
-    container_name: sistemas-pedidos-comprovantes-api
+    command: sh -c "npx prisma migrate deploy && npm run start"
+    container_name: rpg-system-backend-api
     ports:
       - "3001:3001"
     volumes:
@@ -23,7 +23,7 @@ services:
       - /usr/src/app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - DATABASE_URL=postgres://postgres:1234@postgres:5432/sistemas-pedidos-comprovantes
+      - DATABASE_URL=postgres://postgres:1234@postgres:5432/rpg-system-backend
     links:
       - postgres
     depends_on:

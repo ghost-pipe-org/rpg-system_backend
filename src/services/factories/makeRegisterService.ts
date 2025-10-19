@@ -2,7 +2,7 @@ import { PrismaUsersRepository } from "@/repositories/prisma/prismaUsersReposito
 import { RegisterService } from "../users/registerService";
 
 export function makeRegisterService() {
-    const usersRepository = new PrismaUsersRepository();
-    const registerService = new RegisterService(usersRepository);
-    return registerService;
+	const usersRepository = new PrismaUsersRepository();
+	const registerService = new RegisterService(usersRepository);
+	return registerService;
 }

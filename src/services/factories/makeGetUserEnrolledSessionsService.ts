@@ -2,7 +2,7 @@ import { PrismaSessionsRepository } from "@/repositories/prisma/prismaSessionsRe
 import { GetUserEnrolledSessionsService } from "../users/getUserEnrolledSessionsService";
 
 export function makeGetUserEnrolledSessionsService() {
-    const sessionsRepository = new PrismaSessionsRepository();
-    const service = new GetUserEnrolledSessionsService(sessionsRepository);
-    return service;
+	const sessionsRepository = new PrismaSessionsRepository();
+	const service = new GetUserEnrolledSessionsService(sessionsRepository);
+	return service;
 }
