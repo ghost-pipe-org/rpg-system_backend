@@ -17,12 +17,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								""
-							]
+							"host": ["{{base_url}}"],
+							"path": [""]
 						},
 						"description": "Verificação de saúde da API"
 					},
@@ -34,12 +30,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{base_url}}/",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										""
-									]
+									"host": ["{{base_url}}"],
+									"path": [""]
 								}
 							},
 							"status": "OK",
@@ -72,12 +64,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/users",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["users"]
 						},
 						"description": "Registra um novo usuário como PLAYER"
 					},
@@ -98,12 +86,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/users",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"users"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["users"]
 								}
 							},
 							"status": "Created",
@@ -136,12 +120,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/users",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["users"]
 						},
 						"description": "Registra um novo usuário como MASTER (requer matrícula)"
 					},
@@ -162,12 +142,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/users",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"users"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["users"]
 								}
 							},
 							"status": "Created",
@@ -217,13 +193,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/users/authenticate",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users",
-								"authenticate"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["users", "authenticate"]
 						},
 						"description": "Autentica um usuário e retorna token JWT"
 					},
@@ -244,13 +215,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/users/authenticate",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"users",
-										"authenticate"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["users", "authenticate"]
 								}
 							},
 							"status": "OK",
@@ -274,13 +240,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/sessions/approved",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions",
-								"approved"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "approved"]
 						},
 						"description": "Retorna todas as sessões aprovadas e disponíveis para inscrição"
 					},
@@ -292,13 +253,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{base_url}}/sessions/approved",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions",
-										"approved"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "approved"]
 								}
 							},
 							"status": "OK",
@@ -333,12 +289,8 @@
 						],
 						"url": {
 							"raw": "{{base_url}}/my-emmitted-sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"my-emmitted-sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["my-emmitted-sessions"]
 						},
 						"description": "Retorna todas as sessões criadas pelo usuário logado"
 					},
@@ -355,12 +307,8 @@
 								],
 								"url": {
 									"raw": "{{base_url}}/my-emmitted-sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"my-emmitted-sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["my-emmitted-sessions"]
 								}
 							},
 							"status": "OK",
@@ -389,12 +337,8 @@
 						],
 						"url": {
 							"raw": "{{base_url}}/my-enrolled-sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"my-enrolled-sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["my-enrolled-sessions"]
 						},
 						"description": "Retorna todas as sessões nas quais o usuário está inscrito"
 					},
@@ -411,12 +355,8 @@
 								],
 								"url": {
 									"raw": "{{base_url}}/my-enrolled-sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"my-enrolled-sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["my-enrolled-sessions"]
 								}
 							},
 							"status": "OK",
@@ -453,12 +393,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions"]
 						},
 						"description": "Cria uma nova sessão RPG (apenas para MASTER)"
 					},
@@ -483,12 +419,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions"]
 								}
 							},
 							"status": "Created",
@@ -517,14 +449,8 @@
 						],
 						"url": {
 							"raw": "{{base_url}}/sessions/{{session_id}}/subscribe",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions",
-								"{{session_id}}",
-								"subscribe"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "{{session_id}}", "subscribe"]
 						},
 						"description": "Inscreve o usuário logado em uma sessão específica"
 					},
@@ -541,14 +467,8 @@
 								],
 								"url": {
 									"raw": "{{base_url}}/sessions/session-uuid-1/subscribe",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions",
-										"session-uuid-1",
-										"subscribe"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "session-uuid-1", "subscribe"]
 								}
 							},
 							"status": "OK",
@@ -583,12 +503,8 @@
 						],
 						"url": {
 							"raw": "{{base_url}}/sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions"]
 						},
 						"description": "Retorna todas as sessões do sistema (apenas para ADMIN)"
 					},
@@ -605,12 +521,8 @@
 								],
 								"url": {
 									"raw": "{{base_url}}/sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions"]
 								}
 							},
 							"status": "OK",
@@ -647,14 +559,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/sessions/{{session_id}}/approve",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions",
-								"{{session_id}}",
-								"approve"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "{{session_id}}", "approve"]
 						},
 						"description": "Aprova uma sessão pendente (apenas para ADMIN)"
 					},
@@ -679,14 +585,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/sessions/session-uuid-1/approve",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions",
-										"session-uuid-1",
-										"approve"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "session-uuid-1", "approve"]
 								}
 							},
 							"status": "OK",
@@ -715,14 +615,8 @@
 						],
 						"url": {
 							"raw": "{{base_url}}/sessions/{{session_id}}/reject",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions",
-								"{{session_id}}",
-								"reject"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "{{session_id}}", "reject"]
 						},
 						"description": "Rejeita uma sessão pendente (apenas para ADMIN)"
 					},
@@ -739,14 +633,8 @@
 								],
 								"url": {
 									"raw": "{{base_url}}/sessions/session-uuid-1/reject",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions",
-										"session-uuid-1",
-										"reject"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "session-uuid-1", "reject"]
 								}
 							},
 							"status": "OK",
@@ -785,12 +673,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/users",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"users"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["users"]
 						},
 						"description": "Testa validação de dados inválidos no registro"
 					},
@@ -811,12 +695,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/users",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"users"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["users"]
 								}
 							},
 							"status": "Bad Request",
@@ -840,12 +720,8 @@
 						"header": [],
 						"url": {
 							"raw": "{{base_url}}/my-emmitted-sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"my-emmitted-sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["my-emmitted-sessions"]
 						},
 						"description": "Testa acesso sem token de autenticação"
 					},
@@ -857,12 +733,8 @@
 								"header": [],
 								"url": {
 									"raw": "{{base_url}}/my-emmitted-sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"my-emmitted-sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["my-emmitted-sessions"]
 								}
 							},
 							"status": "Unauthorized",
@@ -899,12 +771,8 @@
 						},
 						"url": {
 							"raw": "{{base_url}}/sessions",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sessions"
-							]
+							"host": ["{{base_url}}"],
+							"path": ["sessions"]
 						},
 						"description": "Testa criação de sessão com usuário PLAYER (deve falhar)"
 					},
@@ -929,12 +797,8 @@
 								},
 								"url": {
 									"raw": "{{base_url}}/sessions",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"sessions"
-									]
+									"host": ["{{base_url}}"],
+									"path": ["sessions"]
 								}
 							},
 							"status": "Forbidden",
@@ -960,18 +824,14 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		}
 	],
