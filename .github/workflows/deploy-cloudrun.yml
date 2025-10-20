@@ -160,9 +160,11 @@ jobs:
           if [[ "$ENVIRONMENT" == "production" ]]; then
             DB_SECRET="database-url"
             JWT_SECRET_NAME="jwt-secret"
+            NODE_ENV_VALUE="production"
           else
             DB_SECRET="database-url-staging"
             JWT_SECRET_NAME="jwt-secret-staging"
+            NODE_ENV_VALUE="production"  # Staging também usa production mode
           fi
           
           gcloud run deploy $SERVICE_NAME \
@@ -172,7 +174,7 @@ jobs:
             --allow-unauthenticated \
             --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
             --set-secrets="DATABASE_URL=${DB_SECRET}:latest,JWT_SECRET=${JWT_SECRET_NAME}:latest" \
-            --set-env-vars NODE_ENV=$ENVIRONMENT \
+            --set-env-vars NODE_ENV=$NODE_ENV_VALUE \
             --memory 512Mi \
             --cpu 1 \
             --timeout 300 \
