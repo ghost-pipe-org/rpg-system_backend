@@ -1,0 +1,163 @@
+name: Deploy to Google Cloud Run
+
+# 🎯 Quando este workflow executa:
+# - Push para branch 'main' → Deploy em PRODUCTION
+# - Push para branch 'release/*' → Deploy em STAGING  
+# - Outras branches → NÃO fazem deploy automático
+# - Você pode fazer deploy manual via 'Actions' tab → 'Run workflow'
+
+on:
+  push:
+    branches:
+      - main           # Production
+      - release/*      # Staging (ex: release/v0.5.0)
+  workflow_dispatch:   # Permite deploy manual via UI do GitHub
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: europe-west1
+
+jobs:
+  # Job para determinar o ambiente baseado na branch
+  determine-environment:
+    name: Determine Environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.set-env.outputs.environment }}
+      service_name: ${{ steps.set-env.outputs.service_name }}
+    steps:
+      - name: Set environment based on branch
+        id: set-env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "service_name=rpg-system-api" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" =~ ^refs/heads/release/.* ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "service_name=rpg-system-api-staging" >> $GITHUB_OUTPUT
+          else
+            echo "environment=development" >> $GITHUB_OUTPUT
+            echo "service_name=rpg-system-api-dev" >> $GITHUB_OUTPUT
+          fi
+
+  # Job de testes (executar antes do deploy)
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm run test:run
+
+  # Job de deploy
+  deploy:
+    name: Deploy to Cloud Run (${{ needs.determine-environment.outputs.environment }})
+    runs-on: ubuntu-latest
+    needs: [determine-environment, test]
+    environment: ${{ needs.determine-environment.outputs.environment }}
+    
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: |
+          gcloud auth configure-docker
+
+      - name: Build and Push Docker Image
+        env:
+          SERVICE_NAME: ${{ needs.determine-environment.outputs.service_name }}
+        run: |
+          docker build -f Dockerfile.cloudrun -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
+          docker build -f Dockerfile.cloudrun -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        env:
+          SERVICE_NAME: ${{ needs.determine-environment.outputs.service_name }}
+          ENVIRONMENT: ${{ needs.determine-environment.outputs.environment }}
+        run: |
+          # Usar secrets diferentes baseado no ambiente
+          if [[ "$ENVIRONMENT" == "production" ]]; then
+            DB_SECRET="database-url"
+            JWT_SECRET_NAME="jwt-secret"
+          else
+            DB_SECRET="database-url-staging"
+            JWT_SECRET_NAME="jwt-secret-staging"
+          fi
+          
+          gcloud run deploy $SERVICE_NAME \
+            --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated \
+            --add-cloudsql-instances ${{ secrets.CLOUD_SQL_INSTANCE }} \
+            --set-secrets="DATABASE_URL=${DB_SECRET}:latest,JWT_SECRET=${JWT_SECRET_NAME}:latest" \
+            --set-env-vars NODE_ENV=$ENVIRONMENT \
+            --memory 512Mi \
+            --cpu 1 \
+            --timeout 300 \
+            --max-instances 10 \
+            --min-instances 0
+
+      - name: Get Service URL
+        env:
+          SERVICE_NAME: ${{ needs.determine-environment.outputs.service_name }}
+        run: |
+          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+          echo "🌐 Service URL: $SERVICE_URL"
+          echo "service_url=$SERVICE_URL" >> $GITHUB_OUTPUT
+          echo "### 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: ${{ needs.determine-environment.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service**: $SERVICE_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: $SERVICE_URL" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Health Check
+        env:
+          SERVICE_NAME: ${{ needs.determine-environment.outputs.service_name }}
+        run: |
+          SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format 'value(status.url)')
+          echo "Waiting for service to be ready..."
+          sleep 15
+          
+          if curl -f -s "$SERVICE_URL/api-docs/" > /dev/null; then
+            echo "✅ Health check passed!"
+          else
+            echo "⚠️ Health check failed, but deployment completed"
+          fi

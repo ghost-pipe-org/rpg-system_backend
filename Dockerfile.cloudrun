@@ -1,0 +1,48 @@
+# Multi-stage build para otimizar tamanho da imagem
+FROM node:lts-alpine3.17 AS builder
+
+WORKDIR /usr/src/app
+
+# Copiar arquivos de dependências
+COPY package*.json ./
+COPY prisma ./prisma/
+
+# Instalar TODAS as dependências (incluindo dev) para o build
+RUN npm ci && npm cache clean --force
+
+# Copiar código fonte
+COPY . .
+
+# Build da aplicação
+RUN npm run build
+
+# Gerar Prisma Client
+RUN npx prisma generate
+
+# Remover devDependencies após o build
+RUN npm prune --production
+
+# Estágio final - imagem menor
+FROM node:lts-alpine3.17
+
+WORKDIR /usr/src/app
+
+# Copiar apenas o necessário do builder
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/prisma ./prisma
+COPY --from=builder /usr/src/app/package*.json ./
+
+# Copiar script de inicialização
+COPY docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh
+
+# Gerar Prisma Client novamente no estágio final
+RUN npx prisma generate
+
+# Cloud Run usa a variável PORT
+ENV PORT=8080
+EXPOSE 8080
+
+# Script de inicialização
+CMD ["./docker-entrypoint.sh"]

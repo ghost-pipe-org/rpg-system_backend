@@ -300,6 +300,54 @@ npm run test:docker
 - `test:` Testes
 - `refactor:` Refatoração
 
-## 📄 Licença
+## � Deploy
+
+Este projeto suporta deploy no **Google Cloud Run** com CI/CD automático via GitHub Actions.
+
+### 🎯 Métodos de Deploy
+
+| Método | Descrição | Quando Usar |
+|--------|-----------|-------------|
+| **🔄 CI/CD Automático** | GitHub Actions faz deploy ao push | ✅ Produção, trabalho em equipe |
+| **⚡ Manual** | Script `./deploy-cloudrun.sh` | Emergências, testes rápidos |
+
+### ⚡ Quick Start
+
+```bash
+# CI/CD Automático (Recomendado)
+./setup-cicd.sh              # Configurar uma vez
+git push origin main         # Deploy automático! 🚀
+
+# Deploy Manual (Backup)
+./deploy-cloudrun.sh         # Deploy imediato
+```
+
+### 📖 Documentação Completa
+
+- **🔄 [CI_CD_GUIDE.md](./CI_CD_GUIDE.md)** - Setup e uso do CI/CD
+- **📊 [DEPLOY_OPTIONS.md](./DEPLOY_OPTIONS.md)** - Comparação de métodos
+- **✅ [PRODUCTION_CHECKLIST.md](./PRODUCTION_CHECKLIST.md)** - Checklist pre-deploy
+
+### 🌍 Ambientes
+
+| Branch | Ambiente | Deploy | Service |
+|--------|----------|--------|---------|
+| `main` | Production | 🔄 Auto | `rpg-system-api` |
+| `release/*` | Staging | 🔄 Auto | `rpg-system-api-staging` |
+| Outras | - | ❌ Manual | - |
+
+### 🔧 Configuração Necessária
+
+**Secrets do GitHub** (Settings → Secrets → Actions):
+- `GCP_PROJECT_ID` - ID do projeto GCP
+- `GCP_SA_KEY` - Chave JSON da service account
+- `CLOUD_SQL_INSTANCE` - Connection name do Cloud SQL
+
+**Executar uma vez:**
+```bash
+./setup-cicd.sh  # Cria service account e mostra secrets para GitHub
+```
+
+## �📄 Licença
 
 Este projeto está sob a licença ISC. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
