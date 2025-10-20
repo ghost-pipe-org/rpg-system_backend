@@ -1,10 +1,10 @@
-name: CI/CD Pipeline
+name: CI - Tests and Validation
 
 on:
-  push:
-    branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, 'release/**' ]
+  push:
+    branches: [ develop ]
 
 jobs:
   test:
@@ -76,24 +76,5 @@ jobs:
         name: build-files
         path: dist/
 
-  # Deploy job (example for future use)
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [test, build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-files
-        path: dist/
-
-    - name: Deploy to production
-      run: |
-        echo "Deployment would happen here"
-        # Add your deployment steps here
-        # For example, deploy to Docker, Heroku, AWS, etc.
+  # Deploy é feito pelo workflow deploy-cloudrun.yml
+  # Este workflow foca apenas em validação e testes

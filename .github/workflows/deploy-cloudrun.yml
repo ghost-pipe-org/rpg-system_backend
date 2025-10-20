@@ -53,6 +53,23 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    
+    # Serviço PostgreSQL para testes
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_DB: test
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,14 +83,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup test database
+        env:
+          DATABASE_URL: postgresql://test:1234@localhost:5433/test
+        run: |
+          npx prisma migrate deploy
+          npx prisma generate
+
       - name: Run tests
+        env:
+          DATABASE_URL: postgresql://test:1234@localhost:5433/test
         run: npm run test:run
 
   # Job de deploy
   deploy:
     name: Deploy to Cloud Run (${{ needs.determine-environment.outputs.environment }})
     runs-on: ubuntu-latest
-    needs: [determine-environment, test]
+    needs: [determine-environment, test]  # ✅ Testes rodam antes do deploy
     environment: ${{ needs.determine-environment.outputs.environment }}
     
     permissions:
