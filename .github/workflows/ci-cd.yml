@@ -9,6 +9,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    # Retry automático em caso de falha temporária do Docker Hub
+    continue-on-error: false
+    strategy:
+      fail-fast: false
 
     services:
       postgres:
@@ -28,6 +33,18 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Wait for Docker Hub (retry strategy)
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 2
+        max_attempts: 3
+        retry_wait_seconds: 30
+        command: docker pull postgres:15 || true
+        warning_on_retry: true
+      continue-on-error: true
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
