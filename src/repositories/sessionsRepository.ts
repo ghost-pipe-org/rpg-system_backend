@@ -24,7 +24,7 @@ export interface SessionsRepository {
 	subscribeUserToSession(
 		sessionId: string,
 		userId: string,
-	): Promise<SessionEnrollment>;
+	): Promise<SessionWithRelations | null>;
 	isUserEnrolled(sessionId: string, userId: string): Promise<boolean>;
 	findFirstByMasterAndStatus(
 		masterId: string,

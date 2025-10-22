@@ -86,11 +86,25 @@ export class PrismaSessionsRepository implements SessionsRepository {
 	}
 
 	async subscribeUserToSession(sessionId: string, userId: string) {
-		return prisma.sessionEnrollment.create({
+		await prisma.sessionEnrollment.create({
 			data: {
 				sessionId,
 				userId,
 				status: "PENDENTE",
+			},
+		});
+
+		// Retorna a sessão atualizada com os enrollments
+		return prisma.session.findUnique({
+			where: { id: sessionId },
+			include: {
+				master: {
+					select: {
+						name: true,
+					},
+				},
+				possibleDates: true,
+				enrollments: true,
 			},
 		});
 	}
