@@ -15,17 +15,14 @@ export async function subscribeUserToSessionController(
 	try {
 		const subscribeUserToSessionService = makeSubscribeUserToSessionService();
 
-		const { session } = await subscribeUserToSessionService.execute({
+		await subscribeUserToSessionService.execute({
 			sessionId,
 			userId,
 		});
 
 		return res
 			.status(200)
-			.json({ 
-				message: "User subscribed to session successfully",
-				session
-			});
+			.json({ message: "User subscribed to session successfully" });
 	} catch (error) {
 		if (error instanceof InvalidSessionError) {
 			return res.status(404).json({ error: "Session not found" });

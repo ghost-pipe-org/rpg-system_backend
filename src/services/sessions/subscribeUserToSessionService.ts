@@ -1,4 +1,3 @@
-import type { Session, SessionEnrollment, SessionPossibleDate } from "@prisma/client";
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
 import type { UsersRepository } from "@/repositories/usersRepository";
 import { AlreadyEnrolledError } from "../errors/alreadyEnrolledError";
@@ -11,16 +10,9 @@ interface subscribeUserToSessionServiceRequest {
 	userId: string;
 }
 
-type SessionWithRelations = Session & {
-	possibleDates: SessionPossibleDate[];
-	enrollments: SessionEnrollment[];
-	master?: {
-		name: string;
-	};
-};
-
 interface subscribeUserToSessionServiceResponse {
-	session: SessionWithRelations | null;
+	success: boolean;
+	message: string;
 }
 
 export class SubscribeUserToSessionService {
@@ -58,10 +50,11 @@ export class SubscribeUserToSessionService {
 			throw new SessionFullError();
 		}
 
-		const updatedSession = await this.sessionsRepository.subscribeUserToSession(sessionId, userId);
+		await this.sessionsRepository.subscribeUserToSession(sessionId, userId);
 
 		return {
-			session: updatedSession,
+			success: true,
+			message: "User successfully subscribed to the session.",
 		};
 	}
 }

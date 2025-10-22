@@ -118,9 +118,6 @@ describe("Protected Sessions Routes", () => {
 				.expect(200);
 
 			expect(response.body).toHaveProperty("message");
-			expect(response.body).toHaveProperty("session");
-			expect(response.body.session).toHaveProperty("enrollments");
-			expect(Array.isArray(response.body.session.enrollments)).toBe(true);
 		});
 
 		it("should allow master to subscribe to session", async () => {
