@@ -81,6 +81,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 					},
 				},
 				possibleDates: true,
+				enrollments: true,
 			},
 		});
 	}
