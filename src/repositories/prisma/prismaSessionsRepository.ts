@@ -123,14 +123,26 @@ export class PrismaSessionsRepository implements SessionsRepository {
 		});
 	}
 
-	async findEnrolledByUser(userId: string) {
-		return prisma.sessionEnrollment.findMany({
-			where: {
-				userId,
-			},
-			include: {
-				session: true, // Include session details if needed
-			},
-		});
-	}
+async findEnrolledByUser(userId: string) {
+  return prisma.sessionEnrollment.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      session: {
+        include: {  // ← ADICIONE ISSO
+          master: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            }
+          },
+          possibleDates: true,
+          enrollments: true,
+        }
+      }
+    },
+  });
+}
 }
