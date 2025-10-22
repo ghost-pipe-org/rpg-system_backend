@@ -45,6 +45,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 						name: true,
 					},
 				},
+				possibleDates: true,
 			},
 		});
 	}
