@@ -128,6 +128,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 								id: true,
 								name: true,
 								email: true,
+								phoneNumber: true,
 							},
 						},
 					},
