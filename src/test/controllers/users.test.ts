@@ -80,7 +80,7 @@ describe("Users Authentication", () => {
 				password: "Password123",
 				masterConfirm: true,
 				enrollment: "123456789",
-				phoneNumber: "+5511999999999",
+				phoneNumber: "11999999999",
 			};
 
 			const response = await request(app)
