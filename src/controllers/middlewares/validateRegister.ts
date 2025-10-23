@@ -20,7 +20,8 @@ const registerSchema = z
 		phoneNumber: z
 			.string()
 			.regex(/^[1-9]{2}9?\d{8}$/, {
-				message: "Phone number must be in format: 83999999999 (area code + number)",
+				message:
+					"Phone number must be in format: 83999999999 (area code + number)",
 			})
 			.optional(),
 		masterConfirm: z.boolean().optional(),
