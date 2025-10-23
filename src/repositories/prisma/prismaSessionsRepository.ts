@@ -120,6 +120,19 @@ export class PrismaSessionsRepository implements SessionsRepository {
 			where: {
 				masterId,
 			},
+			include: {
+				enrollments: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								name: true,
+								email: true,
+							},
+						},
+					},
+				},
+			},
 		});
 	}
 
