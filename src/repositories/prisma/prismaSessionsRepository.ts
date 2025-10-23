@@ -129,8 +129,8 @@ export class PrismaSessionsRepository implements SessionsRepository {
 							},
 						},
 					},
-				}
-			}
+				},
+			},
 		});
 	}
 
