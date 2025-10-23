@@ -11,9 +11,6 @@ const registerSchema = z
 			.regex(/[A-Z]/, {
 				message: "Password must contain at least one uppercase letter",
 			})
-			.regex(/[a-z]/, {
-				message: "Password must contain at least one lowercase letter",
-			})
 			.regex(/[0-9]/, { message: "Password must contain at least one number" }),
 		enrollment: z
 			.string()
@@ -22,8 +19,8 @@ const registerSchema = z
 			.optional(),
 		phoneNumber: z
 			.string()
-			.regex(/^\+?[1-9]\d{1,14}$/, {
-				message: "Phone number must be in E.164 format",
+			.regex(/^[1-9]{2}9?\d{8}$/, {
+				message: "Phone number must be in format: 83999999999 (area code + number)",
 			})
 			.optional(),
 		masterConfirm: z.boolean().optional(),
