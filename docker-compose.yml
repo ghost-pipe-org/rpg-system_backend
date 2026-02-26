@@ -1,7 +1,7 @@
 services:
   postgres:
     container_name: postgres-rpg-system-backend
-    image: postgres
+    image: postgres:16
     restart: always
     environment:
       - POSTGRES_USER=postgres
