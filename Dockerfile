@@ -9,6 +9,6 @@ COPY . .
 RUN npm run build
 RUN npx prisma generate
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD npx prisma migrate deploy && npm run start
