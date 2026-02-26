@@ -3,8 +3,8 @@ import { SessionStatus } from "@prisma/client";
 import { SessionsRepository } from "../../repositories/sessionsRepository";
 import { CancelDeadlineExceededError } from "../errors/cancelDeadlineExceededError";
 import { CancelJustificationRequiredError } from "../errors/cancelJustificationRequiredError";
-import { NotSessionMasterError } from "../errors/notSessionMasterError";
 import { NotApprovedSessionError } from "../errors/notApprovedSessionError";
+import { NotSessionMasterError } from "../errors/notSessionMasterError";
 
 interface CancelApprovedSessionRequest {
 	sessionId: string;
@@ -13,7 +13,11 @@ interface CancelApprovedSessionRequest {
 }
 
 export class CancelApprovedSessionService {
-	async execute({ sessionId, masterId, cancelEvent }: CancelApprovedSessionRequest) {
+	async execute({
+		sessionId,
+		masterId,
+		cancelEvent,
+	}: CancelApprovedSessionRequest) {
 		// Validação da justificativa
 		if (!cancelEvent || cancelEvent.trim().length === 0) {
 			throw new CancelJustificationRequiredError();
@@ -21,7 +25,7 @@ export class CancelApprovedSessionService {
 
 		// Buscar a sessão
 		const session = await SessionsRepository.findById(sessionId);
-		
+
 		if (!session) {
 			throw new Error("Sessão não encontrada");
 		}
@@ -51,7 +55,7 @@ export class CancelApprovedSessionService {
 		// Atualizar a sessão
 		const updatedSession = await SessionsRepository.update(sessionId, {
 			status: SessionStatus.CANCELED,
-			cancelEvent: cancelEvent.trim()
+			cancelEvent: cancelEvent.trim(),
 		});
 
 		return updatedSession;

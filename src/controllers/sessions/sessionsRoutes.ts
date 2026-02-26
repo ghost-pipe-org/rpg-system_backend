@@ -1,18 +1,21 @@
 // src/controllers/sessions/sessionsRoutes.ts
 import { Router } from "express";
 import { validateApproveSession } from "../middlewares/validateApproveSession";
+import { validateCancelApprovedSession } from "../middlewares/validateCancelApprovedSession";
 import { validateEmitSession } from "../middlewares/validateEmitSession";
 import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
-import { validateCancelApprovedSession } from "../middlewares/validateCancelApprovedSession";
 import { approveSessionController } from "./approveSessionController";
+import {
+	CancelApprovedSessionController,
+	CancelApprovedSessionControllerancelApprovedSessionController,
+} from "./cancelApprovedSessionController";
 import { cancelPendingSessionController } from "./cancelSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
 import { rejectSessionController } from "./rejectSessionController";
 import { subscribeUserToSessionController } from "./subscribeUserToSessionController";
-import { CancelApprovedSessionController, CancelApprovedSessionControllerancelApprovedSessionController } from "./cancelApprovedSessionController";
 
 const sessionRouter = Router();
 
@@ -58,7 +61,6 @@ sessionRouter.patch(
 	validateRole("ADMIN"),
 	rejectSessionController,
 );
-
 
 sessionRouter.patch(
 	"/sessions/:sessionId/cancel",

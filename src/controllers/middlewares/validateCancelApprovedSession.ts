@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const cancelSessionSchema = z.object({
-	cancelEvent: z.string().min(1, "Justificativa é obrigatória")
+	cancelEvent: z.string().min(1, "Justificativa é obrigatória"),
 });
 
 export async function validateCancelApprovedSession(
 	req: Request,
 	res: Response,
-	next: NextFunction
+	next: NextFunction,
 ) {
 	try {
 		cancelSessionSchema.parse(req.body);
@@ -17,7 +17,7 @@ export async function validateCancelApprovedSession(
 		if (error instanceof z.ZodError) {
 			return res.status(400).json({
 				error: "Dados inválidos",
-				details: error.errors
+				details: error.errors,
 			});
 		}
 		next(error);
