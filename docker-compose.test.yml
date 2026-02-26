@@ -1,7 +1,7 @@
 
 services:
   postgres-test:
-    image: postgres
+    image: postgres:16
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: 1234
