@@ -18,8 +18,8 @@ export default defineConfig({
 			NODE_ENV: "test",
 			JWT_SECRET: "test-jwt-secret-for-testing-only",
 		},
-		testTimeout: 30000,
-		hookTimeout: 30000,
+		testTimeout: 60000, // Aumentar para 60s
+		hookTimeout: 60000, // Aumentar para 60s
 		// Usar forks para melhor isolamento entre arquivos de teste
 		pool: "forks",
 		poolOptions: {

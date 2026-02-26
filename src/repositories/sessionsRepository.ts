@@ -13,6 +13,10 @@ type SessionWithRelations = Session & {
 	};
 };
 
+export type SessionEnrollmentWithSession = SessionEnrollment & {
+	session: Session;
+};
+
 export interface SessionsRepository {
 	findById(id: string): Promise<SessionWithRelations | null>;
 	create(data: Prisma.SessionCreateInput): Promise<Session>;
@@ -31,5 +35,5 @@ export interface SessionsRepository {
 		status: string,
 	): Promise<Session | null>;
 	findEmittedByMaster(masterId: string): Promise<Session[]>;
-	findEnrolledByUser(userId: string): Promise<SessionEnrollment[]>;
+	findEnrolledByUser(userId: string): Promise<SessionEnrollmentWithSession[]>;
 }

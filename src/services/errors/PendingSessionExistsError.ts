@@ -1,6 +1,7 @@
 export class PendingSessionExistsError extends Error {
 	constructor() {
-		super("Você já possui uma sessão pendente para aprovação.");
+		// You already have a session waiting for approve
+		super("You already have a session waiting for approve");
 		this.name = "PendingSessionExistsError";
 	}
 }
