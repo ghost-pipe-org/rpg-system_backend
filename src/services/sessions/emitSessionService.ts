@@ -12,7 +12,6 @@ interface emitSessionServiceRequest {
 	minPlayers: number;
 	maxPlayers: number;
 	masterId: string;
-	location: string;
 }
 
 interface emitSessionServiceResponse {
@@ -32,7 +31,6 @@ export class EmitSessionService {
 		minPlayers,
 		maxPlayers,
 		masterId,
-		location,
 	}: emitSessionServiceRequest): Promise<emitSessionServiceResponse> {
 		const pendingSession =
 			await this.sessionsRepository.findFirstByMasterAndStatus(
@@ -48,7 +46,6 @@ export class EmitSessionService {
 			description,
 			requirements,
 			system,
-			location,
 			period,
 			minPlayers,
 			maxPlayers,

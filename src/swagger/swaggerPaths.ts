@@ -341,7 +341,6 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 							period: "NOITE",
 							minPlayers: 3,
 							maxPlayers: 6,
-							location: "Sala 201 - Prédio de Humanas",
 						},
 					},
 				},

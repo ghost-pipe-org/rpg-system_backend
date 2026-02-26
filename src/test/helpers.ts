@@ -34,7 +34,7 @@ export interface TestSession {
 	title: string;
 	description: string;
 	system: string;
-	location: string;
+	location?: string;
 	minPlayers: number;
 	maxPlayers: number;
 	masterId: string;
@@ -121,7 +121,7 @@ export async function createSession(
 		title: data.title || "Test Session",
 		description: data.description || "Test session description",
 		system: data.system || "D&D 5e",
-		location: data.location || "Test Location",
+		location: data.location,
 		minPlayers: data.minPlayers || 3,
 		maxPlayers: data.maxPlayers || 6,
 		master: {
@@ -143,7 +143,7 @@ export async function createSession(
 		title: session.title,
 		description: session.description,
 		system: session.system,
-		location: session.location,
+		location: session.location || undefined,
 		minPlayers: session.minPlayers,
 		maxPlayers: session.maxPlayers,
 		masterId: data.masterId,

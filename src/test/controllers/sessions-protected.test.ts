@@ -175,7 +175,6 @@ describe("Protected Sessions Routes", () => {
 			title: "New RPG Session",
 			description: "An exciting D&D adventure",
 			system: "D&D 5e",
-			location: "Discord",
 			minPlayers: 3,
 			maxPlayers: 5,
 			requirements: "Basic knowledge of D&D",

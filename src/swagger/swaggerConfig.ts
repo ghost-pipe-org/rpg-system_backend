@@ -13,8 +13,12 @@ const swaggerDefinition = {
 	},
 	servers: [
 		{
+			url: "https://rpg-system-api-staging-6bpup4cy7q-ew.a.run.app",
+			description: "Servidor de Staging (Google Cloud Run)",
+		},
+		{
 			url: "http://localhost:3000",
-			description: "Servidor de desenvolvimento",
+			description: "Servidor de desenvolvimento local",
 		},
 	],
 	components: {
@@ -103,6 +107,7 @@ const swaggerDefinition = {
 						type: "string",
 						maxLength: 255,
 						example: "Sala 101 - Prédio Principal",
+						nullable: true,
 					},
 					status: {
 						type: "string",
@@ -276,7 +281,6 @@ const swaggerDefinition = {
 					"period",
 					"minPlayers",
 					"maxPlayers",
-					"location",
 				],
 				properties: {
 					title: {
