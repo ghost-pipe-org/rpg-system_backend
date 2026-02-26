@@ -39,7 +39,9 @@ jobs:
       run: npm ci
 
     - name: Run Prisma migrations
-      run: DATABASE_URL="postgresql://test:1234@localhost:5433/test" npx prisma migrate dev --name init
+      run: npx prisma migrate deploy
+      env:
+        DATABASE_URL: "postgresql://test:1234@localhost:5433/test"
 
     - name: Run linting
       run: npx biome check .
@@ -48,7 +50,11 @@ jobs:
       run: npx tsc --noEmit
 
     - name: Run tests with coverage
-      run: npm run test:coverage
+      run: npx vitest run --coverage
+      env:
+        DATABASE_URL: "postgresql://test:1234@localhost:5433/test"
+        JWT_SECRET: "ci-secret-for-tests"
+        NODE_ENV: "test"
 
   build:
     runs-on: ubuntu-latest
