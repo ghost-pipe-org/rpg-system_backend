@@ -45,6 +45,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 						name: true,
 					},
 				},
+				possibleDates: true,
 			},
 		});
 	}
@@ -80,6 +81,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 					},
 				},
 				possibleDates: true,
+				enrollments: true,
 			},
 		});
 	}
@@ -126,6 +128,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 								id: true,
 								name: true,
 								email: true,
+								phoneNumber: true,
 							},
 						},
 					},
@@ -140,7 +143,19 @@ export class PrismaSessionsRepository implements SessionsRepository {
 				userId,
 			},
 			include: {
-				session: true, // Include session details if needed
+				session: {
+					include: {
+						master: {
+							select: {
+								id: true,
+								name: true,
+								email: true,
+							},
+						},
+						possibleDates: true,
+						enrollments: true,
+					},
+				},
 			},
 		});
 	}
