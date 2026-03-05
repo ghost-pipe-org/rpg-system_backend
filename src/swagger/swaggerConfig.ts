@@ -13,10 +13,6 @@ const swaggerDefinition = {
 	},
 	servers: [
 		{
-			url: "https://rpg-system-api-staging-6bpup4cy7q-ew.a.run.app",
-			description: "Servidor de Staging (Google Cloud Run)",
-		},
-		{
 			url: "http://localhost:3000",
 			description: "Servidor de desenvolvimento local",
 		},
