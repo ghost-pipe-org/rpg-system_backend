@@ -604,6 +604,185 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 			},
 		},
 	},
+	"/users/profile": {
+		get: {
+			tags: ["Usuários"],
+			summary: "Buscar perfil do usuário autenticado",
+			description:
+				"Retorna o perfil completo do usuário logado, incluindo histórico de sessões emitidas e inscrições",
+			security: [{ bearerAuth: [] }],
+			responses: {
+				"200": {
+					description: "Perfil retornado com sucesso",
+					content: {
+						"application/json": {
+							schema: {
+								type: "object",
+								properties: {
+									user: { $ref: "#/components/schemas/User" },
+									emmitedSessions: {
+										type: "array",
+										items: { $ref: "#/components/schemas/Session" },
+									},
+									enrolledSessions: {
+										type: "array",
+										items: { type: "object" },
+									},
+									totalEmmited: { type: "number" },
+									totalEnrolled: { type: "number" },
+								},
+							},
+						},
+					},
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+				"404": {
+					description: "Usuário não encontrado",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+			},
+		},
+		patch: {
+			tags: ["Usuários"],
+			summary: "Atualizar perfil do usuário autenticado",
+			description:
+				"Atualiza nome e/ou telefone do usuário logado. Campos como role, email e enrollment são ignorados por segurança.",
+			security: [{ bearerAuth: [] }],
+			requestBody: {
+				required: true,
+				content: {
+					"application/json": {
+						schema: {
+							type: "object",
+							properties: {
+								name: {
+									type: "string",
+									minLength: 2,
+									maxLength: 100,
+									example: "João Silva Santos",
+								},
+								phoneNumber: {
+									type: "string",
+									example: "(11) 99999-9999",
+								},
+							},
+						},
+					},
+				},
+			},
+			responses: {
+				"200": {
+					description: "Perfil atualizado com sucesso",
+					content: {
+						"application/json": {
+							schema: {
+								type: "object",
+								properties: {
+									message: {
+										type: "string",
+										example: "Profile updated successfully",
+									},
+									user: { $ref: "#/components/schemas/User" },
+								},
+							},
+						},
+					},
+				},
+				"400": {
+					description: "Dados inválidos ou nenhum campo fornecido",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+			},
+		},
+	},
+	"/sessions/{sessionId}": {
+		delete: {
+			tags: ["Sessões"],
+			summary: "Cancelar sessão pendente (Master)",
+			description:
+				"Cancela uma sessão com status PENDENTE. Apenas o MASTER criador da sessão pode cancelar.",
+			security: [{ bearerAuth: [] }],
+			parameters: [
+				{
+					name: "sessionId",
+					in: "path",
+					required: true,
+					description: "ID da sessão",
+					schema: { type: "string" },
+				},
+			],
+			responses: {
+				"200": {
+					description: "Sessão cancelada com sucesso",
+					content: {
+						"application/json": {
+							schema: {
+								type: "object",
+								properties: {
+									message: { type: "string" },
+								},
+							},
+						},
+					},
+				},
+				"400": {
+					description: "Sessão não está com status PENDENTE",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+				"403": {
+					description: "Usuário não é o mestre da sessão",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+				"404": {
+					description: "Sessão não encontrada",
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
+				},
+			},
+		},
+	},
 };
 
 // Merge paths com swaggerSpec

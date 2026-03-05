@@ -484,6 +484,136 @@
 							"body": "{\n  \"message\": \"Inscrição realizada com sucesso\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/profile",
+							"host": ["{{base_url}}"],
+							"path": ["users", "profile"]
+						},
+						"description": "Retorna o perfil completo do usuário autenticado, incluindo histórico de sessões emitidas e inscrições"
+					},
+					"response": [
+						{
+							"name": "Success - User Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{ "key": "Authorization", "value": "Bearer {{auth_token}}" }
+								],
+								"url": {
+									"raw": "{{base_url}}/users/profile",
+									"host": ["{{base_url}}"],
+									"path": ["users", "profile"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{ "key": "Content-Type", "value": "application/json" }
+							],
+							"cookie": [],
+							"body": "{\n  \"user\": {\n    \"id\": \"user-uuid\",\n    \"name\": \"João Silva\",\n    \"email\": \"joao@exemplo.com\",\n    \"enrollment\": null,\n    \"phoneNumber\": \"(11) 99999-9999\",\n    \"role\": \"PLAYER\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  },\n  \"emmitedSessions\": [],\n  \"enrolledSessions\": [],\n  \"totalEmmited\": 0,\n  \"totalEnrolled\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{auth_token}}" },
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"João Silva Santos\",\n  \"phoneNumber\": \"(11) 99999-9999\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/profile",
+							"host": ["{{base_url}}"],
+							"path": ["users", "profile"]
+						},
+						"description": "Atualiza nome e/ou telefone do usuário autenticado. Campos como role, email e enrollment são ignorados."
+					},
+					"response": [
+						{
+							"name": "Success - Profile Updated",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{ "key": "Authorization", "value": "Bearer {{auth_token}}" },
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"João Silva Santos\",\n  \"phoneNumber\": \"(11) 99999-9999\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/profile",
+									"host": ["{{base_url}}"],
+									"path": ["users", "profile"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{ "key": "Content-Type", "value": "application/json" }
+							],
+							"cookie": [],
+							"body": "{\n  \"message\": \"Profile updated successfully\",\n  \"user\": {\n    \"id\": \"user-uuid\",\n    \"name\": \"João Silva Santos\",\n    \"email\": \"joao@exemplo.com\",\n    \"phoneNumber\": \"(11) 99999-9999\",\n    \"role\": \"PLAYER\",\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"updatedAt\": \"2024-01-15T10:30:00.000Z\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Pending Session (Master)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{auth_token}}" }
+						],
+						"url": {
+							"raw": "{{base_url}}/sessions/{{session_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["sessions", "{{session_id}}"]
+						},
+						"description": "Cancela uma sessão com status PENDENTE. Apenas o MASTER criador pode cancelar."
+					},
+					"response": [
+						{
+							"name": "Success - Session Cancelled",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{ "key": "Authorization", "value": "Bearer {{auth_token}}" }
+								],
+								"url": {
+									"raw": "{{base_url}}/sessions/{{session_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["sessions", "{{session_id}}"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{ "key": "Content-Type", "value": "application/json" }
+							],
+							"cookie": [],
+							"body": "{\n  \"message\": \"Infelizmente, sua solicitação não pôde ser atendida, pois as datas escolhidas não são adequadas para a mestragem da mesa. Por favor contate o admin do sistema.\"\n}"
+						}
+					]
 				}
 			],
 			"description": "Endpoints protegidos que requerem autenticação JWT"
