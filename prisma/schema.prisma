@@ -45,6 +45,7 @@ model User {
 
   enrollments     SessionEnrollment[]
   createdSessions Session[] @relation("SessionToUser")
+  posts           Post[]
 }
 
 model Session {
@@ -91,4 +92,49 @@ model SessionEnrollment {
   createdAt DateTime @default(now())
 
   @@unique([userId, sessionId])
+}
+
+enum PostStatus {
+  RASCUNHO
+  PUBLICADO
+  ARQUIVADO
+}
+
+model Post {
+  id            String     @id @default(uuid()) @db.Uuid
+  title         String     @db.VarChar(255)
+  slug          String     @unique @db.VarChar(255)
+  summary       String?    @db.VarChar(500)
+  content       String     @db.Text
+  coverImageUrl String?    @db.VarChar(500)
+  status        PostStatus @default(RASCUNHO)
+  viewCount     Int        @default(0)
+
+  authorId String @db.Uuid
+  author   User   @relation(fields: [authorId], references: [id])
+
+  categories PostCategory[]
+
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique @db.VarChar(100)
+  slug      String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now())
+
+  posts PostCategory[]
+}
+
+model PostCategory {
+  postId     String @db.Uuid
+  categoryId String @db.Uuid
+
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
 }
