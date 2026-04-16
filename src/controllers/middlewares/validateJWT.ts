@@ -13,9 +13,9 @@ export const validateJWT = () => {
 
 		try {
 			const { JWT_SECRET } = env;
-			const decoded = jwt.verify(token, JWT_SECRET) as { sub: string };
+			const decoded = jwt.verify(token, JWT_SECRET) as { sub: string, role: string };
 
-			req.user = { id: decoded.sub }; // Apenas o id do usuário
+			req.user = { id: decoded.sub, role: decoded.role };
 
 			next();
 		} catch (error) {
