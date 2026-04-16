@@ -78,8 +78,8 @@ describe("Protected Sessions Routes", () => {
 				.set("Authorization", `Bearer ${adminToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(2);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(2);
 		});
 
 		it("should require admin role", async () => {
@@ -189,11 +189,13 @@ describe("Protected Sessions Routes", () => {
 				.send(sessionData)
 				.expect(201);
 
-			expect(response.body).toHaveProperty("session");
-			expect(response.body.session).toHaveProperty("id");
-			expect(response.body.session.title).toBe(sessionData.title);
-			expect(response.body.session.status).toBe("PENDENTE");
-			expect(response.body.session.masterId).toBe(masterId);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveProperty("id");
+			expect(response.body.data.title).toBe(sessionData.title);
+			expect(response.body.data.description).toBe(sessionData.description);
+			expect(response.body.data.status).toBe("PENDENTE");
+			expect(response.body.data.minPlayers).toBe(sessionData.minPlayers);
+			expect(response.body.data.maxPlayers).toBe(sessionData.maxPlayers);
 		});
 
 		it("should not allow player to create session", async () => {
