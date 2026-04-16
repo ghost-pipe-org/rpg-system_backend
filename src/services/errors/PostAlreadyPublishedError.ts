@@ -1,5 +1,5 @@
-export class PostAlreadyPublishedError extends Error{
-    constructor() {
+export class PostAlreadyPublishedError extends Error {
+	constructor() {
 		super("Post already published.");
 		this.name = "PostAlreadyPublishedError";
 	}
