@@ -1,5 +1,4 @@
-import { error } from "node:console";
-import { cancelPendingSessionController } from "@/controllers/sessions/cancelSessionController";
+
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
 import type { UsersRepository } from "@/repositories/usersRepository";
 import { SessionNotPending } from "../errors/SessionNotPending";

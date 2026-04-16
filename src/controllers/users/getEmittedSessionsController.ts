@@ -13,9 +13,9 @@ export async function getEmittedSessionsController(
 			masterId,
 		});
 
-		return res.status(200).json({ emittedSessions });
+		return res.status(200).json({ data: emittedSessions });
 	} catch (error) {
 		console.error("Error fetching emitted sessions:", error);
-		return res.status(500).json({ error: "Internal server error" });
+		return res.status(500).json({ message: "Internal server error" });
 	}
 }

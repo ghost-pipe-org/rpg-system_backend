@@ -47,7 +47,8 @@ export class ApproveSessionService {
 
 		// Verifica se a data aprovada está entre as datas possíveis da sessão
 		const possibleDatesExists = session.possibleDates.some(
-			(pd: { date: Date }) => pd.date.getTime() === approvedDate.getTime(),
+			(pd: { date: Date | string }) => 
+				new Date(pd.date).toISOString().slice(0, 10) === new Date(approvedDate).toISOString().slice(0, 10),
 		);
 
 		if (!possibleDatesExists) {

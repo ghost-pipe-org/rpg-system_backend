@@ -9,9 +9,9 @@ export async function getAvaliableSessionsController(
 
 	try {
 		const { sessions } = await avaliableSessionsService.execute();
-		return res.status(200).json({ sessions });
+		return res.status(200).json({ data: sessions });
 	} catch (error) {
 		console.error("Error fetching available sessions:", error);
-		return res.status(500).json({ error: "Internal server error" });
+		return res.status(500).json({ message: "Internal server error" });
 	}
 }
