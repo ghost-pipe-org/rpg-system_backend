@@ -1,3 +1,9 @@
+import { validateUpdateEmail } from "../middlewares/validateUpdateEmail";
+import { validateUpdatePassword } from "../middlewares/validateUpdatePassword";
+import { updateUserEmailController } from "./updateUserEmailController";
+import { updateUserPasswordController } from "./updateUserPasswordController";
+
+// Rest of the imports remain...
 import { type Express, Router } from "express";
 import { validateAuthenticate } from "../middlewares/validateAuthenticate";
 import { validateJWT } from "../middlewares/validateJWT";
@@ -32,11 +38,26 @@ userRouter.get(
 );
 
 userRouter.get("/users/profile", validateJWT(), getUserProfileController);
+
 userRouter.patch(
 	"/users/profile",
 	validateJWT(),
 	validateUpdateProfile,
 	updateUserProfileController,
+);
+
+userRouter.patch(
+	"/users/password",
+	validateJWT(),
+	validateUpdatePassword,
+	updateUserPasswordController,
+);
+
+userRouter.patch(
+	"/users/email",
+	validateJWT(),
+	validateUpdateEmail,
+	updateUserEmailController,
 );
 
 export default userRouter;

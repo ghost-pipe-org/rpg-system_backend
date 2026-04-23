@@ -33,13 +33,13 @@ export async function emitSessionController(req: Request, res: Response) {
 
 		return res
 			.status(201)
-			.json({ message: "Session emitted successfully", session });
+			.json({ message: "Session emitted successfully", data: session });
 	} catch (error) {
 		if (error instanceof PendingSessionExistsError) {
-			return res.status(409).json({ error: error.message });
+			return res.status(409).json({ message: error.message });
 		}
 
 		console.error("Error emitting session:", error);
-		return res.status(500).json({ error: "Internal server error" });
+		return res.status(500).json({ message: "Internal server error" });
 	}
 }

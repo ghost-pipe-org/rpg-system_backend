@@ -51,9 +51,9 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(2);
-			for (const session of response.body.sessions) {
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(2);
+			for (const session of response.body.data) {
 				expect(session.status).toBe("APROVADA");
 				expect(["Approved Session 1", "Approved Session 2"]).toContain(
 					session.title,
@@ -70,8 +70,8 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(0);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(0);
 		});
 
 		it("should return sessions with all required fields", async () => {
@@ -90,10 +90,10 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(1);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
 
-			const session = response.body.sessions[0];
+			const session = response.body.data[0];
 			expect(session).toHaveProperty("id");
 			expect(session).toHaveProperty("title", "Complete Session");
 			expect(session).toHaveProperty("description", "Test description");
@@ -117,10 +117,10 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(1);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
 
-			const session = response.body.sessions[0];
+			const session = response.body.data[0];
 			expect(session).toHaveProperty("master");
 			expect(session.master).toHaveProperty("id", masterId);
 			expect(session.master).toHaveProperty("name");
@@ -146,10 +146,10 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(1);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
 
-			const session = response.body.sessions[0];
+			const session = response.body.data[0];
 			expect(session).toHaveProperty("possibleDates");
 			expect(session.possibleDates).toHaveLength(3);
 			expect(session.possibleDates[0]).toHaveProperty("date");
@@ -164,8 +164,8 @@ describe("Public Sessions Routes", () => {
 
 			const response = await request(app).get("/sessions/approved").expect(200);
 
-			expect(response.body).toHaveProperty("sessions");
-			expect(response.body.sessions).toHaveLength(1);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
 		});
 	});
 });

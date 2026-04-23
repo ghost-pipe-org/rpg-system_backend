@@ -1,9 +1,12 @@
 import { Router } from "express";
 import { validateApproveSession } from "../middlewares/validateApproveSession";
+import { validateCancelApprovedSession } from "../middlewares/validateCancelApprovedSession";
 import { validateEmitSession } from "../middlewares/validateEmitSession";
 import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
 import { approveSessionController } from "./approveSessionController";
+import { cancelApprovedSessionController } from "./cancelApprovedSessionController";
+import { cancelEnrollmentController } from "./cancelEnrollmentController";
 import { cancelPendingSessionController } from "./cancelSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
@@ -61,6 +64,21 @@ sessionRouter.delete(
 	validateJWT(),
 	validateRole("MASTER"),
 	cancelPendingSessionController,
+);
+
+sessionRouter.delete(
+	"/sessions/:sessionId/cancel",
+	validateJWT(),
+	validateRole("MASTER"),
+	validateCancelApprovedSession,
+	cancelApprovedSessionController,
+);
+
+sessionRouter.delete(
+	"/sessions/:sessionId/enrollments/me",
+	validateJWT(),
+	validateRole(["PLAYER", "MASTER"]),
+	cancelEnrollmentController,
 );
 
 export default sessionRouter;

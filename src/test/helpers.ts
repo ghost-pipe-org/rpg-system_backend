@@ -41,6 +41,7 @@ export interface TestSession {
 	status?: SessionStatus;
 	period?: SessionPeriod;
 	requirements?: string;
+	approvedDate?: Date;
 }
 
 export async function createUser(
@@ -132,6 +133,7 @@ export async function createSession(
 		status: data.status || ("PENDENTE" as SessionStatus),
 		period: data.period,
 		requirements: data.requirements,
+		approvedDate: data.approvedDate,
 	};
 
 	const session = await prisma.session.create({
@@ -150,6 +152,7 @@ export async function createSession(
 		status: session.status,
 		period: session.period || undefined,
 		requirements: session.requirements || undefined,
+		approvedDate: session.approvedDate || undefined,
 	};
 }
 
