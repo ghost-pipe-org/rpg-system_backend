@@ -29,6 +29,7 @@ export interface SessionsRepository {
 		sessionId: string,
 		userId: string,
 	): Promise<SessionEnrollment>;
+	unsubscribeUserFromSession(sessionId: string, userId: string): Promise<void>;
 	isUserEnrolled(sessionId: string, userId: string): Promise<boolean>;
 	findFirstByMasterAndStatus(
 		masterId: string,

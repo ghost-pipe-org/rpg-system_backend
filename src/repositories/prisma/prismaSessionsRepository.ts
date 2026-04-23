@@ -96,6 +96,17 @@ export class PrismaSessionsRepository implements SessionsRepository {
 		});
 	}
 
+	async unsubscribeUserFromSession(sessionId: string, userId: string) {
+		await prisma.sessionEnrollment.delete({
+			where: {
+				userId_sessionId: {
+					userId,
+					sessionId,
+				},
+			},
+		});
+	}
+
 	async isUserEnrolled(sessionId: string, userId: string) {
 		const enrollment = await prisma.sessionEnrollment.findFirst({
 			where: {

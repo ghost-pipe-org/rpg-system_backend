@@ -1,6 +1,8 @@
 import { AlreadyEnrolledError } from "@/services/errors/alreadyEnrolledError";
+import { EnrollmentClosedError } from "@/services/errors/enrollmentClosedError";
 import { InvalidSessionError } from "@/services/errors/invalidSessionError";
 import { InvalidUserError } from "@/services/errors/invalidUserError";
+import { SessionConflictError } from "@/services/errors/sessionConflictError";
 import { SessionFullError } from "@/services/errors/sessionFullError";
 import { makeSubscribeUserToSessionService } from "@/services/factories/makesubscribeUserToSessionService";
 import type { Request, Response } from "express";
@@ -29,6 +31,12 @@ export async function subscribeUserToSessionController(
 		}
 		if (error instanceof InvalidUserError) {
 			return res.status(404).json({ message: "User not found" });
+		}
+		if (error instanceof EnrollmentClosedError) {
+			return res.status(403).json({ message: error.message });
+		}
+		if (error instanceof SessionConflictError) {
+			return res.status(409).json({ message: error.message });
 		}
 		if (error instanceof AlreadyEnrolledError) {
 			return res
