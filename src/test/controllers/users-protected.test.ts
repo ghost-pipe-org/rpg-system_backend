@@ -76,7 +76,9 @@ describe("Protected User Routes", () => {
 			expect(response.body.data[0]).toHaveProperty("maxPlayers");
 
 			expect(
-				response.body.data.every((s: any) => s.masterId === masterId),
+				response.body.data.every(
+					(s: { masterId: string }) => s.masterId === masterId,
+				),
 			).toBe(true);
 		});
 

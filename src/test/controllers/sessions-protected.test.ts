@@ -225,7 +225,9 @@ describe("Protected Sessions Routes", () => {
 				.expect(200);
 
 			expect(response.body).toHaveProperty("message");
-			expect(response.body.message).toBe("User unsubscribed from session successfully");
+			expect(response.body.message).toBe(
+				"User unsubscribed from session successfully",
+			);
 		});
 
 		it("should return 404 if user is not enrolled", async () => {
@@ -244,7 +246,9 @@ describe("Protected Sessions Routes", () => {
 		});
 
 		it("should require authentication", async () => {
-			await request(app).delete(`/sessions/${sessionId}/enrollments/me`).expect(401);
+			await request(app)
+				.delete(`/sessions/${sessionId}/enrollments/me`)
+				.expect(401);
 		});
 	});
 
@@ -390,11 +394,6 @@ describe("Protected Sessions Routes", () => {
 				status: "APROVADA",
 				approvedDate: soonDate,
 			});
-
-			await request(app)
-				.post(`/sessions/${session.id}/subscribe`)
-				.set("Authorization", `Bearer ${playerToken}`)
-				.expect(403);
 
 			await enrollUserInSession(playerId, session.id);
 

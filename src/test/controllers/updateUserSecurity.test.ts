@@ -40,7 +40,10 @@ describe("Update User Security Controllers", () => {
 				})
 				.expect(200);
 
-			expect(response.body).toHaveProperty("message", "Senha atualizada com sucesso");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Senha atualizada com sucesso",
+			);
 
 			// Test login with new password
 			const newAuth = await request(app).post("/users/authenticate").send({
@@ -60,7 +63,10 @@ describe("Update User Security Controllers", () => {
 				})
 				.expect(400);
 
-			expect(response.body).toHaveProperty("message", "Credenciais inválidas: a senha atual está incorreta");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Credenciais inválidas: a senha atual está incorreta",
+			);
 		});
 
 		it("should reject password that is too weak", async () => {
@@ -98,7 +104,10 @@ describe("Update User Security Controllers", () => {
 				})
 				.expect(200);
 
-			expect(response.body).toHaveProperty("message", "Email atualizado com sucesso");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Email atualizado com sucesso",
+			);
 			expect(response.body).toHaveProperty("data");
 			expect(response.body.data.email).toBe("new.security@example.com");
 
@@ -120,7 +129,10 @@ describe("Update User Security Controllers", () => {
 				})
 				.expect(400);
 
-			expect(response.body).toHaveProperty("message", "Credenciais inválidas: a senha atual está incorreta");
+			expect(response.body).toHaveProperty(
+				"message",
+				"Credenciais inválidas: a senha atual está incorreta",
+			);
 		});
 
 		it("should reject updating to an email already in use", async () => {
@@ -141,7 +153,10 @@ describe("Update User Security Controllers", () => {
 				})
 				.expect(409);
 
-			expect(response.body).toHaveProperty("message", "O endereço de email fornecido já está em uso");
+			expect(response.body).toHaveProperty(
+				"message",
+				"O endereço de email fornecido já está em uso",
+			);
 		});
 
 		it("should require authentication", async () => {

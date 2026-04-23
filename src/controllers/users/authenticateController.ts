@@ -25,7 +25,9 @@ export async function authenticateController(req: Request, res: Response) {
 			phoneNumber: user.phoneNumber,
 		};
 
-		const token = jwt.sign({ sub: user.id, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
+		const token = jwt.sign({ sub: user.id, role: user.role }, JWT_SECRET, {
+			expiresIn: "7d",
+		});
 		return res.status(200).json({
 			message: "User authenticated successfully",
 			token,

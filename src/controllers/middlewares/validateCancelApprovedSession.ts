@@ -2,9 +2,9 @@ import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
 const cancelApprovedSessionSchema = z.object({
-	cancelEvent: z
-		.string()
-		.min(10, { message: "O motivo do cancelamento deve ter no mínimo 10 caracteres." }),
+	cancelEvent: z.string().min(10, {
+		message: "O motivo do cancelamento deve ter no mínimo 10 caracteres.",
+	}),
 });
 
 export const validateCancelApprovedSession = (

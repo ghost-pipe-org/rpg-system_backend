@@ -1,7 +1,7 @@
-import { validateUpdatePassword } from "../middlewares/validateUpdatePassword";
 import { validateUpdateEmail } from "../middlewares/validateUpdateEmail";
-import { updateUserPasswordController } from "./updateUserPasswordController";
+import { validateUpdatePassword } from "../middlewares/validateUpdatePassword";
 import { updateUserEmailController } from "./updateUserEmailController";
+import { updateUserPasswordController } from "./updateUserPasswordController";
 
 // Rest of the imports remain...
 import { type Express, Router } from "express";

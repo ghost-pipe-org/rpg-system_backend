@@ -1,7 +1,7 @@
 import type { UsersRepository } from "@/repositories/usersRepository";
-import { InvalidUserError } from "../errors/invalidUserError";
-import { InvalidCredentialsError } from "../errors/invalidCredentialsError";
 import bcrypt from "bcryptjs";
+import { InvalidCredentialsError } from "../errors/invalidCredentialsError";
+import { InvalidUserError } from "../errors/invalidUserError";
 
 interface UpdateUserPasswordServiceRequest {
 	userId: string;

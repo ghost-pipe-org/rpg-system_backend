@@ -6,13 +6,13 @@ import { validateJWT } from "../middlewares/validateJWT";
 import { validateRole } from "../middlewares/validateRole";
 import { approveSessionController } from "./approveSessionController";
 import { cancelApprovedSessionController } from "./cancelApprovedSessionController";
+import { cancelEnrollmentController } from "./cancelEnrollmentController";
 import { cancelPendingSessionController } from "./cancelSessionController";
 import { emitSessionController } from "./emitSessionController";
 import { getAllSessionsController } from "./getAllSessionsController";
 import { getAvaliableSessionsController } from "./getAvaliableSessionsController";
 import { rejectSessionController } from "./rejectSessionController";
 import { subscribeUserToSessionController } from "./subscribeUserToSessionController";
-import { cancelEnrollmentController } from "./cancelEnrollmentController";
 
 const sessionRouter = Router();
 

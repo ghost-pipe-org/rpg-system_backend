@@ -1,4 +1,3 @@
-
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
 import type { UsersRepository } from "@/repositories/usersRepository";
 import { SessionNotPending } from "../errors/SessionNotPending";

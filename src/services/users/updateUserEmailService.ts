@@ -1,9 +1,9 @@
 import type { UsersRepository } from "@/repositories/usersRepository";
 import type { Prisma, User } from "@prisma/client";
-import { InvalidUserError } from "../errors/invalidUserError";
-import { InvalidCredentialsError } from "../errors/invalidCredentialsError";
-import { UserAlreadyExistsError } from "../errors/userAlreadyExistsError";
 import bcrypt from "bcryptjs";
+import { InvalidCredentialsError } from "../errors/invalidCredentialsError";
+import { InvalidUserError } from "../errors/invalidUserError";
+import { UserAlreadyExistsError } from "../errors/userAlreadyExistsError";
 
 interface UpdateUserEmailServiceRequest {
 	userId: string;

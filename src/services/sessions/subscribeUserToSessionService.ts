@@ -56,7 +56,8 @@ export class SubscribeUserToSessionService {
 			throw new InvalidUserError();
 		}
 
-		const userEnrollments = await this.sessionsRepository.findEnrolledByUser(userId);
+		const userEnrollments =
+			await this.sessionsRepository.findEnrolledByUser(userId);
 		const hasConflict = userEnrollments.some(({ session: enrolledSession }) => {
 			if (!enrolledSession.approvedDate || !session.approvedDate) return false;
 			const sameDay =
