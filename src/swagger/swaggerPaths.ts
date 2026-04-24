@@ -608,7 +608,8 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 		get: {
 			tags: ["Oficinas"],
 			summary: "Buscar oficinas aprovadas",
-			description: "Retorna todas as oficinas aprovadas e disponíveis para inscrição",
+			description:
+				"Retorna todas as oficinas aprovadas e disponíveis para inscrição",
 			responses: {
 				"200": {
 					description: "Lista de oficinas aprovadas",
@@ -630,7 +631,8 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 		get: {
 			tags: ["Oficinas"],
 			summary: "Buscar todas as oficinas (Admin)",
-			description: "Retorna todas as oficinas do sistema (apenas para administradores)",
+			description:
+				"Retorna todas as oficinas do sistema (apenas para administradores)",
 			security: [{ bearerAuth: [] }],
 			responses: {
 				"200": {
@@ -646,18 +648,27 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 				},
 				"401": {
 					description: "Token inválido ou expirado",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 				"403": {
 					description: "Acesso negado",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 			},
 		},
 		post: {
 			tags: ["Oficinas"],
 			summary: "Emitir nova oficina (Master)",
-			description: "Cria uma nova oficina narrativa. Opcionalmente pode incluir IDs de facilitadores.",
+			description:
+				"Cria uma nova oficina narrativa. Opcionalmente pode incluir IDs de facilitadores.",
 			security: [{ bearerAuth: [] }],
 			requestBody: {
 				required: true,
@@ -670,19 +681,35 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 			responses: {
 				"201": {
 					description: "Oficina criada com sucesso",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Session" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Session" },
+						},
+					},
 				},
 				"400": {
 					description: "Dados inválidos",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 				"401": {
 					description: "Token inválido ou expirado",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 				"403": {
 					description: "Acesso negado - apenas mestres podem emitir oficinas",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 			},
 		},
@@ -707,21 +734,36 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 					description: "Inscrição realizada com sucesso",
 					content: {
 						"application/json": {
-							schema: { type: "object", properties: { message: { type: "string" } } },
+							schema: {
+								type: "object",
+								properties: { message: { type: "string" } },
+							},
 						},
 					},
 				},
 				"400": {
 					description: "Sessão lotada ou usuário já inscrito",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 				"401": {
 					description: "Token inválido ou expirado",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 				"404": {
 					description: "Oficina não encontrada",
-					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+					content: {
+						"application/json": {
+							schema: { $ref: "#/components/schemas/Error" },
+						},
+					},
 				},
 			},
 		},
