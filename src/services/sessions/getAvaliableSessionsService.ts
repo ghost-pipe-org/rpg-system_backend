@@ -1,15 +1,18 @@
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
-import type { Session } from "@prisma/client";
+import type { EventType, Session } from "@prisma/client";
 
 interface GetAvaliableSessionsServiceResponse {
 	sessions: Session[];
 }
 
 export class GetAvaliableSessionsService {
-	constructor(private SessionRepository: SessionsRepository) {}
+	constructor(private sessionRepository: SessionsRepository) {}
 
-	async execute(): Promise<GetAvaliableSessionsServiceResponse> {
-		const sessions = await this.SessionRepository.getAllByStatus("APROVADA");
+	async execute(type: EventType): Promise<GetAvaliableSessionsServiceResponse> {
+		const sessions = await this.sessionRepository.getAllByStatusAndType(
+			"APROVADA",
+			type,
+		);
 
 		return {
 			sessions,

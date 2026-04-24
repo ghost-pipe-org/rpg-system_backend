@@ -26,6 +26,11 @@ enum SessionPeriod {
   NOITE
 }
 
+enum EventType {
+  MESA
+  OFICINA
+}
+
 enum EnrollmentStatus {
   PENDENTE
   APROVADO
@@ -43,18 +48,20 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  enrollments     SessionEnrollment[]
-  createdSessions Session[] @relation("SessionToUser")
-  posts           Post[]
+  enrollments          SessionEnrollment[]
+  createdSessions      Session[]            @relation("SessionToUser")
+  facilitatedSessions  SessionFacilitator[]
+  posts                Post[]
 }
 
 model Session {
   id            String         @id @default(uuid()) @db.Uuid
+  type          EventType      @default(MESA)
   title         String         @db.VarChar(255)
   description   String         @db.Text
   requirements  String?        @db.Text
   status        SessionStatus  @default(PENDENTE)
-  system        String         @db.VarChar(100)
+  system        String?        @db.VarChar(100)
   location      String?        @db.VarChar(255)
   approvedDate  DateTime?
   cancelEvent   String?        @db.Text
@@ -64,9 +71,10 @@ model Session {
 
   enrollments   SessionEnrollment[]
   possibleDates SessionPossibleDate[]
+  facilitators  SessionFacilitator[]
 
-  masterId String @db.Uuid
-  master   User   @relation(fields: [masterId], references: [id], name: "SessionToUser")
+  masterId String? @db.Uuid
+  master   User?   @relation(fields: [masterId], references: [id], name: "SessionToUser")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,6 +100,17 @@ model SessionEnrollment {
   createdAt DateTime @default(now())
 
   @@unique([userId, sessionId])
+}
+
+model SessionFacilitator {
+  id        String  @id @default(uuid()) @db.Uuid
+  sessionId String  @db.Uuid
+  userId    String  @db.Uuid
+
+  session   Session @relation(fields: [sessionId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([sessionId, userId])
 }
 
 enum PostStatus {

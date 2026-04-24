@@ -381,6 +381,37 @@ describe("Protected Sessions Routes", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(409);
 		});
+
+		it("should not allow subscription to two mesas on the same day even in different periods", async () => {
+			const sessionDate = new Date();
+			sessionDate.setDate(sessionDate.getDate() + 7);
+
+			const firstSession = await createSession({
+				title: "Mesa Manha",
+				masterId: masterId,
+				status: "APROVADA",
+				approvedDate: sessionDate,
+				period: "MANHA",
+			});
+
+			const secondSession = await createSession({
+				title: "Mesa Tarde",
+				masterId: masterId,
+				status: "APROVADA",
+				approvedDate: sessionDate,
+				period: "TARDE",
+			});
+
+			await request(app)
+				.post(`/sessions/${firstSession.id}/subscribe`)
+				.set("Authorization", `Bearer ${playerToken}`)
+				.expect(200);
+
+			await request(app)
+				.post(`/sessions/${secondSession.id}/subscribe`)
+				.set("Authorization", `Bearer ${playerToken}`)
+				.expect(409);
+		});
 	});
 
 	describe("DELETE /sessions/:sessionId/enrollments/me — cancellation window", () => {

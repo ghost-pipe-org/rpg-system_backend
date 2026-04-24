@@ -17,7 +17,7 @@ export async function cancelApprovedSessionController(
 
 		const result = await cancelApprovedSessionService.execute({
 			sessionId,
-			masterId,
+			userId: masterId,
 			cancelEvent,
 		});
 

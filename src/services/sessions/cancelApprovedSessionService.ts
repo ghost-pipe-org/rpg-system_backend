@@ -1,12 +1,13 @@
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
 import type { UsersRepository } from "@/repositories/usersRepository";
+import { InvalidSessionError } from "../errors/invalidSessionError";
 import { NotFoundError } from "../errors/notFoundError";
 import { SessionCancellationWindowError } from "../errors/sessionCancellationWindowError";
 import { userIsNotMaster } from "../errors/userIsNotMaster";
 
 interface CancelApprovedSessionServiceRequest {
 	sessionId: string;
-	masterId: string;
+	userId: string;
 	cancelEvent: string;
 }
 
@@ -22,7 +23,7 @@ export class CancelApprovedSessionService {
 
 	async execute({
 		sessionId,
-		masterId,
+		userId,
 		cancelEvent,
 	}: CancelApprovedSessionServiceRequest): Promise<CancelApprovedSessionServiceResponse> {
 		const session = await this.sessionsRepository.findById(sessionId);
@@ -32,17 +33,26 @@ export class CancelApprovedSessionService {
 		}
 
 		if (!session.approvedDate) {
-			throw new NotFoundError("Sessão não possui data aprovada");
+			throw new InvalidSessionError();
 		}
 
-		const user = await this.usersRepository.findById(masterId);
+		const user = await this.usersRepository.findById(userId);
 
 		if (!user) {
 			throw new NotFoundError("Usuário não encontrado");
 		}
 
-		if (session.masterId !== masterId) {
-			throw new userIsNotMaster();
+		if (session.type === "MESA") {
+			if (session.masterId !== userId) {
+				throw new userIsNotMaster();
+			}
+		} else {
+			const isFacilitator = session.facilitators.some(
+				(f) => f.userId === userId,
+			);
+			if (!isFacilitator) {
+				throw new userIsNotMaster();
+			}
 		}
 
 		const now = new Date();
