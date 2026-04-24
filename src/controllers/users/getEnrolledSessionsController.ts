@@ -13,9 +13,9 @@ export async function getEnrolledSessionsController(
 			userId,
 		});
 
-		return res.status(200).json({ enrolledSessions });
+		return res.status(200).json({ data: enrolledSessions });
 	} catch (error) {
 		console.error("Error fetching enrolled sessions:", error);
-		return res.status(500).json({ error: "Internal server error" });
+		return res.status(500).json({ message: "Internal server error" });
 	}
 }

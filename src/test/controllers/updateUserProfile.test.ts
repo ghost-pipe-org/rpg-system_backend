@@ -69,11 +69,11 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				"message",
 				"Profile updated successfully",
 			);
-			expect(response.body).toHaveProperty("user");
-			expect(response.body.user.name).toBe("João Silva Santos");
-			expect(response.body.user.id).toBe(playerId);
-			expect(response.body.user.email).toBe(playerData.email);
-			expect(response.body.user).not.toHaveProperty("passwordHash");
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data.name).toBe("João Silva Santos");
+			expect(response.body.data.id).toBe(playerId);
+			expect(response.body.data.email).toBe(playerData.email);
+			expect(response.body.data).not.toHaveProperty("passwordHash");
 		});
 
 		it("should update phone number successfully", async () => {
@@ -87,8 +87,8 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.phoneNumber).toBe("(11) 95555-5555");
-			expect(response.body.user.name).toBe(playerData.name); // Nome não deve mudar
+			expect(response.body.data.phoneNumber).toBe("(11) 95555-5555");
+			expect(response.body.data.name).toBe(playerData.name); // Nome não deve mudar
 		});
 
 		it("should update both name and phone number successfully", async () => {
@@ -103,8 +103,8 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.name).toBe("Maria Silva");
-			expect(response.body.user.phoneNumber).toBe("(21) 99999-8888");
+			expect(response.body.data.name).toBe("Maria Silva");
+			expect(response.body.data.phoneNumber).toBe("(21) 99999-8888");
 		});
 
 		it("should remove phone number when empty string is sent", async () => {
@@ -118,7 +118,7 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.phoneNumber).toBeNull();
+			expect(response.body.data.phoneNumber).toBeNull();
 		});
 
 		it("should trim whitespace from name", async () => {
@@ -132,7 +132,7 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.name).toBe("João Silva Santos");
+			expect(response.body.data.name).toBe("João Silva Santos");
 		});
 
 		it("should work for MASTER users", async () => {
@@ -147,9 +147,9 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.name).toBe("Professor Carlos");
-			expect(response.body.user.phoneNumber).toBe("(11) 94444-4444");
-			expect(response.body.user.role).toBe("MASTER");
+			expect(response.body.data.name).toBe("Professor Carlos");
+			expect(response.body.data.phoneNumber).toBe("(11) 94444-4444");
+			expect(response.body.data.role).toBe("MASTER");
 		});
 	});
 
@@ -290,11 +290,11 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.expect(200);
 
 			// Apenas o nome deve ter mudado
-			expect(response.body.user.name).toBe("João Silva");
-			expect(response.body.user.email).toBe(playerData.email); // não mudou
-			expect(response.body.user.role).toBe("PLAYER"); // não mudou
-			expect(response.body.user.enrollment).toBe(playerData.enrollment); // não mudou
-			expect(response.body.user.id).toBe(playerId); // não mudou
+			expect(response.body.data.name).toBe("João Silva");
+			expect(response.body.data.email).toBe(playerData.email); // não mudou
+			expect(response.body.data.role).toBe("PLAYER"); // não mudou
+			expect(response.body.data.enrollment).toBe(playerData.enrollment); // não mudou
+			expect(response.body.data.id).toBe(playerId); // não mudou
 		});
 
 		it("should require authentication", async () => {
@@ -335,7 +335,7 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user).not.toHaveProperty("passwordHash");
+			expect(response.body.data).not.toHaveProperty("passwordHash");
 		});
 	});
 
@@ -351,7 +351,7 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.name).toBe("José da Silva Ação");
+			expect(response.body.data.name).toBe("José da Silva Ação");
 		});
 
 		it("should handle phone number with different valid formats", async () => {
@@ -365,7 +365,7 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.phoneNumber).toBe("(11) 9999-9999");
+			expect(response.body.data.phoneNumber).toBe("(11) 9999-9999");
 		});
 
 		it("should return 404 for non-existent user", async () => {
@@ -386,9 +386,9 @@ describe("PATCH /users/profile - Update User Profile Controller", () => {
 				.send(updateData)
 				.expect(200);
 
-			expect(response.body.user.updatedAt).toBeDefined();
+			expect(response.body.data.updatedAt).toBeDefined();
 			// Verificar que updatedAt é uma data recente (últimos 10 segundos)
-			const updatedAt = new Date(response.body.user.updatedAt);
+			const updatedAt = new Date(response.body.data.updatedAt);
 			const now = new Date();
 			const diffInSeconds = (now.getTime() - updatedAt.getTime()) / 1000;
 			expect(diffInSeconds).toBeLessThan(10);

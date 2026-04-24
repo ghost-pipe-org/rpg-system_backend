@@ -1,6 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import type { Prisma, SessionStatus } from "@prisma/client";
+import type { EventType, Prisma, SessionStatus } from "@prisma/client";
 import type { SessionsRepository } from "../sessionsRepository";
+
+const facilitatorsInclude = {
+	facilitators: {
+		include: {
+			user: {
+				select: {
+					id: true,
+					name: true,
+					email: true,
+				},
+			},
+		},
+	},
+} as const;
 
 export class PrismaSessionsRepository implements SessionsRepository {
 	async findById(id: string) {
@@ -14,6 +28,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 				},
 				possibleDates: true,
 				enrollments: true,
+				...facilitatorsInclude,
 			},
 		});
 	}
@@ -46,6 +61,24 @@ export class PrismaSessionsRepository implements SessionsRepository {
 					},
 				},
 				possibleDates: true,
+				...facilitatorsInclude,
+			},
+		});
+	}
+
+	async getAllByType(type: EventType) {
+		return prisma.session.findMany({
+			where: { type },
+			include: {
+				master: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+					},
+				},
+				possibleDates: true,
+				...facilitatorsInclude,
 			},
 		});
 	}
@@ -65,6 +98,7 @@ export class PrismaSessionsRepository implements SessionsRepository {
 						name: true,
 					},
 				},
+				...facilitatorsInclude,
 			},
 		});
 	}
@@ -82,6 +116,28 @@ export class PrismaSessionsRepository implements SessionsRepository {
 				},
 				possibleDates: true,
 				enrollments: true,
+				...facilitatorsInclude,
+			},
+		});
+	}
+
+	async getAllByStatusAndType(status: string, type: EventType) {
+		return prisma.session.findMany({
+			where: {
+				status: status as SessionStatus,
+				type,
+			},
+			include: {
+				master: {
+					select: {
+						id: true,
+						name: true,
+						email: true,
+					},
+				},
+				possibleDates: true,
+				enrollments: true,
+				...facilitatorsInclude,
 			},
 		});
 	}
@@ -96,6 +152,17 @@ export class PrismaSessionsRepository implements SessionsRepository {
 		});
 	}
 
+	async unsubscribeUserFromSession(sessionId: string, userId: string) {
+		await prisma.sessionEnrollment.delete({
+			where: {
+				userId_sessionId: {
+					userId,
+					sessionId,
+				},
+			},
+		});
+	}
+
 	async isUserEnrolled(sessionId: string, userId: string) {
 		const enrollment = await prisma.sessionEnrollment.findFirst({
 			where: {
@@ -106,19 +173,44 @@ export class PrismaSessionsRepository implements SessionsRepository {
 		return !!enrollment;
 	}
 
-	async findFirstByMasterAndStatus(masterId: string, status: string) {
+	async findFirstByMasterAndStatusAndType(
+		masterId: string,
+		status: string,
+		type: EventType,
+	) {
 		return prisma.session.findFirst({
 			where: {
 				masterId,
 				status: status as SessionStatus,
+				type,
 			},
 		});
+	}
+
+	async findFirstByFacilitatorAndStatusAndType(
+		userId: string,
+		status: string,
+		type: EventType,
+	) {
+		const result = await prisma.sessionFacilitator.findFirst({
+			where: {
+				userId,
+				session: {
+					status: status as SessionStatus,
+					type,
+				},
+			},
+		});
+		return result
+			? prisma.session.findUnique({ where: { id: result.sessionId } })
+			: null;
 	}
 
 	async findEmittedByMaster(masterId: string) {
 		return prisma.session.findMany({
 			where: {
 				masterId,
+				type: "MESA",
 			},
 			include: {
 				enrollments: {
@@ -133,6 +225,35 @@ export class PrismaSessionsRepository implements SessionsRepository {
 						},
 					},
 				},
+				...facilitatorsInclude,
+			},
+		});
+	}
+
+	async findEmittedByFacilitator(userId: string) {
+		const facilitatorEntries = await prisma.sessionFacilitator.findMany({
+			where: { userId },
+			select: { sessionId: true },
+		});
+
+		return prisma.session.findMany({
+			where: {
+				id: { in: facilitatorEntries.map((f) => f.sessionId) },
+			},
+			include: {
+				enrollments: {
+					include: {
+						user: {
+							select: {
+								id: true,
+								name: true,
+								email: true,
+								phoneNumber: true,
+							},
+						},
+					},
+				},
+				...facilitatorsInclude,
 			},
 		});
 	}
@@ -154,8 +275,18 @@ export class PrismaSessionsRepository implements SessionsRepository {
 						},
 						possibleDates: true,
 						enrollments: true,
+						...facilitatorsInclude,
 					},
 				},
+			},
+		});
+	}
+
+	async addFacilitator(sessionId: string, userId: string) {
+		await prisma.sessionFacilitator.create({
+			data: {
+				sessionId,
+				userId,
 			},
 		});
 	}

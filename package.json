@@ -1,6 +1,6 @@
 {
 	"name": "rpg-system-backend-node",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "Uma API de sistema de inscrições de mesas de RPG em Node usando typescript.",
 	"main": "index.js",
 	"scripts": {

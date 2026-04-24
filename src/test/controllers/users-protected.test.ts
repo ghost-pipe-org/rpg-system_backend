@@ -65,11 +65,21 @@ describe("Protected User Routes", () => {
 				.set("Authorization", `Bearer ${masterToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("emittedSessions");
-			expect(response.body.emittedSessions).toHaveLength(2);
-			expect(response.body.emittedSessions[0]).toHaveProperty("title");
-			expect(response.body.emittedSessions[0]).toHaveProperty("status");
-			expect(response.body.emittedSessions[0].masterId).toBe(masterId);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(2);
+			expect(response.body.data[0]).toHaveProperty("title");
+			expect(response.body.data[0]).toHaveProperty("description");
+			expect(response.body.data[0]).toHaveProperty("status");
+			expect(response.body.data[0]).toHaveProperty("system");
+			expect(response.body.data[0]).toHaveProperty("location");
+			expect(response.body.data[0]).toHaveProperty("minPlayers");
+			expect(response.body.data[0]).toHaveProperty("maxPlayers");
+
+			expect(
+				response.body.data.every(
+					(s: { masterId: string }) => s.masterId === masterId,
+				),
+			).toBe(true);
 		});
 
 		it("should return empty array for user with no emitted sessions", async () => {
@@ -78,8 +88,8 @@ describe("Protected User Routes", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("emittedSessions");
-			expect(response.body.emittedSessions).toHaveLength(0);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(0);
 		});
 
 		it("should require authentication", async () => {
@@ -109,14 +119,12 @@ describe("Protected User Routes", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("enrolledSessions");
-			expect(response.body.enrolledSessions).toHaveLength(1);
-			expect(response.body.enrolledSessions[0]).toHaveProperty("session");
-			expect(response.body.enrolledSessions[0]).toHaveProperty("status");
-			expect(response.body.enrolledSessions[0].session.title).toBe(
-				"Test Session",
-			);
-			expect(response.body.enrolledSessions[0].status).toBe("APROVADO");
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
+			expect(response.body.data[0]).toHaveProperty("status");
+			expect(response.body.data[0]).toHaveProperty("session");
+			expect(response.body.data[0].session).toHaveProperty("title");
+			expect(response.body.data[0].session).toHaveProperty("status");
 		});
 
 		it("should return empty array for user with no enrollments", async () => {
@@ -125,8 +133,8 @@ describe("Protected User Routes", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("enrolledSessions");
-			expect(response.body.enrolledSessions).toHaveLength(0);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(0);
 		});
 
 		it("should require authentication", async () => {
@@ -153,9 +161,9 @@ describe("Protected User Routes", () => {
 				.set("Authorization", `Bearer ${playerToken}`)
 				.expect(200);
 
-			expect(response.body).toHaveProperty("enrolledSessions");
-			expect(response.body.enrolledSessions).toHaveLength(1);
-			expect(response.body.enrolledSessions[0].userId).toBe(playerId);
+			expect(response.body).toHaveProperty("data");
+			expect(response.body.data).toHaveLength(1);
+			expect(response.body.data[0].userId).toBe(playerId);
 		});
 	});
 });

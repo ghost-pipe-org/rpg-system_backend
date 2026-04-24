@@ -18,7 +18,7 @@ export async function updateUserProfileController(req: Request, res: Response) {
 
 		return res.status(200).json({
 			message: "Profile updated successfully",
-			user,
+			data: user,
 		});
 	} catch (error) {
 		if (error instanceof InvalidUserError) {

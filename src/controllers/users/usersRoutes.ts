@@ -1,3 +1,10 @@
+import { validateUpdateEmail } from "../middlewares/validateUpdateEmail";
+import { validateUpdatePassword } from "../middlewares/validateUpdatePassword";
+import { getFacilitatedWorkshopsController } from "./getFacilitatedWorkshopsController";
+import { searchUserByEmailController } from "./searchUserByEmailController";
+import { updateUserEmailController } from "./updateUserEmailController";
+import { updateUserPasswordController } from "./updateUserPasswordController";
+
 import { type Express, Router } from "express";
 import { validateAuthenticate } from "../middlewares/validateAuthenticate";
 import { validateJWT } from "../middlewares/validateJWT";
@@ -31,12 +38,35 @@ userRouter.get(
 	getEnrolledSessionsController,
 );
 
+userRouter.get(
+	"/my-facilitated-workshops",
+	validateJWT(),
+	getFacilitatedWorkshopsController,
+);
+
+userRouter.get("/users/search", validateJWT(), searchUserByEmailController);
+
 userRouter.get("/users/profile", validateJWT(), getUserProfileController);
+
 userRouter.patch(
 	"/users/profile",
 	validateJWT(),
 	validateUpdateProfile,
 	updateUserProfileController,
+);
+
+userRouter.patch(
+	"/users/password",
+	validateJWT(),
+	validateUpdatePassword,
+	updateUserPasswordController,
+);
+
+userRouter.patch(
+	"/users/email",
+	validateJWT(),
+	validateUpdateEmail,
+	updateUserEmailController,
 );
 
 export default userRouter;

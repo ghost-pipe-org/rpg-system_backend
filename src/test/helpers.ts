@@ -33,7 +33,7 @@ export interface TestSession {
 	id: string;
 	title: string;
 	description: string;
-	system: string;
+	system?: string;
 	location?: string;
 	minPlayers: number;
 	maxPlayers: number;
@@ -41,6 +41,7 @@ export interface TestSession {
 	status?: SessionStatus;
 	period?: SessionPeriod;
 	requirements?: string;
+	approvedDate?: Date;
 }
 
 export async function createUser(
@@ -132,6 +133,7 @@ export async function createSession(
 		status: data.status || ("PENDENTE" as SessionStatus),
 		period: data.period,
 		requirements: data.requirements,
+		approvedDate: data.approvedDate,
 	};
 
 	const session = await prisma.session.create({
@@ -142,7 +144,7 @@ export async function createSession(
 		id: session.id,
 		title: session.title,
 		description: session.description,
-		system: session.system,
+		system: session.system || undefined,
 		location: session.location || undefined,
 		minPlayers: session.minPlayers,
 		maxPlayers: session.maxPlayers,
@@ -150,6 +152,49 @@ export async function createSession(
 		status: session.status,
 		period: session.period || undefined,
 		requirements: session.requirements || undefined,
+		approvedDate: session.approvedDate || undefined,
+	};
+}
+
+export async function createWorkshop(
+	data: Partial<Omit<TestSession, "masterId">> & { facilitatorIds: string[] },
+): Promise<TestSession & { facilitatorIds: string[] }> {
+	const sessionData = {
+		type: "OFICINA" as const,
+		title: data.title || "Test Workshop",
+		description: data.description || "Test workshop description",
+		location: data.location,
+		minPlayers: data.minPlayers || 3,
+		maxPlayers: data.maxPlayers || 6,
+		status: data.status || ("PENDENTE" as SessionStatus),
+		period: data.period,
+		requirements: data.requirements,
+		approvedDate: data.approvedDate,
+	};
+
+	const session = await prisma.session.create({
+		data: sessionData,
+	});
+
+	for (const userId of data.facilitatorIds) {
+		await prisma.sessionFacilitator.create({
+			data: { sessionId: session.id, userId },
+		});
+	}
+
+	return {
+		id: session.id,
+		title: session.title,
+		description: session.description,
+		location: session.location || undefined,
+		minPlayers: session.minPlayers,
+		maxPlayers: session.maxPlayers,
+		masterId: "",
+		status: session.status,
+		period: session.period || undefined,
+		requirements: session.requirements || undefined,
+		approvedDate: session.approvedDate || undefined,
+		facilitatorIds: data.facilitatorIds,
 	};
 }
 
@@ -190,6 +235,7 @@ export async function cleanupTestData() {
 	while (retryCount < maxRetries) {
 		try {
 			await prisma.sessionEnrollment.deleteMany();
+			await prisma.sessionFacilitator.deleteMany();
 			await prisma.sessionPossibleDate.deleteMany();
 			await prisma.session.deleteMany();
 			await prisma.user.deleteMany();

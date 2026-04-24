@@ -33,9 +33,10 @@ export class EmitSessionService {
 		masterId,
 	}: emitSessionServiceRequest): Promise<emitSessionServiceResponse> {
 		const pendingSession =
-			await this.sessionsRepository.findFirstByMasterAndStatus(
+			await this.sessionsRepository.findFirstByMasterAndStatusAndType(
 				masterId,
 				"PENDENTE",
+				"MESA",
 			);
 		if (pendingSession) {
 			throw new PendingSessionExistsError();
