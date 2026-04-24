@@ -43,11 +43,9 @@ export async function emitWorkshopController(req: Request, res: Response) {
 			return res.status(409).json({ message: error.message });
 		}
 		if (error instanceof InvalidUserError) {
-			return res
-				.status(404)
-				.json({
-					message: "Um dos ministrantes informados não foi encontrado.",
-				});
+			return res.status(404).json({
+				message: "Um dos ministrantes informados não foi encontrado.",
+			});
 		}
 
 		console.error("Error emitting workshop:", error);

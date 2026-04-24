@@ -21,7 +21,7 @@ export class ApproveSessionService {
 	constructor(
 		private sessionsRepository: SessionsRepository,
 		private usersRepository: UsersRepository,
-	) { }
+	) {}
 
 	async execute({
 		sessionId,
