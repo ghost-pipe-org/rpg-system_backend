@@ -118,6 +118,9 @@ export async function createUser(
 export async function createSession(
 	data: Partial<TestSession> & { masterId: string },
 ): Promise<TestSession> {
+	const futureDate = new Date();
+	futureDate.setDate(futureDate.getDate() + 3);
+
 	const sessionData = {
 		title: data.title || "Test Session",
 		description: data.description || "Test session description",
@@ -133,7 +136,9 @@ export async function createSession(
 		status: data.status || ("PENDENTE" as SessionStatus),
 		period: data.period,
 		requirements: data.requirements,
-		approvedDate: data.approvedDate,
+		approvedDate:
+			data.approvedDate ||
+			(data.status === "APROVADA" ? futureDate : undefined),
 	};
 
 	const session = await prisma.session.create({
@@ -159,6 +164,9 @@ export async function createSession(
 export async function createWorkshop(
 	data: Partial<Omit<TestSession, "masterId">> & { facilitatorIds: string[] },
 ): Promise<TestSession & { facilitatorIds: string[] }> {
+	const futureDate = new Date();
+	futureDate.setDate(futureDate.getDate() + 3);
+
 	const sessionData = {
 		type: "OFICINA" as const,
 		title: data.title || "Test Workshop",
@@ -169,7 +177,9 @@ export async function createWorkshop(
 		status: data.status || ("PENDENTE" as SessionStatus),
 		period: data.period,
 		requirements: data.requirements,
-		approvedDate: data.approvedDate,
+		approvedDate:
+			data.approvedDate ||
+			(data.status === "APROVADA" ? futureDate : undefined),
 	};
 
 	const session = await prisma.session.create({
