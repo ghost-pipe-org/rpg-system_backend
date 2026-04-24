@@ -16,6 +16,7 @@ async function cleanDatabase() {
 	while (retryCount < maxRetries) {
 		try {
 			await prisma.sessionEnrollment.deleteMany();
+			await prisma.sessionFacilitator.deleteMany();
 			await prisma.sessionPossibleDate.deleteMany();
 			await prisma.session.deleteMany();
 			await prisma.user.deleteMany();

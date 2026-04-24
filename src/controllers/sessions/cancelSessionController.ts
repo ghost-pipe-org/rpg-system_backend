@@ -13,7 +13,6 @@ export async function cancelPendingSessionController(
 		const userId = (req.user as { id: string }).id;
 		const { sessionId } = req.params;
 
-		// possivel erro com os parametros trocados/invertidos
 		const result = await cancelSessionService.execute({ sessionId, userId });
 
 		return res.status(200).json({ message: result.message });

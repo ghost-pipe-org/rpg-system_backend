@@ -39,8 +39,17 @@ export class CancelPendingSessionService {
 			throw new NotFoundError("Usuário não encontrado");
 		}
 
-		if (session.masterId !== userId) {
-			throw new userIsNotMaster();
+		if (session.type === "MESA") {
+			if (session.masterId !== userId) {
+				throw new userIsNotMaster();
+			}
+		} else {
+			const isFacilitator = session.facilitators.some(
+				(f) => f.userId === userId,
+			);
+			if (!isFacilitator) {
+				throw new userIsNotMaster();
+			}
 		}
 
 		await this.sessionsRepository.update(session.id, {
@@ -48,8 +57,7 @@ export class CancelPendingSessionService {
 		});
 
 		return {
-			message:
-				"Infelizmente, sua solicitação não pôde ser atendida, pois as datas escolhidas não são adequadas para a mestragem da mesa. Por favor contate o admin do sistema.",
+			message: "Solicitação cancelada com sucesso.",
 		};
 	}
 }

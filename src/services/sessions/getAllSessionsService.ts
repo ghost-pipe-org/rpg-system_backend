@@ -1,15 +1,15 @@
 import type { SessionsRepository } from "@/repositories/sessionsRepository";
-import type { Session } from "@prisma/client";
+import type { EventType, Session } from "@prisma/client";
 
 interface GetAllSessionsServiceResponse {
 	sessions: Session[];
 }
 
 export class GetAllSessionsService {
-	constructor(private SessionRepository: SessionsRepository) {}
+	constructor(private sessionRepository: SessionsRepository) {}
 
-	async execute(): Promise<GetAllSessionsServiceResponse> {
-		const sessions = await this.SessionRepository.getAll();
+	async execute(type: EventType): Promise<GetAllSessionsServiceResponse> {
+		const sessions = await this.sessionRepository.getAllByType(type);
 
 		return {
 			sessions,

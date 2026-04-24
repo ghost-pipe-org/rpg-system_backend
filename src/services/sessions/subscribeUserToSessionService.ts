@@ -21,7 +21,7 @@ export class SubscribeUserToSessionService {
 	constructor(
 		private sessionsRepository: SessionsRepository,
 		private usersRepository: UsersRepository,
-	) {}
+	) { }
 
 	async execute({
 		sessionId,
@@ -60,10 +60,19 @@ export class SubscribeUserToSessionService {
 			await this.sessionsRepository.findEnrolledByUser(userId);
 		const hasConflict = userEnrollments.some(({ session: enrolledSession }) => {
 			if (!enrolledSession.approvedDate || !session.approvedDate) return false;
+
 			const sameDay =
 				new Date(enrolledSession.approvedDate).toISOString().slice(0, 10) ===
 				new Date(session.approvedDate).toISOString().slice(0, 10);
-			return sameDay && enrolledSession.period === session.period;
+
+			if (!sameDay) return false;
+
+			// Regra 1: Apenas uma mesa por dia. Se as duas forem mesas no mesmo dia, conflito imediato.
+			if (session.type === "MESA" && enrolledSession.type === "MESA")
+				return true;
+
+			// Regra 2: Para qualquer tipo de evento (Mesa ou Oficina), não pode ser no mesmo período.
+			return enrolledSession.period === session.period;
 		});
 		if (hasConflict) {
 			throw new SessionConflictError();
