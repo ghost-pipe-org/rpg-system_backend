@@ -144,7 +144,7 @@ export async function createSession(
 		id: session.id,
 		title: session.title,
 		description: session.description,
-		system: session.system,
+		system: session.system || undefined,
 		location: session.location || undefined,
 		minPlayers: session.minPlayers,
 		maxPlayers: session.maxPlayers,
