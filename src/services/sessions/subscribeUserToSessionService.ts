@@ -44,8 +44,8 @@ export class SubscribeUserToSessionService {
 			const sessionDate = new Date(session.approvedDate);
 			sessionDate.setUTCHours(0, 0, 0, 0);
 
-			// Se a data atual for igual ou maior a data da sessão, as inscrições estão fechadas
-			if (now >= sessionDate) {
+			// Se a data atual for estritamente maior a data da sessão, as inscrições estão fechadas
+			if (now > sessionDate) {
 				throw new EnrollmentClosedError();
 			}
 		}
