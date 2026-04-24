@@ -5,7 +5,7 @@ const swaggerDefinition = {
 	openapi: "3.0.0",
 	info: {
 		title: "RPG System API",
-		version: "0.5.0",
+		version: "0.6.0",
 		description: "Uma API de sistema de inscrições de mesas de RPG",
 		contact: {
 			name: "API Support",
@@ -326,6 +326,71 @@ const swaggerDefinition = {
 						type: "string",
 						maxLength: 255,
 						example: "Sala 101 - Prédio Principal",
+					},
+				},
+			},
+			CreateWorkshopRequest: {
+				type: "object",
+				required: [
+					"title",
+					"description",
+					"possibleDates",
+					"period",
+					"minPlayers",
+					"maxPlayers",
+				],
+				properties: {
+					title: {
+						type: "string",
+						maxLength: 255,
+						example: "Introdução ao D&D",
+					},
+					description: {
+						type: "string",
+						example: "Oficina para ensinar o básico de Roleplay",
+					},
+					requirements: {
+						type: "string",
+						example: "Trazer lápis e borracha",
+						description: "Requisitos opcionais para participar da oficina",
+					},
+					possibleDates: {
+						type: "array",
+						items: {
+							type: "string",
+							format: "date-time",
+						},
+						example: ["2024-12-31T20:00:00.000Z", "2025-01-07T20:00:00.000Z"],
+						description: "Lista de datas possíveis para a oficina",
+					},
+					period: {
+						type: "string",
+						enum: ["MANHA", "TARDE", "NOITE"],
+						example: "TARDE",
+					},
+					minPlayers: {
+						type: "integer",
+						minimum: 1,
+						example: 5,
+					},
+					maxPlayers: {
+						type: "integer",
+						minimum: 1,
+						example: 20,
+					},
+					location: {
+						type: "string",
+						maxLength: 255,
+						example: "Sala de Oficinas 1",
+					},
+					facilitatorIds: {
+						type: "array",
+						items: {
+							type: "string",
+							format: "uuid",
+						},
+						example: ["123e4567-e89b-12d3-a456-426614174000"],
+						description: "Lista de UUIDs dos facilitadores (opcional, o criador é inserido automaticamente)",
 					},
 				},
 			},

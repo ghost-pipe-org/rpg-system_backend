@@ -604,6 +604,128 @@ export const swaggerPaths: OpenAPIV3.PathsObject = {
 			},
 		},
 	},
+	"/workshops/approved": {
+		get: {
+			tags: ["Oficinas"],
+			summary: "Buscar oficinas aprovadas",
+			description: "Retorna todas as oficinas aprovadas e disponíveis para inscrição",
+			responses: {
+				"200": {
+					description: "Lista de oficinas aprovadas",
+					content: {
+						"application/json": {
+							schema: {
+								type: "array",
+								items: {
+									$ref: "#/components/schemas/Session",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+	"/workshops": {
+		get: {
+			tags: ["Oficinas"],
+			summary: "Buscar todas as oficinas (Admin)",
+			description: "Retorna todas as oficinas do sistema (apenas para administradores)",
+			security: [{ bearerAuth: [] }],
+			responses: {
+				"200": {
+					description: "Lista de todas as oficinas",
+					content: {
+						"application/json": {
+							schema: {
+								type: "array",
+								items: { $ref: "#/components/schemas/Session" },
+							},
+						},
+					},
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+				"403": {
+					description: "Acesso negado",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+			},
+		},
+		post: {
+			tags: ["Oficinas"],
+			summary: "Emitir nova oficina (Master)",
+			description: "Cria uma nova oficina narrativa. Opcionalmente pode incluir IDs de facilitadores.",
+			security: [{ bearerAuth: [] }],
+			requestBody: {
+				required: true,
+				content: {
+					"application/json": {
+						schema: { $ref: "#/components/schemas/CreateWorkshopRequest" },
+					},
+				},
+			},
+			responses: {
+				"201": {
+					description: "Oficina criada com sucesso",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Session" } } },
+				},
+				"400": {
+					description: "Dados inválidos",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+				"403": {
+					description: "Acesso negado - apenas mestres podem emitir oficinas",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+			},
+		},
+	},
+	"/workshops/{sessionId}/subscribe": {
+		post: {
+			tags: ["Oficinas"],
+			summary: "Inscrever-se em uma oficina",
+			description: "Inscreve o usuário logado em uma oficina específica",
+			security: [{ bearerAuth: [] }],
+			parameters: [
+				{
+					name: "sessionId",
+					in: "path",
+					required: true,
+					description: "ID da oficina",
+					schema: { type: "string" },
+				},
+			],
+			responses: {
+				"200": {
+					description: "Inscrição realizada com sucesso",
+					content: {
+						"application/json": {
+							schema: { type: "object", properties: { message: { type: "string" } } },
+						},
+					},
+				},
+				"400": {
+					description: "Sessão lotada ou usuário já inscrito",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+				"401": {
+					description: "Token inválido ou expirado",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+				"404": {
+					description: "Oficina não encontrada",
+					content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+				},
+			},
+		},
+	},
 	"/users/profile": {
 		get: {
 			tags: ["Usuários"],

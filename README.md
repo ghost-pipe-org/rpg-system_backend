@@ -8,7 +8,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-5.x-2D3748)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue)
 ![Swagger](https://img.shields.io/badge/Swagger-API%20Docs-brightgreen)
-![Tests](https://img.shields.io/badge/Tests-53%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-123%20passing-brightgreen)
 
 ## 📋 Índice
 
@@ -24,7 +24,7 @@
 
 ## 🎯 Sobre o Projeto
 
-O **RPG System Backend** é uma API REST que gerencia um sistema completo de inscrições para mesas de RPG. Permite que mestres criem sessões, jogadores se inscrevam, e administradores gerenciem todo o sistema.
+O **RPG System Backend** é uma API REST que gerencia um sistema completo de inscrições para mesas de RPG e Oficinas. Permite que mestres criem sessões, organizem oficinas, jogadores se inscrevam, e administradores gerenciem todo o sistema.
 
 ### ✨ Principais Características
 
@@ -34,7 +34,7 @@ O **RPG System Backend** é uma API REST que gerencia um sistema completo de ins
 - 🛡️ **Validação Robusta** com Zod e middlewares personalizados
 - 📚 **Documentação Swagger** interativa e sempre atualizada
 - 🐳 **Docker** para desenvolvimento e produção
-- 🧪 **53 Testes Automatizados** com cobertura completa
+- 🧪 **123 Testes Automatizados** com cobertura completa
 - 📊 **PostgreSQL + Prisma ORM** para persistência de dados
 
 ## 🚀 Tecnologias
@@ -122,6 +122,10 @@ A API possui **documentação Swagger interativa** completa:
 | | `PATCH /sessions/:id/approve` | Aprovar sessão | 🔒 Admin |
 | | `PATCH /sessions/:id/reject` | Rejeitar sessão | 🔒 Admin |
 | | `DELETE /sessions/:id` | Cancelar sessão pendente | 🔒 Master |
+| **Workshops** | `GET /workshops/approved` | Oficinas aprovadas | ❌ |
+| | `GET /workshops` | Todas as oficinas | 🔒 Admin |
+| | `POST /workshops` | Emitir oficina | 🔒 Master |
+| | `POST /workshops/:id/subscribe` | Inscrever-se em oficina | 🔒 Player/Master |
 | **Profile** | `GET /my-emmitted-sessions` | Minhas sessões criadas | 🔒 |
 | | `GET /my-enrolled-sessions` | Minhas inscrições | 🔒 |
 | | `GET /users/profile` | Meu perfil completo | 🔒 |
@@ -197,7 +201,7 @@ docker-compose down -v
 
 ## 🧪 Testes
 
-O projeto possui **53 testes automatizados** cobrindo todos os cenários:
+O projeto possui **123 testes automatizados** cobrindo todos os cenários:
 
 ### ⚡ Comandos Rápidos
 
