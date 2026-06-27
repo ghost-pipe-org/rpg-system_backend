@@ -1,6 +1,6 @@
 import type {
-	PostsRepository,
 	PostWithRelations,
+	PostsRepository,
 } from "@/repositories/postsRepository";
 import { PostNotFoundError } from "@/services/errors/postNotFoundError";
 
@@ -14,7 +14,7 @@ interface GetPostBySlugServiceResponse {
 }
 
 export class GetPostBySlugService {
-	constructor(private postsRepository: PostsRepository) { }
+	constructor(private postsRepository: PostsRepository) {}
 
 	async execute({
 		slug,

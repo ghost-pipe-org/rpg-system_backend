@@ -1,6 +1,6 @@
 import type {
-	PostsRepository,
 	PostWithRelations,
+	PostsRepository,
 } from "@/repositories/postsRepository";
 import type { PostStatus } from "@prisma/client";
 
@@ -22,7 +22,7 @@ interface ListPostsServiceResponse {
 }
 
 export class ListPostsService {
-	constructor(private postsRepository: PostsRepository) { }
+	constructor(private postsRepository: PostsRepository) {}
 
 	async execute({
 		status,
