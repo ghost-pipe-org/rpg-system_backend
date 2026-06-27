@@ -15,6 +15,9 @@ async function cleanDatabase() {
 
 	while (retryCount < maxRetries) {
 		try {
+			await prisma.postCategory.deleteMany();
+			await prisma.post.deleteMany();
+			await prisma.category.deleteMany();
 			await prisma.sessionEnrollment.deleteMany();
 			await prisma.sessionFacilitator.deleteMany();
 			await prisma.sessionPossibleDate.deleteMany();
@@ -33,7 +36,7 @@ async function cleanDatabase() {
 				console.warn("All cleanup attempts failed, trying to truncate tables");
 
 				try {
-					await prisma.$executeRaw`TRUNCATE TABLE "SessionEnrollment", "SessionPossibleDate", "Session", "User" CASCADE`;
+					await prisma.$executeRaw`TRUNCATE TABLE "PostCategory", "Post", "Category", "SessionEnrollment", "SessionFacilitator", "SessionPossibleDate", "Session", "User" CASCADE`;
 					console.log("Database truncated successfully");
 					return;
 				} catch (truncateError) {
@@ -42,7 +45,11 @@ async function cleanDatabase() {
 					);
 					try {
 						await prisma.$executeRaw`SET CONSTRAINTS ALL DEFERRED`;
+						await prisma.$executeRaw`DELETE FROM "PostCategory"`;
+						await prisma.$executeRaw`DELETE FROM "Post"`;
+						await prisma.$executeRaw`DELETE FROM "Category"`;
 						await prisma.$executeRaw`DELETE FROM "SessionEnrollment"`;
+						await prisma.$executeRaw`DELETE FROM "SessionFacilitator"`;
 						await prisma.$executeRaw`DELETE FROM "SessionPossibleDate"`;
 						await prisma.$executeRaw`DELETE FROM "Session"`;
 						await prisma.$executeRaw`DELETE FROM "User"`;
