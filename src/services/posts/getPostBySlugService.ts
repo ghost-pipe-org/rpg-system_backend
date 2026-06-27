@@ -14,7 +14,7 @@ interface GetPostBySlugServiceResponse {
 }
 
 export class GetPostBySlugService {
-	constructor(private postsRepository: PostsRepository) {}
+	constructor(private postsRepository: PostsRepository) { }
 
 	async execute({
 		slug,
